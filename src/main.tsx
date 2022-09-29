@@ -6,7 +6,7 @@ import { Toaster } from "react-hot-toast";
 import "./index.css";
 import { ErrorBoundary } from "react-error-boundary";
 
-if (process.env.NODE_ENV === "development") {
+if (import.meta.env.VITE_ENABLE_MSW === "Y") {
   const { worker } = await import("./mocks/browser");
   worker.start();
 }
