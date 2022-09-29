@@ -6,10 +6,8 @@ import { Toaster } from "react-hot-toast";
 import "./index.css";
 import { ErrorBoundary } from "react-error-boundary";
 
-// TODO: Require this so it's lazy loaded.
-import { worker } from "./mocks/browser";
-
 if (process.env.NODE_ENV === "development") {
+  const { worker } = await import("./mocks/browser");
   worker.start();
 }
 
