@@ -12,26 +12,20 @@ export const handlers = [
     );
   }),
 
-  rest.get("/user", (req, res, ctx) => {
-    // Check if the user is authenticated in this session
-    const isAuthenticated = sessionStorage.getItem("is-authenticated");
-
-    if (!isAuthenticated) {
-      // If not authenticated, respond with a 403 error
-      return res(
-        ctx.status(403),
-        ctx.json({
-          errorMessage: "Not authorized",
-        })
-      );
-    }
-
-    // If authenticated, return a mocked user details
+  rest.get("http://localhost:3001/foods", (req, res, ctx) => {
     return res(
       ctx.status(200),
-      ctx.json({
-        username: "admin",
-      })
+      ctx.json([
+        {
+          id: 1,
+          name: "Burger",
+          image: "burger.jpg",
+          price: 8.99,
+          description:
+            "This ain't your average burger. Topped with our tangy cheddar cheese sauce, fresh lettuce, and tomato.",
+          tags: ["Lunch", "Dinner"],
+        },
+      ])
     );
   }),
 ];
