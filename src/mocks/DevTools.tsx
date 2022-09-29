@@ -1,18 +1,29 @@
 import { useState } from "react";
-import { Food } from "../food";
+import App from "../App";
+import { useWorker } from "./useWorker";
 
-type FoodResponse = "Ice cream shop" | "Diner";
+export type FoodResponse = "Ice cream shop" | "Diner";
 
 export default function DevTools() {
-  const [foodsResponse, setFoodsResponse] = useState<FoodResponse>("Diner");
+  const [foodResponse, setFoodResponse] = useState<FoodResponse>("Diner");
+
+  const isReady = useWorker({
+    foodResponse,
+  });
+
+  if (!isReady) return <p>Initializing...</p>;
 
   return (
-    <div>
-      <label>Foods Response</label>
-      <select value={foodsResponse}>
-        <option value="Ice cream shop">Ice cream shop</option>
-        <option value="Diner">Diner</option>
-      </select>
-    </div>
+    <>
+      <App />
+
+      <section className="fixed p-4 border shadow-xl max-h-screen overflow-auto bg-white opacity-90 bottom-0">
+        <label className="block">Foods Response</label>
+        <select value={foodResponse}>
+          <option value="Ice cream shop">Ice cream shop</option>
+          <option value="Diner">Diner</option>
+        </select>
+      </section>
+    </>
   );
 }

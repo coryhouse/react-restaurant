@@ -7,7 +7,7 @@
     "start": "run-p dev:msw start-api",
     "start:real-api": "run-p dev start-api",
     "dev": "vite",
-    "dev:msw": "cross-env VITE_ENABLE_MSW=Y vite",
+    "dev:msw": "cross-env VITE_ENABLE_DEVTOOLS=Y vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "start-api": "json-server --watch db.json --port 3001 --delay 1000",

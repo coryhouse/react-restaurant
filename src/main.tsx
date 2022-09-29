@@ -6,10 +6,10 @@ import { Toaster } from "react-hot-toast";
 import "./index.css";
 import { ErrorBoundary } from "react-error-boundary";
 
-if (import.meta.env.VITE_ENABLE_MSW === "Y") {
-  const { worker } = await import("./mocks/browser");
-  worker.start();
-}
+// Lazy load so this isn't in the prod bundle
+const DevTools = React.lazy(() => import("./mocks/DevTools"));
+
+const useDevTools = import.meta.env.VITE_ENABLE_DEVTOOLS === "Y";
 
 // Warning: StrictMode will render twice in dev only. This can catch subtle bugs.
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <ErrorBoundary fallback={<h1>Oops! Sorry, an error occurred.</h1>}>
       <BrowserRouter>
         <Toaster />
-        <App />
+        {useDevTools ? <DevTools /> : <App />}
       </BrowserRouter>
     </ErrorBoundary>
   </React.StrictMode>

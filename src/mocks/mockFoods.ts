@@ -1,6 +1,6 @@
 import { Food } from "../food";
 
-export const mockFoods: Food[] = [
+export const mockDiner: Food[] = [
   {
     id: 1,
     name: "Burger",
@@ -17,5 +17,16 @@ export const mockFoods: Food[] = [
     price: 9.99,
     description: "Delicious french toast with banana and blueberry.",
     tags: ["Breakfast"],
+  },
+];
+
+export const mockIceCreamShop: Food[] = [
+  {
+    id: 1,
+    name: "Vanilla Ice Cream Cone",
+    image: "cone.jpg",
+    price: 4.99,
+    description: "Tasty.",
+    tags: ["Dessert"],
   },
 ];

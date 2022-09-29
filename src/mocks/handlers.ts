@@ -1,19 +1,22 @@
 // src/mocks/handlers.js
 import { rest } from "msw";
-import { mockFoods } from "./mockFoods";
+import * as mockFoods from "./mockFoods";
+import { WorkerConfig } from "./useWorker";
 
-export const handlers = [
-  rest.post("/login", (req, res, ctx) => {
-    // Persist user's authentication in the session
-    sessionStorage.setItem("is-authenticated", "true");
-
-    return res(
-      // Respond with a 200 status code
-      ctx.status(200)
-    );
-  }),
-
-  rest.get("http://localhost:3001/foods", (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(mockFoods));
-  }),
-];
+export function getHandlers(config: WorkerConfig) {
+  return [
+    rest.get("http://localhost:3001/foods", (req, res, ctx) => {
+      // 500 Internal Server Error
+      // Slowly
+      // Insufficient rights
+      return res(
+        ctx.status(200),
+        ctx.json(
+          config.foodResponse === "Diner"
+            ? mockFoods.mockDiner
+            : mockFoods.mockIceCreamShop
+        )
+      );
+    }),
+  ];
+}
