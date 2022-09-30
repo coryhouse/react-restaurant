@@ -1,9 +1,24 @@
-import { useQuery } from "@tanstack/react-query";
-import { getFoods } from "./services/foodsApi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { deleteFood, getFoods } from "./services/foodsApi";
+import Button from "./shared/Button";
 import Heading from "./shared/Heading";
 
 export default function Menu() {
   const foodQuery = useQuery(["foods"], getFoods);
+
+  const queryClient = useQueryClient();
+
+  const foodMutation = useMutation(deleteFood, {
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(["foods"]);
+      toast.success("Food deleted! 🍟");
+    },
+    onError: () => {
+      toast.error("Error deleting food 😢");
+    },
+  });
 
   if (foodQuery.isLoading) return <p>Loading...</p>;
   if (foodQuery.isError) throw foodQuery.error;
@@ -26,6 +41,15 @@ export default function Menu() {
               />
               <p>{food.description}</p>
               <p>${food.price}</p>
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => {
+                  foodMutation.mutate(food.id);
+                }}
+              >
+                Delete
+              </Button>
             </div>
           );
         })}

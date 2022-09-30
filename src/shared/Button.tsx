@@ -5,6 +5,7 @@ type ButtonProps = {
   children: React.ReactNode;
   type: "button" | "submit";
   variant: "primary" | "secondary";
+  onClick?: () => void;
 };
 
 const variantMap = {
@@ -17,10 +18,12 @@ export default function Button({
   type,
   variant,
   className,
+  onClick,
 }: ButtonProps) {
   return (
     <button
       type={type}
+      onClick={onClick}
       className={clsx(
         variantMap[variant],
         className,
