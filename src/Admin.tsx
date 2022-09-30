@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { foodTags, NewFood } from "./food";
@@ -38,6 +39,23 @@ export default function Admin() {
   const [food, setFood] = useState(emptyFood);
   const [touched, setTouched] = useState<Touched>({});
   const [status, setStatus] = useState<FormStatus>("idle");
+
+  const queryClient = useQueryClient();
+
+  const foodMutation = useMutation(addFood, {
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(["foods"]);
+      toast.success("Food added! 🍔");
+      setStatus("idle");
+      setFood(emptyFood);
+      setTouched({});
+    },
+    onError: () => {
+      toast.error("Error adding food 😢");
+      setStatus("error");
+    },
+  });
 
   const errors = validate();
   const isValid = Object.keys(errors).length === 0;
@@ -87,16 +105,7 @@ export default function Admin() {
       return;
     }
 
-    try {
-      await addFood(food);
-    } catch (err) {
-      setStatus("error");
-      return;
-    }
-    toast.success("Food added! 🍔");
-    setStatus("idle");
-    setFood(emptyFood);
-    setTouched({});
+    foodMutation.mutate(food);
   }
 
   function getError(id: keyof Errors) {
