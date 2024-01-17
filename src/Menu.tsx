@@ -1,14 +1,26 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { Food } from "./food";
 
 export function Menu() {
-  const [foods, setFoods] = useState(["pizza", "hamburger", "taco"]);
+  const [foods, setFoods] = useState<Food[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const resp = await fetch("http://localhost:3001/foods");
+      const _foods = (await resp.json()) as Food[];
+      setFoods(_foods);
+    }
+
+    fetchData();
+  }, []);
 
   return (
     <>
-      <h1>Menu</h1>
+      <h1 className="text-2xl font-bold">Menu</h1>
+      <img src="/images/burger.jpg" />
       <ul>
         {foods.map((food) => (
-          <Fragment key={food}>
+          <Fragment key={food.id}>
             <button
               onClick={() => {
                 setFoods((prevFoods) => {
@@ -20,7 +32,7 @@ export function Menu() {
             >
               Delete
             </button>{" "}
-            <li key={food}>{food}</li>
+            <li>{food.name}</li>
           </Fragment>
         ))}
       </ul>
