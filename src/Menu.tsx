@@ -27,6 +27,10 @@ export function Menu() {
                 <button
                   className="text-red-500 hover:cursor-pointer"
                   onClick={() => {
+                    // Optimistic delete
+                    fetch("http://localhost:3001/foods/" + food.id, {
+                      method: "DELETE",
+                    });
                     setFoods((prevFoods) => {
                       const newFoods = prevFoods.filter((f) => f !== food);
                       console.log(newFoods);
