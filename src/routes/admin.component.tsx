@@ -4,6 +4,8 @@ import { Input } from "../shared/Input";
 import { useNavigate } from "@tanstack/react-router";
 import toast from "react-hot-toast";
 
+type Status = "idle" | "submitted" | "submitting";
+
 const newFood: NewFood = {
   description: "",
   image: "",
@@ -22,6 +24,7 @@ type Errors = {
 
 export const component = function Admin() {
   const [food, setFood] = useState(newFood);
+  const [status, setStatus] = useState<Status>("idle");
 
   const navigate = useNavigate();
 
@@ -37,6 +40,11 @@ export const component = function Admin() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault(); // prevent the browser from reloading the page.
+    if (Object.keys(errors).length > 0) {
+      setStatus("submitted");
+      return; // If errors, stop here.
+    }
+    setStatus("submitting");
     await fetch("http://localhost:3001/foods", {
       method: "POST",
       body: JSON.stringify(food),
@@ -64,7 +72,7 @@ export const component = function Admin() {
           onChange={onChange}
           label="Name"
           className="mb-4"
-          error={errors.name}
+          error={status === "submitted" ? errors.name : ""}
         />
 
         <Input
@@ -73,7 +81,7 @@ export const component = function Admin() {
           onChange={onChange}
           label="Description"
           className="mb-4"
-          error={errors.description}
+          error={status === "submitted" ? errors.description : ""}
         />
 
         <Input
@@ -88,7 +96,9 @@ export const component = function Admin() {
 
         <fieldset>
           <legend className="font-bold">Tags</legend>
-          {errors.tags && <p className="text-red-500">{errors.tags}</p>}
+          {status === "submitted" && errors.tags && (
+            <p className="text-red-500">{errors.tags}</p>
+          )}
           <ul>
             {foodTags.map((tag) => {
               const id = "tag-" + tag;
