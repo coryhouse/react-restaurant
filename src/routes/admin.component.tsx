@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NewFood } from "../food";
+import { Input } from "../Input";
 
 const newFood: NewFood = {
   description: "",
@@ -16,15 +17,20 @@ export const component = function Admin() {
     <>
       <h1 className="p-2">Admin</h1>
       <form className="p-2">
-        <label htmlFor="name" className="block">
-          Name
-        </label>
-        <input
-          id="name"
-          type="text"
-          className="border-2 border-gray-400"
+        <Input
           value={food.name}
+          id="name"
           onChange={(event) => setFood({ ...food, name: event.target.value })}
+          label="Name"
+        />
+
+        <Input
+          value={food.description}
+          id="description"
+          onChange={(event) =>
+            setFood({ ...food, description: event.target.value })
+          }
+          label="Description"
         />
       </form>
     </>
