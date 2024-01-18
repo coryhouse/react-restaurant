@@ -30,6 +30,12 @@ export const component = function Admin() {
     navigate({ to: "/" }); // Redirect to the Menu
   }
 
+  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+    // Functional form / callback form of set state.
+    // Useful anytime we want to set state based on existing state.
+    setFood((prev) => ({ ...prev, [event.target.id]: event.target.value }));
+  }
+
   return (
     <>
       <h1 className="p-2">Admin</h1>
@@ -37,7 +43,7 @@ export const component = function Admin() {
         <Input
           value={food.name}
           id="name"
-          onChange={(event) => setFood({ ...food, name: event.target.value })}
+          onChange={onChange}
           label="Name"
           className="mb-4"
         />
@@ -45,9 +51,7 @@ export const component = function Admin() {
         <Input
           value={food.description}
           id="description"
-          onChange={(event) =>
-            setFood({ ...food, description: event.target.value })
-          }
+          onChange={onChange}
           label="Description"
           className="mb-4"
         />
@@ -55,9 +59,7 @@ export const component = function Admin() {
         <Input
           value={food.price}
           id="price"
-          onChange={(event) =>
-            setFood({ ...food, price: Number(event.target.value) })
-          }
+          onChange={onChange}
           label="Price"
           className="mb-4"
         />
@@ -75,15 +77,12 @@ export const component = function Admin() {
                     value={tag}
                     checked={food.tags.some((foodTag) => foodTag === tag)}
                     onChange={(event) => {
-                      const { checked } = event.target;
-                      if (checked) {
-                        setFood({ ...food, tags: [...food.tags, tag] });
-                      } else {
-                        setFood({
-                          ...food,
-                          tags: food.tags.filter((t) => t !== tag),
-                        });
-                      }
+                      setFood({
+                        ...food,
+                        tags: event.target.checked
+                          ? [...food.tags, tag]
+                          : food.tags.filter((t) => t !== tag),
+                      });
                     }}
                   />{" "}
                   <label htmlFor={id}>{tag}</label>
