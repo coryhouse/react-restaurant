@@ -5,18 +5,18 @@ type InputProps = {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-export function Input(props: InputProps) {
+export function Input({ id, label, value, onChange }: InputProps) {
   return (
     <>
-      <label htmlFor={props.id} className="block">
-        {props.label}
+      <label htmlFor={id} className="block">
+        {label}
       </label>
       <input
-        id={props.id}
+        id={id}
         type="text"
         className="border-2 border-gray-400"
-        value={props.value}
-        onChange={props.onChange}
+        value={value}
+        onChange={onChange}
       />
     </>
   );
