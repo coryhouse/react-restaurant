@@ -12,6 +12,8 @@ test("should support adding a new food, displaying the new food on the menu page
   // Check validation by submitting an empty form
   await page.getByRole("button", { name: "Add Food" }).click();
   await expect(page.getByText("Name is required")).toHaveCount(1);
+  await expect(page.getByText("Description is required")).toHaveCount(1);
+  await expect(page.getByText("Select at least one tag")).toHaveCount(1);
 
   // Fill out new food form
   await page.getByLabel("Name").fill("New food");
