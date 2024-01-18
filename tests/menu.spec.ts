@@ -19,6 +19,10 @@ test("should support adding a new food, displaying the new food on the menu page
   // Now should be redirected to the Menu page, so check that the new food displays
   await expect(page.getByRole("heading", { name: "Menu" })).toHaveCount(1);
   await expect(page.getByRole("heading", { name: "New food" })).toHaveCount(1);
+  await expect(page.getByText("Food added!")).toHaveCount(1);
 
   await page.getByRole("button", { name: "Delete New food" }).click();
+  await expect(
+    page.getByRole("button", { name: "Delete New food" })
+  ).toHaveCount(0);
 });
