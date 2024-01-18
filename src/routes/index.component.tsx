@@ -25,6 +25,7 @@ export const component = function Index() {
               <div className="w-48">
                 <h2>{food.name}</h2>
                 <button
+                  aria-label={"Delete " + food.name}
                   className="text-red-500 hover:cursor-pointer"
                   onClick={() => {
                     // Optimistic delete

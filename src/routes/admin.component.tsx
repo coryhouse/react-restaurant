@@ -71,7 +71,7 @@ export const component = function Admin() {
             {foodTags.map((tag) => {
               const id = "tag-" + tag;
               return (
-                <li>
+                <li key={tag}>
                   <input
                     id={id}
                     type="checkbox"
