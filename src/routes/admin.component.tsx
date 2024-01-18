@@ -65,11 +65,31 @@ export const component = function Admin() {
         <fieldset>
           <legend className="font-bold">Tags</legend>
           <ul>
-            {foodTags.map((tag) => (
-              <li>
-                <input type="checkbox" /> <label>{tag}</label>
-              </li>
-            ))}
+            {foodTags.map((tag) => {
+              const id = "tag-" + tag;
+              return (
+                <li>
+                  <input
+                    id={id}
+                    type="checkbox"
+                    value={tag}
+                    checked={food.tags.some((foodTag) => foodTag === tag)}
+                    onChange={(event) => {
+                      const { checked } = event.target;
+                      if (checked) {
+                        setFood({ ...food, tags: [...food.tags, tag] });
+                      } else {
+                        setFood({
+                          ...food,
+                          tags: food.tags.filter((t) => t !== tag),
+                        });
+                      }
+                    }}
+                  />{" "}
+                  <label htmlFor={id}>{tag}</label>
+                </li>
+              );
+            })}
           </ul>
         </fieldset>
 
