@@ -47,7 +47,11 @@ export function Input({
         value={value}
         onChange={onChange}
       />
-      {error && <p className="text-red-500">{error}</p>}
+      {error && (
+        <p role="alert" className="text-red-500">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

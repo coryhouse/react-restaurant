@@ -97,7 +97,9 @@ export const component = function Admin() {
         <fieldset>
           <legend className="font-bold">Tags</legend>
           {status === "submitted" && errors.tags && (
-            <p className="text-red-500">{errors.tags}</p>
+            <p role="alert" className="text-red-500">
+              {errors.tags}
+            </p>
           )}
           <ul>
             {foodTags.map((tag) => {
