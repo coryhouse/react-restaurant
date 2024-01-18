@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NewFood, foodTags } from "../food";
-import { Input } from "../Input";
+import { Input } from "../shared/Input";
 import { useNavigate } from "@tanstack/react-router";
 import toast from "react-hot-toast";
 
@@ -59,6 +59,7 @@ export const component = function Admin() {
         <Input
           value={food.price}
           id="price"
+          type="number"
           onChange={onChange}
           label="Price"
           className="mb-4"
