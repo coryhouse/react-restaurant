@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { NewFood, foodTags } from "../food";
 import { Input } from "../Input";
+import { useNavigate } from "@tanstack/react-router";
+import toast from "react-hot-toast";
 
 const newFood: NewFood = {
   description: "",
@@ -13,10 +15,25 @@ const newFood: NewFood = {
 export const component = function Admin() {
   const [food, setFood] = useState(newFood);
 
+  const navigate = useNavigate();
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault(); // prevent the browser from reloading the page.
+    await fetch("http://localhost:3001/foods", {
+      method: "POST",
+      body: JSON.stringify(food),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    toast.success("Food added!");
+    navigate({ to: "/" }); // Redirect to the Menu
+  }
+
   return (
     <>
       <h1 className="p-2">Admin</h1>
-      <form className="p-2">
+      <form className="p-2" onSubmit={handleSubmit}>
         <Input
           value={food.name}
           id="name"

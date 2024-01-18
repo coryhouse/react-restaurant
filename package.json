@@ -17,7 +17,8 @@
     "concurrently": "^8.2.2",
     "json-server": "^1.0.0-alpha.21",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1"
   },
   "devDependencies": {
     "@tanstack/router-vite-plugin": "^1.5.0",
