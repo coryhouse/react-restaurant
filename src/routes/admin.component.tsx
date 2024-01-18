@@ -12,10 +12,28 @@ const newFood: NewFood = {
   tags: [],
 };
 
+type Errors = {
+  description?: string;
+  image?: string;
+  name?: string;
+  price?: string;
+  tags?: string;
+};
+
 export const component = function Admin() {
   const [food, setFood] = useState(newFood);
 
   const navigate = useNavigate();
+
+  const errors = validate();
+
+  function validate() {
+    const errors: Errors = {};
+    if (!food.name) errors.name = "Name is required";
+    if (!food.description) errors.description = "Description is required";
+    if (food.tags.length === 0) errors.tags = "Select at least one tag";
+    return errors;
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault(); // prevent the browser from reloading the page.
@@ -46,6 +64,7 @@ export const component = function Admin() {
           onChange={onChange}
           label="Name"
           className="mb-4"
+          error={errors.name}
         />
 
         <Input
@@ -54,6 +73,7 @@ export const component = function Admin() {
           onChange={onChange}
           label="Description"
           className="mb-4"
+          error={errors.description}
         />
 
         <Input
@@ -63,10 +83,12 @@ export const component = function Admin() {
           onChange={onChange}
           label="Price"
           className="mb-4"
+          error={errors.price}
         />
 
         <fieldset>
           <legend className="font-bold">Tags</legend>
+          {errors.tags && <p className="text-red-500">{errors.tags}</p>}
           <ul>
             {foodTags.map((tag) => {
               const id = "tag-" + tag;

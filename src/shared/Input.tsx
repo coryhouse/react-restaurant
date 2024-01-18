@@ -21,6 +21,9 @@ type InputProps = {
 
   /** input type */
   type?: "text" | "number" | "phone" | "email" | "password";
+
+  /** Error to display below the input */
+  error?: string;
 };
 
 export function Input({
@@ -30,6 +33,7 @@ export function Input({
   value,
   onChange,
   type = "text",
+  error,
 }: InputProps) {
   return (
     <div className={className}>
@@ -43,6 +47,7 @@ export function Input({
         value={value}
         onChange={onChange}
       />
+      {error && <p className="text-red-500">{error}</p>}
     </div>
   );
 }
