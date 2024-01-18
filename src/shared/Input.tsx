@@ -1,3 +1,5 @@
+import { ErrorMessage } from "./ErrorMessage";
+
 type InputProps = {
   /** input __value__ [more info](http://google.com)
    * Reasons:
@@ -47,11 +49,7 @@ export function Input({
         value={value}
         onChange={onChange}
       />
-      {error && (
-        <p role="alert" className="text-red-500">
-          {error}
-        </p>
-      )}
+      <ErrorMessage message={error} />
     </div>
   );
 }

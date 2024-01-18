@@ -3,6 +3,7 @@ import { NewFood, foodTags } from "../food";
 import { Input } from "../shared/Input";
 import { useNavigate } from "@tanstack/react-router";
 import toast from "react-hot-toast";
+import { ErrorMessage } from "../shared/ErrorMessage";
 
 type Status = "idle" | "submitted" | "submitting";
 
@@ -96,11 +97,7 @@ export const component = function Admin() {
 
         <fieldset>
           <legend className="font-bold">Tags</legend>
-          {status === "submitted" && errors.tags && (
-            <p role="alert" className="text-red-500">
-              {errors.tags}
-            </p>
-          )}
+          {status === "submitted" && <ErrorMessage message={errors.tags} />}
           <ul>
             {foodTags.map((tag) => {
               const id = "tag-" + tag;
