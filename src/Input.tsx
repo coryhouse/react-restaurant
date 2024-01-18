@@ -1,14 +1,15 @@
 type InputProps = {
-  value: string;
+  value: string | number;
+  className?: string;
   label: string;
   id: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-export function Input({ id, label, value, onChange }: InputProps) {
+export function Input({ id, className, label, value, onChange }: InputProps) {
   return (
-    <>
-      <label htmlFor={id} className="block">
+    <div className={className}>
+      <label htmlFor={id} className="block font-bold">
         {label}
       </label>
       <input
@@ -18,6 +19,6 @@ export function Input({ id, label, value, onChange }: InputProps) {
         value={value}
         onChange={onChange}
       />
-    </>
+    </div>
   );
 }
