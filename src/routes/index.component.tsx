@@ -42,6 +42,10 @@ export const component = function Index() {
                 </button>
                 <p>{food.description}</p>
                 <p>${food.price}</p>
+                <p>
+                  <span className="font-bold">Tags</span>:{" "}
+                  {food.tags.join(", ")}
+                </p>
               </div>
               <div className="w-36">
                 <img
