@@ -9,6 +9,10 @@ test("should support adding a new food, displaying the new food on the menu page
 }) => {
   await page.goto("http://localhost:3000/admin");
 
+  // Check validation by submitting an empty form
+  await page.getByRole("button", { name: "Add Food" }).click();
+  await expect(page.getByText("Name is required")).toHaveCount(1);
+
   // Fill out new food form
   await page.getByLabel("Name").fill("New food");
   await page.getByLabel("Description").fill("New food description");
