@@ -6,6 +6,7 @@ import "./index.css";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 import { Toaster } from "react-hot-toast";
+import { UserContextProvider } from "./UserContext";
 
 // Create a new router instance
 const router = new Router({ routeTree });
@@ -24,7 +25,9 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <Toaster />
-      <RouterProvider router={router} />
+      <UserContextProvider>
+        <RouterProvider router={router} />
+      </UserContextProvider>
     </StrictMode>
   );
 }
