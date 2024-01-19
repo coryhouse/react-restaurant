@@ -15,11 +15,31 @@ export const component = function Index() {
     fetchData();
   }, []);
 
+  // Derived state
+  const matchingFoods =
+    selectedTag === ""
+      ? foods
+      : foods.filter((food) => food.tags.includes(selectedTag));
+
   return (
     <>
       <h1>Menu</h1>
+
+      <label className="block font-bold" htmlFor="tag-filter">
+        Filter by tag
+      </label>
+      <select
+        id="tag-filter"
+        value={selectedTag}
+        onChange={(event) => setSelectedTag(event.target.value as FoodTag)}
+      >
+        <option value="">All</option>
+        {foodTags.map((tag) => (
+          <option key={tag}>{tag}</option>
+        ))}
+      </select>
       <div className="flex flex-wrap">
-        {foods.map((food) => (
+        {matchingFoods.map((food) => (
           <Card key={food.id}>
             <div className="flex justify-between">
               <div className="w-48">
