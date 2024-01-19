@@ -23,9 +23,18 @@ type Errors = {
   tags?: string;
 };
 
+type Touched = {
+  description?: boolean;
+  image?: boolean;
+  name?: boolean;
+  price?: boolean;
+  tags?: boolean;
+};
+
 export const component = function Admin() {
   const [food, setFood] = useState(newFood);
   const [status, setStatus] = useState<Status>("idle");
+  const [touched, setTouched] = useState<Touched>({});
 
   const navigate = useNavigate();
 
@@ -60,6 +69,7 @@ export const component = function Admin() {
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
     // Functional form / callback form of set state.
     // Useful anytime we want to set state based on existing state.
+    // Using the computed property syntax to set a property using a variable.
     setFood((prev) => ({ ...prev, [event.target.id]: event.target.value }));
   }
 
@@ -73,7 +83,8 @@ export const component = function Admin() {
           onChange={onChange}
           label="Name"
           className="mb-4"
-          error={status === "submitted" ? errors.name : ""}
+          error={status === "submitted" || touched.name ? errors.name : ""}
+          onBlur={() => setTouched({ ...touched, name: true })}
         />
 
         <Input
@@ -83,6 +94,7 @@ export const component = function Admin() {
           label="Description"
           className="mb-4"
           error={status === "submitted" ? errors.description : ""}
+          onBlur={() => setTouched({ ...touched, description: true })}
         />
 
         <Input
@@ -93,6 +105,7 @@ export const component = function Admin() {
           label="Price"
           className="mb-4"
           error={errors.price}
+          onBlur={() => setTouched({ ...touched, price: true })}
         />
 
         <fieldset>
@@ -124,7 +137,7 @@ export const component = function Admin() {
           </ul>
         </fieldset>
 
-        <button className="bg-slate-300 border p-1 rounded mt-4" type="submit">
+        <button className="p-1 mt-4 border rounded bg-slate-300" type="submit">
           Add Food
         </button>
       </form>

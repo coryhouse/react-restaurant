@@ -18,6 +18,9 @@ type InputProps = {
   /** input id */
   id: string;
 
+  /** input onFocus */
+  onBlur: React.FocusEventHandler<HTMLInputElement>;
+
   /** input onChange */
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 
@@ -33,6 +36,7 @@ export function Input({
   className,
   label,
   value,
+  onBlur,
   onChange,
   type = "text",
   error,
@@ -45,6 +49,7 @@ export function Input({
       <input
         id={id}
         type={type}
+        onBlur={onBlur}
         className="border-2 border-gray-400"
         value={value}
         onChange={onChange}
