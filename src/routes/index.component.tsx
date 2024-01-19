@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
 import { Food, FoodTag, foodTags } from "../food";
 import { Card } from "../Card";
+import { Link } from "@tanstack/react-router";
 
 export const component = function Index() {
   const [foods, setFoods] = useState<Food[]>([]);
   const [selectedTag, setSelectedTag] = useState<FoodTag | "">("");
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     async function fetchData() {
-      const resp = await fetch("http://localhost:3001/foods");
-      const _foods = (await resp.json()) as Food[];
-      setFoods(_foods);
+      try {
+        const resp = await fetch("http://localhost:300/foods");
+        const _foods = (await resp.json()) as Food[];
+        setFoods(_foods);
+      } catch (error) {
+        console.error(error);
+        setError(error as Error); // Hack. Real world, inspect the error narrow the type
+      }
     }
 
     fetchData();
@@ -21,6 +28,8 @@ export const component = function Index() {
     selectedTag === ""
       ? foods
       : foods.filter((food) => food.tags.includes(selectedTag));
+
+  if (error) throw error;
 
   return (
     <>
@@ -52,6 +61,13 @@ export const component = function Index() {
             <div className="flex justify-between">
               <div className="w-48">
                 <h2>{food.name}</h2>
+                <Link
+                  className="px-2 py-1 mr-2 text-white bg-blue-600 rounded"
+                  to={"/admin"}
+                  search={{ foodId: Number(food.id) }}
+                >
+                  Edit
+                </Link>
                 <button
                   aria-label={"Delete " + food.name}
                   className="text-red-500 hover:cursor-pointer"
