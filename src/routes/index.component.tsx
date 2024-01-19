@@ -1,19 +1,16 @@
 import { useState } from "react";
-import { Food, FoodTag, foodTags } from "../food";
+import { FoodTag, foodTags } from "../food";
 import { Card } from "../Card";
 import { Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useDeleteFood, useFoods } from "../hooks/useFoods";
+import toast from "react-hot-toast";
 
 export const component = function Index() {
   const [selectedTag, setSelectedTag] = useState<FoodTag | "">("");
 
-  const { data: foods = [], isLoading } = useQuery({
-    queryKey: ["foods"],
-    queryFn: async () => {
-      const resp = await fetch("http://localhost:3001/foods");
-      const _foods = (await resp.json()) as Food[];
-      return _foods;
-    },
+  const { data: foods = [], isLoading } = useFoods();
+  const { mutate: deleteFood } = useDeleteFood(() => {
+    toast.success("Food deleted");
   });
 
   if (isLoading) return <p>Loading...</p>;
@@ -64,17 +61,7 @@ export const component = function Index() {
                 <button
                   aria-label={"Delete " + food.name}
                   className="text-red-500 hover:cursor-pointer"
-                  onClick={() => {
-                    // Optimistic delete
-                    fetch("http://localhost:3001/foods/" + food.id, {
-                      method: "DELETE",
-                    });
-                    setFoods((prevFoods) => {
-                      const newFoods = prevFoods.filter((f) => f !== food);
-                      console.log(newFoods);
-                      return newFoods; // Whatever we return becomes the new state. Setting state is asynchronous (hey react, set the state ASAP)
-                    });
-                  }}
+                  onClick={() => deleteFood(food.id)}
                 >
                   Delete
                 </button>
