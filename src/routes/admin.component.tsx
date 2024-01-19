@@ -4,6 +4,7 @@ import { Input } from "../shared/Input";
 import { useNavigate } from "@tanstack/react-router";
 import toast from "react-hot-toast";
 import { ErrorMessage } from "../shared/ErrorMessage";
+import { useAddFood } from "../hooks/useFoods";
 
 export type Status = "idle" | "submitted" | "submitting";
 
@@ -26,8 +27,12 @@ type Errors = {
 export const component = function Admin() {
   const [food, setFood] = useState(newFood);
   const [status, setStatus] = useState<Status>("idle");
-
   const navigate = useNavigate();
+
+  const addFoodMutation = useAddFood(() => {
+    toast.success("Food added!");
+    navigate({ to: "/" }); // Redirect to the Menu
+  });
 
   const errors = validate();
 
@@ -46,15 +51,7 @@ export const component = function Admin() {
       return; // If errors, stop here.
     }
     setStatus("submitting");
-    await fetch("http://localhost:3001/foods", {
-      method: "POST",
-      body: JSON.stringify(food),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    toast.success("Food added!");
-    navigate({ to: "/" }); // Redirect to the Menu
+    addFoodMutation.mutate(food);
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
