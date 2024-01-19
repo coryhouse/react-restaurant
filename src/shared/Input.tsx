@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { ErrorMessage } from "./ErrorMessage";
+import { Status } from "../routes/admin.component";
 
 type InputProps = {
   /** input __value__ [more info](http://google.com)
@@ -19,7 +21,7 @@ type InputProps = {
   id: string;
 
   /** input onFocus */
-  onBlur: React.FocusEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
 
   /** input onChange */
   onChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -29,6 +31,9 @@ type InputProps = {
 
   /** Error to display below the input */
   error?: string;
+
+  /** Status of the form */
+  formStatus: Status;
 };
 
 export function Input({
@@ -40,7 +45,10 @@ export function Input({
   onChange,
   type = "text",
   error,
+  formStatus,
 }: InputProps) {
+  const [hasBeenTouched, setHasBeenTouched] = useState(false);
+
   return (
     <div className={className}>
       <label htmlFor={id} className="block font-bold">
@@ -49,12 +57,20 @@ export function Input({
       <input
         id={id}
         type={type}
-        onBlur={onBlur}
+        onBlur={(event) => {
+          setHasBeenTouched(true);
+          onBlur?.(event);
+        }}
         className="border-2 border-gray-400"
         value={value}
         onChange={onChange}
       />
-      <ErrorMessage message={error} />
+      {/** Only show the error message if the field has been touched or the form has been submitted */}
+      <ErrorMessage
+        message={
+          hasBeenTouched || formStatus === "submitted" ? error : undefined
+        }
+      />
     </div>
   );
 }

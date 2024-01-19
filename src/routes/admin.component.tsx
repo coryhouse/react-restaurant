@@ -5,7 +5,7 @@ import { useNavigate } from "@tanstack/react-router";
 import toast from "react-hot-toast";
 import { ErrorMessage } from "../shared/ErrorMessage";
 
-type Status = "idle" | "submitted" | "submitting";
+export type Status = "idle" | "submitted" | "submitting";
 
 const newFood: NewFood = {
   description: "",
@@ -23,18 +23,9 @@ type Errors = {
   tags?: string;
 };
 
-type Touched = {
-  description?: boolean;
-  image?: boolean;
-  name?: boolean;
-  price?: boolean;
-  tags?: boolean;
-};
-
 export const component = function Admin() {
   const [food, setFood] = useState(newFood);
   const [status, setStatus] = useState<Status>("idle");
-  const [touched, setTouched] = useState<Touched>({});
 
   const navigate = useNavigate();
 
@@ -83,8 +74,8 @@ export const component = function Admin() {
           onChange={onChange}
           label="Name"
           className="mb-4"
-          error={status === "submitted" || touched.name ? errors.name : ""}
-          onBlur={() => setTouched({ ...touched, name: true })}
+          error={errors.name}
+          formStatus={status}
         />
 
         <Input
@@ -93,8 +84,8 @@ export const component = function Admin() {
           onChange={onChange}
           label="Description"
           className="mb-4"
-          error={status === "submitted" ? errors.description : ""}
-          onBlur={() => setTouched({ ...touched, description: true })}
+          error={errors.description}
+          formStatus={status}
         />
 
         <Input
@@ -105,7 +96,7 @@ export const component = function Admin() {
           label="Price"
           className="mb-4"
           error={errors.price}
-          onBlur={() => setTouched({ ...touched, price: true })}
+          formStatus={status}
         />
 
         <fieldset>
