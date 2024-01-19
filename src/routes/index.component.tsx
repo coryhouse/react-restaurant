@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Food } from "../food";
+import { Food, FoodTag, foodTags } from "../food";
 import { Card } from "../Card";
 
 export const component = function Index() {
   const [foods, setFoods] = useState<Food[]>([]);
+  const [selectedTag, setSelectedTag] = useState<FoodTag | "">("");
 
   useEffect(() => {
     async function fetchData() {
