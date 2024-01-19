@@ -1,35 +1,28 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Food, FoodTag, foodTags } from "../food";
 import { Card } from "../Card";
 import { Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 
 export const component = function Index() {
-  const [foods, setFoods] = useState<Food[]>([]);
   const [selectedTag, setSelectedTag] = useState<FoodTag | "">("");
-  const [error, setError] = useState<Error | null>(null);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const resp = await fetch("http://localhost:300/foods");
-        const _foods = (await resp.json()) as Food[];
-        setFoods(_foods);
-      } catch (error) {
-        console.error(error);
-        setError(error as Error); // Hack. Real world, inspect the error narrow the type
-      }
-    }
+  const { data: foods = [], isLoading } = useQuery({
+    queryKey: ["foods"],
+    queryFn: async () => {
+      const resp = await fetch("http://localhost:3001/foods");
+      const _foods = (await resp.json()) as Food[];
+      return _foods;
+    },
+  });
 
-    fetchData();
-  }, []);
+  if (isLoading) return <p>Loading...</p>;
 
   // Derived state
   const matchingFoods =
     selectedTag === ""
       ? foods
       : foods.filter((food) => food.tags.includes(selectedTag));
-
-  if (error) throw error;
 
   return (
     <>

@@ -7,6 +7,8 @@ import "./index.css";
 import { routeTree } from "./routeTree.gen";
 import { Toaster } from "react-hot-toast";
 import { UserContextProvider } from "./UserContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 // Create a new router instance
 const router = new Router({ routeTree });
@@ -18,6 +20,8 @@ declare module "@tanstack/react-router" {
   }
 }
 
+const queryClient = new QueryClient();
+
 // Render the app
 const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {
@@ -25,9 +29,12 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <Toaster />
-      <UserContextProvider>
-        <RouterProvider router={router} />
-      </UserContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools />
+        <UserContextProvider>
+          <RouterProvider router={router} />
+        </UserContextProvider>
+      </QueryClientProvider>
     </StrictMode>
   );
 }
