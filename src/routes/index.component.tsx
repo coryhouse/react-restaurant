@@ -39,6 +39,13 @@ export const component = function Index() {
           <option key={tag}>{tag}</option>
         ))}
       </select>
+
+      {selectedTag !== "" && (
+        <h2>
+          {matchingFoods.length} matching food{matchingFoods.length > 1 && "s"}{" "}
+          found:
+        </h2>
+      )}
       <div className="flex flex-wrap">
         {matchingFoods.map((food) => (
           <Card key={food.id}>
