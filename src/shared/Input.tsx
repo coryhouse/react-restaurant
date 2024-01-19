@@ -37,15 +37,14 @@ type InputProps = {
 };
 
 export function Input({
-  id,
   className,
   label,
-  value,
+  id,
   onBlur,
-  onChange,
   type = "text",
   error,
   formStatus,
+  ...otherInputProps
 }: InputProps) {
   const [hasBeenTouched, setHasBeenTouched] = useState(false);
 
@@ -62,8 +61,7 @@ export function Input({
           onBlur?.(event);
         }}
         className="border-2 border-gray-400"
-        value={value}
-        onChange={onChange}
+        {...otherInputProps}
       />
       {/** Only show the error message if the field has been touched or the form has been submitted */}
       <ErrorMessage
