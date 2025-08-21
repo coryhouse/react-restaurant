@@ -8,12 +8,13 @@ import toast from "react-hot-toast";
 export const component = function Index() {
   const [selectedTag, setSelectedTag] = useState<FoodTag | "">("");
 
-  const { data: foods = [], isLoading } = useFoods();
+  const { data: foods, isLoading } = useFoods();
   const { mutate: deleteFood } = useDeleteFood(() => {
     toast.success("Food deleted");
   });
 
   if (isLoading) return <p>Loading...</p>;
+  if (!foods) return <p>No foods found</p>;
 
   // Derived state
   const matchingFoods =
@@ -26,7 +27,7 @@ export const component = function Index() {
       <h1>Menu</h1>
 
       <label className="block font-bold" htmlFor="tag-filter">
-        Filter by tag
+        Filter by taggos
       </label>
       <select
         id="tag-filter"
