@@ -20,7 +20,8 @@
     "json-server": "^1.0.0-alpha.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hot-toast": "^2.4.1"
+    "react-hot-toast": "^2.4.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@playwright/test": "^1.41.0",
