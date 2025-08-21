@@ -1,10 +1,10 @@
-import { Link, Outlet, RootRoute } from "@tanstack/react-router";
+import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
-export const Route = new RootRoute({
+export const rootRoute = createRootRoute({
   component: () => (
     <>
-      <nav className="p-2 flex gap-2">
+      <nav className="flex gap-2 p-2">
         <Link to="/" className="[&.active]:font-bold">
           Menu
         </Link>{" "}
