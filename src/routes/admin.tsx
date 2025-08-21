@@ -2,7 +2,7 @@ import { useState } from "react";
 import { type NewFood, foodTags } from "../food";
 import { Input } from "../shared/Input";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { ErrorMessage } from "../shared/ErrorMessage";
 import { useAddFood } from "../hooks/useFoods";
 

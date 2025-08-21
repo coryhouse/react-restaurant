@@ -3,7 +3,7 @@ import { type FoodTag, foodTags } from "../food";
 import { Card } from "../Card";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useDeleteFood, useFoods } from "../hooks/useFoods";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
   component: Index,

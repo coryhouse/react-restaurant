@@ -5,7 +5,7 @@ import "./index.css";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "sonner";
 import { UserContextProvider } from "./UserContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -24,7 +24,7 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Toaster />
+    <Toaster richColors position="top-right" />
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
       <UserContextProvider>

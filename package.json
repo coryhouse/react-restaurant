@@ -22,7 +22,7 @@
     "json-server": "^1.0.0-beta.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-hot-toast": "^2.6.0",
+    "sonner": "^2.0.7",
     "zod": "^4.0.17"
   },
   "devDependencies": {
