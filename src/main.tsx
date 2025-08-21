@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import ReactDOM from "react-dom/client";
+import { createRoot } from "react-dom/client";
 import { RouterProvider, Router } from "@tanstack/react-router";
 import "./index.css";
 
@@ -22,19 +22,14 @@ declare module "@tanstack/react-router" {
 
 const queryClient = new QueryClient();
 
-// Render the app
-const rootElement = document.getElementById("root")!;
-if (!rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement);
-  root.render(
-    <StrictMode>
-      <Toaster />
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools />
-        <UserContextProvider>
-          <RouterProvider router={router} />
-        </UserContextProvider>
-      </QueryClientProvider>
-    </StrictMode>
-  );
-}
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <Toaster />
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools />
+      <UserContextProvider>
+        <RouterProvider router={router} />
+      </UserContextProvider>
+    </QueryClientProvider>
+  </StrictMode>
+);
