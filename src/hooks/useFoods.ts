@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Food, NewFood } from "../food";
+import { NewFood, foodSchema } from "../food";
 
 const baseUrl = "http://localhost:3001/foods";
 
@@ -12,7 +12,10 @@ export function useFoods() {
     queryKey: keys.allFoods,
     queryFn: async () => {
       const resp = await fetch(baseUrl);
-      return (await resp.json()) as Food[];
+      const json = await resp.json();
+      // If the json doesn't match the schema, then this will throw an error
+      const foods = foodSchema.parse(json);
+      return foods;
     },
   });
 }
