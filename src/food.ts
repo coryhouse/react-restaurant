@@ -1,7 +1,7 @@
 import * as z from "zod";
 
 export const foodSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   name: z.string(),
   image: z.string(),
   price: z.number(),
