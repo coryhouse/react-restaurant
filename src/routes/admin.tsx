@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { NewFood, foodTags } from "../food";
+import { type NewFood, foodTags } from "../food";
 import { Input } from "../shared/Input";
-import { useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import toast from "react-hot-toast";
 import { ErrorMessage } from "../shared/ErrorMessage";
 import { useAddFood } from "../hooks/useFoods";
+
+export const Route = createFileRoute("/admin")({
+  component: Admin,
+});
 
 export type Status = "idle" | "submitted" | "submitting";
 
@@ -24,7 +28,7 @@ type Errors = {
   tags?: string;
 };
 
-export const component = function Admin() {
+function Admin() {
   const [food, setFood] = useState(newFood);
   const [status, setStatus] = useState<Status>("idle");
   const navigate = useNavigate();
@@ -131,4 +135,4 @@ export const component = function Admin() {
       </form>
     </>
   );
-};
+}

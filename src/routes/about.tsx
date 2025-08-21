@@ -1,6 +1,11 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { useUserContext } from "../UserContext";
 
-export const component = function About() {
+export const Route = createFileRoute("/about")({
+  component: About,
+});
+
+function About() {
   const { user, setUser } = useUserContext();
   return (
     <>
@@ -13,4 +18,4 @@ export const component = function About() {
       </button>
     </>
   );
-};
+}

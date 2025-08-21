@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { FoodTag, foodTags } from "../food";
+import { type FoodTag, foodTags } from "../food";
 import { Card } from "../Card";
-import { Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useDeleteFood, useFoods } from "../hooks/useFoods";
 import toast from "react-hot-toast";
 
-export const component = function Index() {
+export const Route = createFileRoute("/")({
+  component: Index,
+});
+
+function Index() {
   const [selectedTag, setSelectedTag] = useState<FoodTag | "">("");
 
   const { data: foods, isLoading } = useFoods();
@@ -86,4 +90,4 @@ export const component = function Index() {
       </div>
     </>
   );
-};
+}
