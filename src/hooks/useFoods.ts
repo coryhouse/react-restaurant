@@ -14,7 +14,7 @@ export function useFoods() {
       const resp = await fetch(baseUrl);
       const json = await resp.json();
       // If the json doesn't match the schema, then this will throw an error
-      const foods = foodSchema.parse(json);
+      const foods = foodSchema.array().parse(json);
       return foods;
     },
   });
