@@ -31,7 +31,7 @@ function Index() {
       <h1>Menu</h1>
 
       <label className="block font-bold" htmlFor="tag-filter">
-        Filter by taggos
+        Filter by tag
       </label>
       <select
         id="tag-filter"
