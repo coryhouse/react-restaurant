@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { NewFood, foodSchema } from "../food";
+import { type NewFood, foodSchema } from "../food";
 
 const baseUrl = "http://localhost:3001/foods";
 

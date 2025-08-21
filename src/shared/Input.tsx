@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ErrorMessage } from "./ErrorMessage";
-import { Status } from "../routes/admin.component";
+import type { Status } from "../routes/admin";
 
 type InputProps = {
   /** input __value__ [more info](http://google.com)
