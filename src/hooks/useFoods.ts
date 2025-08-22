@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { type NewFood, foodSchema } from "../food";
+import { type Food, type NewFood, foodSchema } from "../food";
 
 const baseUrl = "http://localhost:3001/foods";
 
@@ -7,13 +7,24 @@ const keys = {
   allFoods: ["foods"],
 };
 
+export function useGetFoodById(foodId?: string) {
+  return useQuery({
+    enabled: Boolean(foodId),
+    queryKey: [...keys.allFoods, foodId],
+    queryFn: async () => {
+      const resp = await fetch(baseUrl + "/" + foodId);
+      const json = await resp.json();
+      return foodSchema.parse(json);
+    },
+  });
+}
+
 export function useFoods() {
   return useQuery({
     queryKey: keys.allFoods,
     queryFn: async () => {
       const resp = await fetch(baseUrl);
       const json = await resp.json();
-      // If the json doesn't match the schema, then this will throw an error
       const foods = foodSchema.array().parse(json);
       return foods;
     },
@@ -42,6 +53,26 @@ export function useAddFood(onSuccess: () => void) {
     mutationFn: async (food: NewFood) => {
       return fetch(baseUrl, {
         method: "POST",
+        body: JSON.stringify(food),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    },
+    onSuccess,
+    onSettled: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: keys.allFoods });
+    },
+  });
+}
+
+export function useUpdateFood(onSuccess: () => void) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (food: Food) => {
+      return fetch(baseUrl + "/" + food.id, {
+        method: "PUT",
         body: JSON.stringify(food),
         headers: {
           "Content-Type": "application/json",
