@@ -1,13 +1,13 @@
-## Friday Options
+# React with Vite and Tanstack Router
 
-2. Show spread props on Input
-3. Edit food item
-4. State management approaches and filtering foods via derived state
-5. Context
-6. React Query
-7. React Server Components via Next.js
-8. React Hook Form
-9. Use a third party lib like MUI or Chakra UI
+## TODO
+
+1. Switch to QueryOptions
+2. Handle 404 on Admin page with bad food id
+3. Add Tanstack DB
+4. React Router branch
+5. React Hook Form
+6. Use a third party component lib like MUI or Chakra UI
 
 # React + TypeScript + Vite
 
