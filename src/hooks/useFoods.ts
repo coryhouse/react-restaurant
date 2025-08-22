@@ -1,4 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+// This file contains reusable Tanstack Query QueryOptions
+import {
+  queryOptions,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { type Food, type NewFood, foodSchema } from "../food";
 import ky from "ky";
 
@@ -8,16 +14,14 @@ const keys = {
   allFoods: ["foods"],
 };
 
-export function useGetFoodById(foodId?: string) {
-  return useQuery({
-    enabled: Boolean(foodId),
+export const getFoodById = (foodId?: string) =>
+  queryOptions({
     queryKey: [...keys.allFoods, foodId],
     queryFn: async () => {
       const json = await ky.get(`${baseUrl}/${foodId}`).json();
       return foodSchema.parse(json);
     },
   });
-}
 
 export function useFoods() {
   return useQuery({
