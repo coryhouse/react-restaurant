@@ -40,7 +40,10 @@ function Admin() {
   const [status, setStatus] = useState<Status>("idle");
   const navigate = useNavigate();
   const { foodId } = Route.useSearch();
-  const { data: existingFood } = useQuery(foodQueries.getFoodById(foodId));
+  const { data: existingFood } = useQuery({
+    ...foodQueries.getFoodById(foodId),
+    enabled: !!foodId,
+  });
 
   useEffect(
     function populateForm() {
