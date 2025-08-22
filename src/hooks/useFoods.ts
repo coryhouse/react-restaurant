@@ -8,7 +8,7 @@ const keys = {
   allFoods: ["foods"],
 };
 
-export function useGetFoodById(foodId?: number) {
+export function useGetFoodById(foodId?: string) {
   return useQuery({
     enabled: Boolean(foodId),
     queryKey: [...keys.allFoods, foodId],
@@ -32,7 +32,7 @@ export function useFoods() {
 export function useDeleteFood(onSuccess: () => void) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (foodId: number) => {
+    mutationFn: async (foodId: string) => {
       ky.delete(`${baseUrl}/${foodId}`);
     },
     onSuccess,
