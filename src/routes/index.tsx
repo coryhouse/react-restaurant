@@ -60,7 +60,7 @@ function Index() {
                 <Link
                   className="px-2 py-1 mr-2 text-white bg-blue-600 rounded"
                   to={"/admin"}
-                  search={{ foodId: Number(food.id) }}
+                  search={{ foodId: food.id }}
                 >
                   Edit
                 </Link>
