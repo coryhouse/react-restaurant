@@ -7,6 +7,7 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  errorComponent: () => <div>Oops! Failed to load the menu.</div>,
 });
 
 function Index() {
