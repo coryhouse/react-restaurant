@@ -4,11 +4,12 @@ import { Input } from "../shared/Input";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { ErrorMessage } from "../shared/ErrorMessage";
-import { useSaveFood, useGetFoodById } from "../hooks/useFoods";
+import { useSaveFood, getFoodById } from "../hooks/useFoods";
 import z from "zod";
+import { useQuery } from "@tanstack/react-query";
 
 const searchParamsSchema = z.object({
-  foodId: z.number().optional(),
+  foodId: z.string().optional(),
 });
 
 export const Route = createFileRoute("/admin")({
@@ -39,7 +40,7 @@ function Admin() {
   const [status, setStatus] = useState<Status>("idle");
   const navigate = useNavigate();
   const { foodId } = Route.useSearch();
-  const { data: existingFood } = useGetFoodById(foodId);
+  const { data: existingFood } = useQuery(getFoodById(foodId));
 
   useEffect(
     function populateForm() {
