@@ -4,9 +4,9 @@ import { Input } from "../shared/Input";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { ErrorMessage } from "../shared/ErrorMessage";
-import { useSaveFood, getFoodById } from "../hooks/useFoods";
+import { foodMutations, foodQueries } from "../query-factories/foods";
 import z from "zod";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const searchParamsSchema = z.object({
   foodId: z.string().optional(),
@@ -40,7 +40,7 @@ function Admin() {
   const [status, setStatus] = useState<Status>("idle");
   const navigate = useNavigate();
   const { foodId } = Route.useSearch();
-  const { data: existingFood } = useQuery(getFoodById(foodId));
+  const { data: existingFood } = useQuery(foodQueries.getFoodById(foodId));
 
   useEffect(
     function populateForm() {
@@ -49,10 +49,12 @@ function Admin() {
     [existingFood]
   );
 
-  const saveFoodMutation = useSaveFood(() => {
-    toast.success(`Food ${"id" in food ? "saved" : "added"}!`);
-    navigate({ to: "/" }); // Redirect to the Menu
-  });
+  const { mutate: saveFood } = useMutation(
+    foodMutations.saveFood(() => {
+      toast.success(`Food ${"id" in food ? "saved" : "added"}!`);
+      navigate({ to: "/" }); // Redirect to the Menu
+    })
+  );
 
   const errors = validate();
 
@@ -71,7 +73,7 @@ function Admin() {
       return; // If errors, stop here.
     }
     setStatus("submitting");
-    saveFoodMutation.mutate(food);
+    saveFood(food);
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
