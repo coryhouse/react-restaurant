@@ -1,13 +1,19 @@
-import { useState } from "react";
-import { type NewFood, foodTags } from "../food";
+import { useEffect, useState } from "react";
+import { type Food, type NewFood, foodTags } from "../food";
 import { Input } from "../shared/Input";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { ErrorMessage } from "../shared/ErrorMessage";
-import { useAddFood } from "../hooks/useFoods";
+import { useSaveFood, useGetFoodById } from "../hooks/useFoods";
+import z from "zod";
+
+const searchParamsSchema = z.object({
+  foodId: z.number().optional(),
+});
 
 export const Route = createFileRoute("/admin")({
   component: Admin,
+  validateSearch: searchParamsSchema,
 });
 
 export type Status = "idle" | "submitted" | "submitting";
@@ -29,12 +35,21 @@ type Errors = {
 };
 
 function Admin() {
-  const [food, setFood] = useState(newFood);
+  const [food, setFood] = useState<Food | NewFood>(newFood);
   const [status, setStatus] = useState<Status>("idle");
   const navigate = useNavigate();
+  const { foodId } = Route.useSearch();
+  const { data: existingFood } = useGetFoodById(foodId);
 
-  const addFoodMutation = useAddFood(() => {
-    toast.success("Food added!");
+  useEffect(
+    function populateForm() {
+      if (existingFood) setFood(existingFood);
+    },
+    [existingFood]
+  );
+
+  const saveFoodMutation = useSaveFood(() => {
+    toast.success(`Food ${"id" in food ? "saved" : "added"}!`);
     navigate({ to: "/" }); // Redirect to the Menu
   });
 
@@ -55,7 +70,7 @@ function Admin() {
       return; // If errors, stop here.
     }
     setStatus("submitting");
-    addFoodMutation.mutate(food);
+    saveFoodMutation.mutate(food);
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -130,7 +145,7 @@ function Admin() {
         </fieldset>
 
         <button className="p-1 mt-4 border rounded bg-slate-300" type="submit">
-          Add Food
+          {foodId ? "Save" : "Add"} Food
         </button>
       </form>
     </>
