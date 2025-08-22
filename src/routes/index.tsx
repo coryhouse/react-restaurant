@@ -2,8 +2,9 @@ import { useState } from "react";
 import { type FoodTag, foodTags } from "../food";
 import { Card } from "../Card";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useDeleteFood, useFoods } from "../hooks/useFoods";
+import { foodMutations, foodQueries } from "../query-factories/foods";
 import { toast } from "sonner";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -13,10 +14,12 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [selectedTag, setSelectedTag] = useState<FoodTag | "">("");
 
-  const { data: foods, isLoading } = useFoods();
-  const { mutate: deleteFood } = useDeleteFood(() => {
-    toast.success("Food deleted");
-  });
+  const { data: foods, isLoading } = useQuery(foodQueries.getFoods());
+  const { mutate: deleteFood } = useMutation(
+    foodMutations.deleteFood(() => {
+      toast.success("Food deleted");
+    })
+  );
 
   if (isLoading) return <p>Loading...</p>;
   if (!foods) return <p>No foods found</p>;
