@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Food, type NewFood, foodSchema } from "../food";
+import ky from "ky";
 
 const baseUrl = "http://localhost:3001/foods";
 
@@ -7,13 +8,12 @@ const keys = {
   allFoods: ["foods"],
 };
 
-export function useGetFoodById(foodId?: string) {
+export function useGetFoodById(foodId?: number) {
   return useQuery({
     enabled: Boolean(foodId),
     queryKey: [...keys.allFoods, foodId],
     queryFn: async () => {
-      const resp = await fetch(baseUrl + "/" + foodId);
-      const json = await resp.json();
+      const json = await ky.get(`${baseUrl}/${foodId}`).json();
       return foodSchema.parse(json);
     },
   });
@@ -23,10 +23,8 @@ export function useFoods() {
   return useQuery({
     queryKey: keys.allFoods,
     queryFn: async () => {
-      const resp = await fetch(baseUrl);
-      const json = await resp.json();
-      const foods = foodSchema.array().parse(json);
-      return foods;
+      const json = await ky.get(baseUrl).json();
+      return foodSchema.array().parse(json);
     },
   });
 }
@@ -35,9 +33,7 @@ export function useDeleteFood(onSuccess: () => void) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (foodId: number) => {
-      fetch(baseUrl + "/" + foodId, {
-        method: "DELETE",
-      });
+      ky.delete(`${baseUrl}/${foodId}`);
     },
     onSuccess,
     onSettled: () => {
@@ -47,37 +43,14 @@ export function useDeleteFood(onSuccess: () => void) {
   });
 }
 
-export function useAddFood(onSuccess: () => void) {
+export function useSaveFood(onSuccess: () => void) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (food: NewFood) => {
-      return fetch(baseUrl, {
-        method: "POST",
-        body: JSON.stringify(food),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    },
-    onSuccess,
-    onSettled: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: keys.allFoods });
-    },
-  });
-}
-
-export function useUpdateFood(onSuccess: () => void) {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (food: Food) => {
-      return fetch(baseUrl + "/" + food.id, {
-        method: "PUT",
-        body: JSON.stringify(food),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    mutationFn: async (food: NewFood | Food) => {
+      const body = { json: food };
+      return "id" in food
+        ? ky.put(`${baseUrl}/${food.id}`, body).json()
+        : ky.post(baseUrl, body).json();
     },
     onSuccess,
     onSettled: () => {
