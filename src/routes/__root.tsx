@@ -5,6 +5,7 @@ export const Route = createRootRoute({
   errorComponent: (props) => (
     <div>Oops! Something went wrong: {props.error.message}</div>
   ),
+  notFoundComponent: () => <h1>Oops! That page doesn't exist.</h1>,
   component: () => (
     <>
       <nav className="flex gap-2 p-2">
