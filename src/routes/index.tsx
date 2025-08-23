@@ -4,14 +4,13 @@ import { Card } from "../Card";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { foodMutations, foodQueries } from "../query-factories/foods";
 import { toast } from "sonner";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
-
-const queryClient = new QueryClient();
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/")({
   component: Index,
   errorComponent: () => <div>Oops! Failed to load the menu.</div>,
-  loader: () => queryClient.ensureQueryData(foodQueries.getFoods()),
+  loader: ({ context: { queryClient } }) =>
+    queryClient.ensureQueryData(foodQueries.getFoods()),
 });
 
 function Index() {
@@ -65,8 +64,8 @@ function Index() {
                 <h2>{food.name}</h2>
                 <Link
                   className="px-2 py-1 mr-2 text-white bg-blue-600 rounded"
-                  to={"/admin"}
-                  search={{ foodId: food.id }}
+                  to="/admin/$foodId"
+                  params={{ foodId: food.id }}
                 >
                   Edit
                 </Link>
