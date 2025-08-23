@@ -11,8 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminIndexRouteImport } from './routes/admin.index'
-import { Route as AdminFoodIdRouteImport } from './routes/admin.$foodId'
+import { Route as AdminChar123FoodIdChar125RouteImport } from './routes/admin.{-$foodId}'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -24,49 +23,41 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/admin/',
-  path: '/admin/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminFoodIdRoute = AdminFoodIdRouteImport.update({
-  id: '/admin/$foodId',
-  path: '/admin/$foodId',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const AdminChar123FoodIdChar125Route =
+  AdminChar123FoodIdChar125RouteImport.update({
+    id: '/admin/{-$foodId}',
+    path: '/admin/{-$foodId}',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/admin/$foodId': typeof AdminFoodIdRoute
-  '/admin': typeof AdminIndexRoute
+  '/admin/{-$foodId}': typeof AdminChar123FoodIdChar125Route
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/admin/$foodId': typeof AdminFoodIdRoute
-  '/admin': typeof AdminIndexRoute
+  '/admin/{-$foodId}': typeof AdminChar123FoodIdChar125Route
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/admin/$foodId': typeof AdminFoodIdRoute
-  '/admin/': typeof AdminIndexRoute
+  '/admin/{-$foodId}': typeof AdminChar123FoodIdChar125Route
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/admin/$foodId' | '/admin'
+  fullPaths: '/' | '/about' | '/admin/{-$foodId}'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/admin/$foodId' | '/admin'
-  id: '__root__' | '/' | '/about' | '/admin/$foodId' | '/admin/'
+  to: '/' | '/about' | '/admin/{-$foodId}'
+  id: '__root__' | '/' | '/about' | '/admin/{-$foodId}'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  AdminFoodIdRoute: typeof AdminFoodIdRoute
-  AdminIndexRoute: typeof AdminIndexRoute
+  AdminChar123FoodIdChar125Route: typeof AdminChar123FoodIdChar125Route
 }
 
 declare module '@tanstack/react-router' {
@@ -85,18 +76,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/': {
-      id: '/admin/'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/$foodId': {
-      id: '/admin/$foodId'
-      path: '/admin/$foodId'
-      fullPath: '/admin/$foodId'
-      preLoaderRoute: typeof AdminFoodIdRouteImport
+    '/admin/{-$foodId}': {
+      id: '/admin/{-$foodId}'
+      path: '/admin/{-$foodId}'
+      fullPath: '/admin/{-$foodId}'
+      preLoaderRoute: typeof AdminChar123FoodIdChar125RouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -105,8 +89,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  AdminFoodIdRoute: AdminFoodIdRoute,
-  AdminIndexRoute: AdminIndexRoute,
+  AdminChar123FoodIdChar125Route: AdminChar123FoodIdChar125Route,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
