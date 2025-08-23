@@ -1,3 +1,4 @@
+// This component is shared between the admin index and admin $foodId routes.
 import { useEffect, useState } from "react";
 import { type Food, type NewFood, foodTags } from "../food";
 import { Input } from "../shared/Input";
@@ -5,19 +6,21 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { ErrorMessage } from "../shared/ErrorMessage";
 import { foodMutations, foodQueries } from "../query-factories/foods";
-import z from "zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import type { Status } from "../types/status.types";
+import { z } from "zod";
 
-const searchParamsSchema = z.object({
-  foodId: z.string().optional(),
-});
-
-export const Route = createFileRoute("/admin")({
+export const Route = createFileRoute("/admin/{-$foodId}")({
+  params: {
+    parse: (params) => ({
+      foodId: z.string().optional().parse(params.foodId),
+    }),
+  },
   component: Admin,
-  validateSearch: searchParamsSchema,
+  loader: ({ context: { queryClient }, params: { foodId } }) => {
+    if (foodId) queryClient.ensureQueryData(foodQueries.getFoodById(foodId));
+  },
 });
-
-export type Status = "idle" | "submitted" | "submitting";
 
 const newFood: NewFood = {
   description: "",
@@ -39,7 +42,7 @@ function Admin() {
   const [food, setFood] = useState<Food | NewFood>(newFood);
   const [status, setStatus] = useState<Status>("idle");
   const navigate = useNavigate();
-  const { foodId } = Route.useSearch();
+  const { foodId } = Route.useParams();
   const { data: existingFood } = useQuery({
     ...foodQueries.getFoodById(foodId),
     enabled: !!foodId,
