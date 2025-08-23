@@ -50,9 +50,13 @@ function Admin() {
 
   useEffect(
     function populateForm() {
-      if (existingFood) setFood(existingFood);
+      if (existingFood) {
+        setFood(existingFood);
+      } else if (!foodId) {
+        setFood(newFood);
+      }
     },
-    [existingFood]
+    [existingFood, foodId]
   );
 
   const { mutate: saveFood } = useMutation(
