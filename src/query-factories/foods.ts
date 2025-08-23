@@ -9,12 +9,21 @@ const keys = {
   allFoods: ["foods"],
 };
 
+export class FoodNotFoundError extends Error {}
+
 export const foodQueries = {
   getFoodById: (foodId?: string) =>
     queryOptions({
       queryKey: [...keys.allFoods, foodId],
       queryFn: async () => {
-        const json = await ky.get(`${baseUrl}/${foodId}`).json();
+        const json = await ky
+          .get(`${baseUrl}/${foodId}`)
+          .json()
+          .catch((error) => {
+            if (error.response.status === 404)
+              throw new FoodNotFoundError("Food not found");
+            throw new Error("Failed to fetch food");
+          });
         return foodSchema.parse(json);
       },
     }),
