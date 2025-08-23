@@ -64,7 +64,7 @@ function Index() {
                 <h2>{food.name}</h2>
                 <Link
                   className="px-2 py-1 mr-2 text-white bg-blue-600 rounded"
-                  to="/admin/$foodId"
+                  to="/admin/{-$foodId}"
                   params={{ foodId: food.id }}
                 >
                   Edit
