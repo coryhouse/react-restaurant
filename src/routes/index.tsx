@@ -4,11 +4,14 @@ import { Card } from "../Card";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { foodMutations, foodQueries } from "../query-factories/foods";
 import { toast } from "sonner";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export const Route = createFileRoute("/")({
   component: Index,
   errorComponent: () => <div>Oops! Failed to load the menu.</div>,
+  loader: () => queryClient.ensureQueryData(foodQueries.getFoods()),
 });
 
 function Index() {
