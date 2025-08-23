@@ -24,6 +24,12 @@ export const queryClient = new QueryClient({
   },
 });
 
+// Type router context so it can be referenced in root. Must be in sync with the context in the router below.
+export type MyRouterContext = {
+  queryClient: QueryClient;
+  defaultPreloadStaleTime: number;
+};
+
 // Create router instance
 const router = new Router({
   routeTree,
