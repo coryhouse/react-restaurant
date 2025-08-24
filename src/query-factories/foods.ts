@@ -43,7 +43,7 @@ export const foodMutations = {
     const queryClient = useQueryClient();
     return {
       mutationFn: async (foodId: string) => {
-        ky.delete(`${baseUrl}/${foodId}`);
+        await ky.delete(`${baseUrl}/${foodId}`);
       },
       onSuccess,
       onSettled: () => {
