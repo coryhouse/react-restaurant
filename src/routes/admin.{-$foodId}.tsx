@@ -90,7 +90,8 @@ function Admin() {
     // Functional form / callback form of set state.
     // Useful anytime we want to set state based on existing state.
     // Using the computed property syntax to set a property using a variable.
-    setFood((prev) => ({ ...prev, [event.target.id]: event.target.value }));
+    const value = event.target.id === 'price' ? Number(event.target.value) : event.target.value;
+    setFood((prev) => ({ ...prev, [event.target.id]: value }));
   }
 
   return (
