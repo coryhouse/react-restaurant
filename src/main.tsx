@@ -13,6 +13,7 @@ import { QueryClient } from "@tanstack/query-core";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
 import { createCollection } from "@tanstack/react-db";
 import { foodSchema } from "./food";
+import ky from "ky";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,14 +31,14 @@ export const queryClient = new QueryClient({
 
 const baseUrl = "http://localhost:3001/foods";
 
+export class FoodNotFoundError extends Error {}
+
 export const foodCollection = createCollection(
   queryCollectionOptions({
     queryClient,
     queryKey: ["foods"],
     queryFn: async () => {
-      const response = await fetch(baseUrl);
-      if (!response.ok) throw new Error("Failed to fetch foods");
-      const json = await response.json();
+      const json = await ky.get(baseUrl).json();
       return foodSchema.array().parse(json);
     },
     getKey: (item) => item.id,
@@ -45,30 +46,15 @@ export const foodCollection = createCollection(
     // Handle all CRUD operations
     onInsert: async ({ transaction }) => {
       const { changes: newFood } = transaction.mutations[0];
-      const response = await fetch(baseUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newFood),
-      });
-      if (!response.ok) throw new Error("Failed to create food");
+      return await ky.post(baseUrl, { json: newFood });
     },
     onUpdate: async ({ transaction }) => {
-      debugger;
       const { original, modified } = transaction.mutations[0];
-      const response = await fetch(`${baseUrl}/${original.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(modified),
-      });
-      debugger;
-      if (!response.ok) throw new Error("Failed to update food");
+      return await ky.put(`${baseUrl}/${original.id}`, { json: modified });
     },
     onDelete: async ({ transaction }) => {
       const { key } = transaction.mutations[0];
-      const response = await fetch(`${baseUrl}/${key}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error("Failed to delete food");
+      return await ky.delete(`${baseUrl}/${key}`);
     },
   })
 );
