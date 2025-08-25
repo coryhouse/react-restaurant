@@ -3,12 +3,11 @@ import { useEffect, useState } from "react";
 import { type Food, type NewFood, foodTags } from "../food";
 import { Input } from "../shared/Input";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { toast } from "sonner";
 import { ErrorMessage } from "../shared/ErrorMessage";
-import { foodMutations, foodQueries } from "../query-factories/foods";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useLiveQuery } from "@tanstack/react-db";
 import type { Status } from "../types/status.types";
 import { z } from "zod";
+import { foodCollection } from "../main";
 
 export const Route = createFileRoute("/admin/{-$foodId}")({
   params: {
@@ -17,9 +16,6 @@ export const Route = createFileRoute("/admin/{-$foodId}")({
     }),
   },
   component: Admin,
-  loader: ({ context: { queryClient }, params: { foodId } }) => {
-    if (foodId) queryClient.ensureQueryData(foodQueries.getFoodById(foodId));
-  },
 });
 
 const newFood: NewFood = {
@@ -43,27 +39,23 @@ function Admin() {
   const [status, setStatus] = useState<Status>("idle");
   const navigate = useNavigate();
   const { foodId } = Route.useParams();
-  const { data: existingFood } = useQuery({
-    ...foodQueries.getFoodById(foodId),
-    enabled: !!foodId,
-  });
+
+  const { data: existingFood } = useLiveQuery(foodCollection);
+
+  const foundFood =
+    existingFood && foodId
+      ? Array.from(existingFood.values()).find((f) => f.id === foodId)
+      : null;
 
   useEffect(
     function populateForm() {
-      if (existingFood) {
-        setFood(existingFood);
+      if (foundFood) {
+        setFood(foundFood);
       } else if (!foodId) {
         setFood(newFood);
       }
     },
-    [existingFood, foodId]
-  );
-
-  const { mutate: saveFood } = useMutation(
-    foodMutations.saveFood(() => {
-      toast.success(`Food ${"id" in food ? "saved" : "added"}!`);
-      navigate({ to: "/" }); // Redirect to the Menu
-    })
+    [foundFood, foodId]
   );
 
   const errors = validate();
@@ -83,14 +75,26 @@ function Admin() {
       return; // If errors, stop here.
     }
     setStatus("submitting");
-    saveFood(food);
+    try {
+      if ("id" in food) {
+        foodCollection.update(food.id, (draft) => ({ ...food, price: 42 }));
+      } else {
+        foodCollection.insert({ ...food, id: crypto.randomUUID() }); // add temporary client-side id
+      }
+      navigate({ to: "/" }); // Redirect to the Menu
+    } catch (error) {
+      setStatus("idle");
+    }
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
     // Functional form / callback form of set state.
     // Useful anytime we want to set state based on existing state.
     // Using the computed property syntax to set a property using a variable.
-    const value = event.target.id === 'price' ? Number(event.target.value) : event.target.value;
+    const value =
+      event.target.id === "price"
+        ? Number(event.target.value)
+        : event.target.value;
     setFood((prev) => ({ ...prev, [event.target.id]: value }));
   }
 
