@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import { type Food, type NewFood, foodTags } from "../food";
 import { Input } from "../shared/Input";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
 import { ErrorMessage } from "../shared/ErrorMessage";
-import { useLiveQuery } from "@tanstack/react-db";
+import { eq, useLiveQuery } from "@tanstack/react-db";
 import type { Status } from "../types/status.types";
 import { z } from "zod";
 import { foodCollection } from "../main";
@@ -16,6 +16,7 @@ export const Route = createFileRoute("/admin/{-$foodId}")({
     }),
   },
   component: Admin,
+  notFoundComponent: () => <h1>Food not found</h1>,
 });
 
 const newFood: NewFood = {
@@ -40,17 +41,20 @@ function Admin() {
   const navigate = useNavigate();
   const { foodId } = Route.useParams();
 
-  const { data: existingFood } = useLiveQuery(foodCollection);
+  const { data: existingFood } = useLiveQuery((q) =>
+    q.from({ food: foodCollection }).where(({ food }) => eq(food.id, foodId))
+  );
 
-  const foundFood =
-    existingFood && foodId
-      ? Array.from(existingFood.values()).find((f) => f.id === foodId)
-      : null;
+  const foundFood = !!foodId && existingFood.length === 1;
+
+  if (foodId && !foundFood) {
+    throw notFound(); //tanstack.com/router/latest/docs/framework/react/guide/not-found-errors#throwing-your-own-notfound-errors
+  }
 
   useEffect(
     function populateForm() {
       if (foundFood) {
-        setFood(foundFood);
+        setFood(existingFood[0]);
       } else if (!foodId) {
         setFood(newFood);
       }
