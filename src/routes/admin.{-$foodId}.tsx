@@ -8,6 +8,7 @@ import { eq, useLiveQuery } from "@tanstack/react-db";
 import type { Status } from "../types/status.types";
 import { z } from "zod";
 import { foodCollection } from "../main";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/{-$foodId}")({
   params: {
@@ -82,8 +83,10 @@ function Admin() {
     try {
       if ("id" in food) {
         foodCollection.update(food.id, (draft) => ({ ...food, price: 42 }));
+        toast.success("Food updated!");
       } else {
         foodCollection.insert({ ...food, id: crypto.randomUUID() }); // add temporary client-side id
+        toast.success("Food added!");
       }
       navigate({ to: "/" }); // Redirect to the Menu
     } catch (error) {
