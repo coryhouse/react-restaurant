@@ -20,7 +20,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         <Link to="/" className="[&.active]:font-bold">
           Menu
         </Link>{" "}
-        <Link to="/admin" className="[&.active]:font-bold">
+        <Link
+          to="/admin/{-$foodId}"
+          params={{ foodId: undefined }}
+          className="[&.active]:font-bold"
+        >
           Admin
         </Link>{" "}
         <Link to="/about" className="[&.active]:font-bold">
