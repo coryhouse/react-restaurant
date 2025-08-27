@@ -82,7 +82,13 @@ function Admin() {
     setStatus("submitting");
     try {
       if ("id" in food) {
-        foodCollection.update(food.id, (draft) => ({ ...food, price: 42 }));
+        // Instantly applies optimistic state, then syncs to server
+        foodCollection.update(food.id, (draft) => {
+          draft.name = food.name;
+          draft.description = food.description;
+          draft.price = food.price;
+          draft.tags = food.tags;
+        });
         toast.success("Food updated!");
       } else {
         foodCollection.insert({ ...food, id: crypto.randomUUID() }); // add temporary client-side id
