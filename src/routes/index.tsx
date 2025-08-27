@@ -53,7 +53,15 @@ function Index() {
           <Card key={food.id}>
             <div className="flex justify-between">
               <div className="w-48">
-                <h2>{food.name}</h2>
+                <h2>
+                  <Link 
+                    to="/food/$foodId" 
+                    params={{ foodId: food.id }}
+                    className="text-blue-600 hover:text-blue-800 hover:underline"
+                  >
+                    {food.name}
+                  </Link>
+                </h2>
                 <Link
                   className="px-2 py-1 mr-2 text-white bg-blue-600 rounded"
                   to="/admin/{-$foodId}"
