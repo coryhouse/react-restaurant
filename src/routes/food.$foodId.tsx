@@ -11,7 +11,6 @@ export const Route = createFileRoute("/food/$foodId")({
     }),
   },
   component: FoodDetail,
-  notFoundComponent: () => <h1>Food not found</h1>,
 });
 
 function FoodDetail() {
@@ -25,9 +24,7 @@ function FoodDetail() {
 
   const food = foods.length > 0 ? foods[0] : null;
 
-  if (!food) {
-    throw notFound();
-  }
+  if (!food) throw notFound();
 
   return <FoodCard food={food} />;
 }
