@@ -1,10 +1,10 @@
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
 import { createCollection } from "@tanstack/react-db";
-import { queryClient } from "../main";
 import ky from "ky";
 import { foodSchema } from "../types/food.types";
+import { queryClient } from "../queryClient";
 
-const baseUrl = "http://localhost:3001/foods";
+const baseUrl = import.meta.env.VITE_API_URL + "/foods";
 
 export const foodCollection = createCollection(
   queryCollectionOptions({
@@ -16,6 +16,7 @@ export const foodCollection = createCollection(
     },
     getKey: (item) => item.id,
     schema: foodSchema, // Type the collection via Zod (so don't need to specify types elsewhere such as getKey)
+
     // Handle all CRUD operations
     onInsert: async ({ transaction }) => {
       const { changes: newFood } = transaction.mutations[0];
