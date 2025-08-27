@@ -52,7 +52,7 @@ export function FoodCard({ food, showActions = false }: FoodCardProps) {
             <span className="font-bold">Tags:</span> {food.tags.join(", ")}
           </div>
         </div>
-        <div className={showActions ? "w-36" : "w-48"}>
+        <div className={"ml-2 " + (showActions ? "w-36" : "w-80")}>
           <img
             className="w-full rounded"
             alt={food.name}
