@@ -31,7 +31,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         </Link>
       </nav>
       <hr />
-      <main>
+      <main className="p-2">
         <Outlet />
       </main>
       <TanStackRouterDevtools />
