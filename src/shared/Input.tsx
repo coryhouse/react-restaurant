@@ -49,7 +49,7 @@ export function Input({
   const [hasBeenTouched, setHasBeenTouched] = useState(false);
 
   return (
-    <div className={className}>
+    <div className={`mb-4 ${className}`}>
       <label htmlFor={id} className="block font-bold">
         {label}
       </label>
