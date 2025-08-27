@@ -3,12 +3,9 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider, Router } from "@tanstack/react-router";
 import "./index.css";
 import { ErrorBoundary } from "react-error-boundary";
-
-// Import the generated route tree
 import { routeTree } from "./routeTree.gen";
 import { Toaster } from "sonner";
 import { UserContextProvider } from "./UserContext";
-import { QueryClientProvider } from "@tanstack/react-query";
 import { QueryClient } from "@tanstack/query-core";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
 import { createCollection } from "@tanstack/react-db";
@@ -88,11 +85,9 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ErrorBoundary fallback={<div>Oops!</div>}>
       <Toaster richColors position="top-right" />
-      <QueryClientProvider client={queryClient}>
-        <UserContextProvider>
-          <RouterProvider router={router} />
-        </UserContextProvider>
-      </QueryClientProvider>
+      <UserContextProvider>
+        <RouterProvider router={router} />
+      </UserContextProvider>
     </ErrorBoundary>
   </StrictMode>
 );
