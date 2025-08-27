@@ -16,11 +16,7 @@ export function FoodCard({ food, showActions = false }: FoodCardProps) {
         <div className={showActions ? "w-48" : ""}>
           <h2 className={showActions ? "text-base" : "text-2xl font-bold mb-4"}>
             {showActions ? (
-              <Link
-                to="/food/$foodId"
-                params={{ foodId: food.id }}
-                className="text-blue-600 hover:text-blue-800 hover:underline"
-              >
+              <Link to="/food/$foodId" params={{ foodId: food.id }}>
                 {food.name}
               </Link>
             ) : (
