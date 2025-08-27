@@ -4,7 +4,7 @@ import { Card } from "../shared/Card";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useLiveQuery } from "@tanstack/react-db";
 import { toast } from "sonner";
-import { foodCollection } from "../main";
+import { foodCollection } from "../collections/foodCollection";
 
 export const Route = createFileRoute("/")({
   component: Index,

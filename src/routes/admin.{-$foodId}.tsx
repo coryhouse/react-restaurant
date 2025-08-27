@@ -7,8 +7,8 @@ import { ErrorMessage } from "../shared/ErrorMessage";
 import { eq, useLiveQuery } from "@tanstack/react-db";
 import type { Status } from "../types/status.types";
 import { z } from "zod";
-import { foodCollection } from "../main";
 import { toast } from "sonner";
+import { foodCollection } from "../collections/foodCollection";
 
 export const Route = createFileRoute("/admin/{-$foodId}")({
   params: {

@@ -1,0 +1,33 @@
+import { queryCollectionOptions } from "@tanstack/query-db-collection";
+import { createCollection } from "@tanstack/react-db";
+import { queryClient } from "../main";
+import ky from "ky";
+import { foodSchema } from "../types/food.types";
+
+const baseUrl = "http://localhost:3001/foods";
+
+export const foodCollection = createCollection(
+  queryCollectionOptions({
+    queryClient,
+    queryKey: ["foods"],
+    queryFn: async () => {
+      const json = await ky.get(baseUrl).json();
+      return foodSchema.array().parse(json);
+    },
+    getKey: (item) => item.id,
+    schema: foodSchema, // Type the collection via Zod (so don't need to specify types elsewhere such as getKey)
+    // Handle all CRUD operations
+    onInsert: async ({ transaction }) => {
+      const { changes: newFood } = transaction.mutations[0];
+      return await ky.post(baseUrl, { json: newFood });
+    },
+    onUpdate: async ({ transaction }) => {
+      const { original, modified } = transaction.mutations[0];
+      return await ky.put(`${baseUrl}/${original.id}`, { json: modified });
+    },
+    onDelete: async ({ transaction }) => {
+      const { key } = transaction.mutations[0];
+      return await ky.delete(`${baseUrl}/${key}`);
+    },
+  })
+);

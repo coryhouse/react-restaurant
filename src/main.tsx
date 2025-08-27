@@ -7,10 +7,6 @@ import { routeTree } from "./routeTree.gen";
 import { Toaster } from "sonner";
 import { UserContextProvider } from "./UserContext";
 import { QueryClient } from "@tanstack/query-core";
-import { queryCollectionOptions } from "@tanstack/query-db-collection";
-import { createCollection } from "@tanstack/react-db";
-import { foodSchema } from "./types/food.types";
-import ky from "ky";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,35 +22,7 @@ export const queryClient = new QueryClient({
   },
 });
 
-const baseUrl = "http://localhost:3001/foods";
-
 export class FoodNotFoundError extends Error {}
-
-export const foodCollection = createCollection(
-  queryCollectionOptions({
-    queryClient,
-    queryKey: ["foods"],
-    queryFn: async () => {
-      const json = await ky.get(baseUrl).json();
-      return foodSchema.array().parse(json);
-    },
-    getKey: (item) => item.id,
-    schema: foodSchema, // Type the collection via Zod (so don't need to specify types elsewhere such as getKey)
-    // Handle all CRUD operations
-    onInsert: async ({ transaction }) => {
-      const { changes: newFood } = transaction.mutations[0];
-      return await ky.post(baseUrl, { json: newFood });
-    },
-    onUpdate: async ({ transaction }) => {
-      const { original, modified } = transaction.mutations[0];
-      return await ky.put(`${baseUrl}/${original.id}`, { json: modified });
-    },
-    onDelete: async ({ transaction }) => {
-      const { key } = transaction.mutations[0];
-      return await ky.delete(`${baseUrl}/${key}`);
-    },
-  })
-);
 
 // Type router context so it can be referenced in root. Must be in sync with the context in the router below.
 export type MyRouterContext = {
