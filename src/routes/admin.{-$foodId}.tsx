@@ -1,6 +1,6 @@
 // This component is shared between the admin index and admin $foodId routes.
 import { useEffect, useState } from "react";
-import { type Food, type NewFood, foodTags } from "../food";
+import { type Food, type NewFood, foodTags } from "../types/food.types";
 import { Input } from "../shared/Input";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
@@ -90,7 +90,10 @@ function Admin() {
     // Functional form / callback form of set state.
     // Useful anytime we want to set state based on existing state.
     // Using the computed property syntax to set a property using a variable.
-    const value = event.target.id === 'price' ? Number(event.target.value) : event.target.value;
+    const value =
+      event.target.id === "price"
+        ? Number(event.target.value)
+        : event.target.value;
     setFood((prev) => ({ ...prev, [event.target.id]: value }));
   }
 

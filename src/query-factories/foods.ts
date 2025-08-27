@@ -1,6 +1,6 @@
 // This file contains reusable Tanstack Query QueryOptions. See here: https://tkdodo.eu/blog/the-query-options-api
 import { queryOptions, useQueryClient } from "@tanstack/react-query";
-import { type Food, type NewFood, foodSchema } from "../food";
+import { type Food, type NewFood, foodSchema } from "../types/food.types";
 import ky from "ky";
 
 const baseUrl = "http://localhost:3001/foods";
