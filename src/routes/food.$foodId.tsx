@@ -1,5 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { Card } from "../shared/Card";
+import { FoodCard } from "../shared/FoodCard";
 import { eq, useLiveQuery } from "@tanstack/react-db";
 import { z } from "zod";
 import { foodCollection } from "../collections/foodCollection";
@@ -29,27 +29,5 @@ function FoodDetail() {
     throw notFound();
   }
 
-  return (
-    <div>
-      <Card>
-        <div className="flex justify-between">
-          <div className="w-64">
-            <h2 className="text-2xl font-bold mb-4">{food.name}</h2>
-            <p className="mb-4">{food.description}</p>
-            <p className="text-xl font-bold mb-4">${food.price}</p>
-            <div>
-              <span className="font-bold">Tags:</span> {food.tags.join(", ")}
-            </div>
-          </div>
-          <div className="w-48">
-            <img
-              className="w-full rounded"
-              alt={food.name}
-              src={`/images/${food.image}`}
-            />
-          </div>
-        </div>
-      </Card>
-    </div>
-  );
+  return <FoodCard food={food} />;
 }

@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { type FoodTag, foodTags } from "../types/food.types";
-import { Card } from "../shared/Card";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { FoodCard } from "../shared/FoodCard";
+import { createFileRoute } from "@tanstack/react-router";
 import { useLiveQuery } from "@tanstack/react-db";
-import { toast } from "sonner";
 import { foodCollection } from "../collections/foodCollection";
 
 export const Route = createFileRoute("/")({
@@ -50,51 +49,7 @@ function Index() {
       )}
       <div className="flex flex-wrap">
         {matchingFoods.map((food) => (
-          <Card key={food.id}>
-            <div className="flex justify-between">
-              <div className="w-48">
-                <h2>
-                  <Link 
-                    to="/food/$foodId" 
-                    params={{ foodId: food.id }}
-                    className="text-blue-600 hover:text-blue-800 hover:underline"
-                  >
-                    {food.name}
-                  </Link>
-                </h2>
-                <Link
-                  className="px-2 py-1 mr-2 text-white bg-blue-600 rounded"
-                  to="/admin/{-$foodId}"
-                  params={{ foodId: food.id }}
-                >
-                  Edit
-                </Link>
-                <button
-                  aria-label={"Delete " + food.name}
-                  className="text-red-500 hover:cursor-pointer"
-                  onClick={() => {
-                    foodCollection.delete(food.id);
-                    toast.success("Food deleted");
-                  }}
-                >
-                  Delete
-                </button>
-                <p>{food.description}</p>
-                <p>${food.price}</p>
-                <p>
-                  <span className="font-bold">Tags</span>:{" "}
-                  {food.tags.join(", ")}
-                </p>
-              </div>
-              <div className="w-36">
-                <img
-                  className="w-32 rounded"
-                  alt={food.name}
-                  src={`/images/${food.image}`}
-                />
-              </div>
-            </div>
-          </Card>
+          <FoodCard key={food.id} food={food} showActions={true} />
         ))}
       </div>
     </>
