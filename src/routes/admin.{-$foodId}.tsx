@@ -118,7 +118,6 @@ function Admin() {
           id="name"
           onChange={onChange}
           label="Name"
-          className="mb-4"
           error={errors.name}
           formStatus={status}
         />
@@ -128,7 +127,6 @@ function Admin() {
           id="description"
           onChange={onChange}
           label="Description"
-          className="mb-4"
           error={errors.description}
           formStatus={status}
         />
@@ -139,7 +137,6 @@ function Admin() {
           type="number"
           onChange={onChange}
           label="Price"
-          className="mb-4"
           error={errors.price}
           formStatus={status}
         />
