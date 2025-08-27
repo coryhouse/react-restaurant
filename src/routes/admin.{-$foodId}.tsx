@@ -84,10 +84,8 @@ function Admin() {
       if ("id" in food) {
         // Instantly applies optimistic state, then syncs to server
         foodCollection.update(food.id, (draft) => {
-          draft.name = food.name;
-          draft.description = food.description;
-          draft.price = food.price;
-          draft.tags = food.tags;
+          // set all properties on draft to match food
+          Object.assign(draft, food);
         });
         toast.success("Food updated!");
       } else {
