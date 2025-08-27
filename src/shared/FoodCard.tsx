@@ -13,7 +13,7 @@ export function FoodCard({ food, showActions = false }: FoodCardProps) {
   return (
     <Card>
       <div className="flex justify-between">
-        <div className={showActions ? "w-48" : "w-64"}>
+        <div className={showActions ? "w-48" : ""}>
           <h2 className={showActions ? "text-base" : "text-2xl font-bold mb-4"}>
             {showActions ? (
               <Link
