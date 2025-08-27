@@ -10,14 +10,14 @@ export const foodCollection = createCollection(
   queryCollectionOptions({
     queryClient,
     queryKey: ["foods"],
+    getKey: (item) => item.id,
+    schema: foodSchema, // Type the collection via Zod (so don't need to specify types elsewhere such as getKey)
+
+    // Handle all CRUD operations. The read is named queryFn (inspired by Tanstack Query)
     queryFn: async () => {
       const json = await ky.get(baseUrl).json();
       return foodSchema.array().parse(json);
     },
-    getKey: (item) => item.id,
-    schema: foodSchema, // Type the collection via Zod (so don't need to specify types elsewhere such as getKey)
-
-    // Handle all CRUD operations
     onInsert: async ({ transaction }) => {
       const { changes: newFood } = transaction.mutations[0];
       return await ky.post(baseUrl, { json: newFood });
