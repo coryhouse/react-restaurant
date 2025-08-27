@@ -21,10 +21,6 @@ function FoodDetail() {
   );
 
   if (isLoading) return <p>Loading...</p>;
-
-  const food = foods.length > 0 ? foods[0] : null;
-
-  if (!food) throw notFound();
-
-  return <FoodCard food={food} />;
+  if (foods.length === 0) throw notFound();
+  return <FoodCard food={foods[0]} />;
 }
