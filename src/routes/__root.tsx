@@ -4,7 +4,7 @@ import {
   Outlet,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import type { MyRouterContext } from "../main";
+import type { MyRouterContext } from "../Router";
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   errorComponent: (props) => (
