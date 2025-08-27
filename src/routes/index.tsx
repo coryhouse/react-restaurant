@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { type FoodTag, foodTags } from "../food";
+import { type FoodTag, foodTags } from "../types/food.types";
 import { Card } from "../Card";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useLiveQuery } from "@tanstack/react-db";

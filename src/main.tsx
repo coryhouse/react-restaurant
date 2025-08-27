@@ -12,7 +12,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { QueryClient } from "@tanstack/query-core";
 import { queryCollectionOptions } from "@tanstack/query-db-collection";
 import { createCollection } from "@tanstack/react-db";
-import { foodSchema } from "./food";
+import { foodSchema } from "./types/food.types";
 import ky from "ky";
 
 export const queryClient = new QueryClient({

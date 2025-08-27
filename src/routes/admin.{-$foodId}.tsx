@@ -1,6 +1,6 @@
 // This component is shared between the admin index and admin $foodId routes.
 import { useEffect, useState } from "react";
-import { type Food, type NewFood, foodTags } from "../food";
+import { type Food, type NewFood, foodTags } from "../types/food.types";
 import { Input } from "../shared/Input";
 import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
 import { ErrorMessage } from "../shared/ErrorMessage";
