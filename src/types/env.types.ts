@@ -2,7 +2,7 @@ import { z } from "zod";
 
 // Define the schema for your environment variables
 const envSchema = z.object({
-  API_URL: z.url(),
+  VITE_API_URL: z.url(),
 });
 
 // Parse and validate environment variables

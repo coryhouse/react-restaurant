@@ -5,7 +5,7 @@ import { foodSchema } from "../types/food.types";
 import { queryClient } from "../queryClient";
 import { env } from "../types/env.types";
 
-const baseUrl = env.API_URL + "/foods";
+const baseUrl = env.VITE_API_URL + "/foods";
 
 export const foodCollection = createCollection(
   queryCollectionOptions({
