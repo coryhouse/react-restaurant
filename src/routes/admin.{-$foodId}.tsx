@@ -54,13 +54,13 @@ function Admin() {
 
   useEffect(
     function populateForm() {
-      if (foundFood) {
+      if (foundFood && existingFood.length === 1) {
         setFood(existingFood[0]);
       } else if (!foodId) {
         setFood(newFood);
       }
     },
-    [foundFood, foodId]
+    [foundFood, foodId, existingFood]
   );
 
   const errors = validate();
@@ -93,7 +93,7 @@ function Admin() {
         toast.success("Food added!");
       }
       navigate({ to: "/" }); // Redirect to the Menu
-    } catch (error) {
+    } catch {
       setStatus("idle");
     }
   }
