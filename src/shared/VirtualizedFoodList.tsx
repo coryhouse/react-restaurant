@@ -1,7 +1,7 @@
 import { FixedSizeGrid as Grid } from "react-window";
 import { FoodCard } from "./FoodCard";
 import type { Food } from "../types/food.types";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 type VirtualizedFoodListProps = {
   foods: Food[];
@@ -10,25 +10,50 @@ type VirtualizedFoodListProps = {
 };
 
 const CARD_WIDTH = 400; // Approximate width including margin
-const CARD_HEIGHT = 200; // Approximate height including margin
-const GRID_PADDING = 20;
+const CARD_HEIGHT = 350; // Increased height to accommodate all content
 
-export function VirtualizedFoodList({ 
-  foods, 
-  showActions = false, 
-  isPending = false 
+export function VirtualizedFoodList({
+  foods,
+  showActions = false,
+  isPending = false,
 }: VirtualizedFoodListProps) {
-  const containerWidth = typeof window !== 'undefined' ? window.innerWidth - 40 : 800;
+  const [windowSize, setWindowSize] = useState({
+    width: typeof window !== "undefined" ? window.innerWidth : 800,
+    height: typeof window !== "undefined" ? window.innerHeight : 600,
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const containerWidth = windowSize.width - 40;
+  const containerHeight = Math.min(600, windowSize.height - 100); // Responsive height with max limit
   const columnsCount = Math.max(1, Math.floor(containerWidth / CARD_WIDTH));
   const rowsCount = Math.ceil(foods.length / columnsCount);
 
-  const itemData = useMemo(() => ({
-    foods,
-    columnsCount,
-    showActions
-  }), [foods, columnsCount, showActions]);
+  const itemData = useMemo(
+    () => ({
+      foods,
+      columnsCount,
+      showActions,
+    }),
+    [foods, columnsCount, showActions]
+  );
 
-  const Cell = ({ columnIndex, rowIndex, style, data }: {
+  const Cell = ({
+    columnIndex,
+    rowIndex,
+    style,
+    data,
+  }: {
     columnIndex: number;
     rowIndex: number;
     style: React.CSSProperties;
@@ -43,7 +68,7 @@ export function VirtualizedFoodList({
 
     return (
       <div style={style}>
-        <div style={{ padding: '8px' }}>
+        <div style={{ padding: "12px" }}>
           <FoodCard food={food} showActions={data.showActions} />
         </div>
       </div>
@@ -59,7 +84,7 @@ export function VirtualizedFoodList({
       <Grid
         columnCount={columnsCount}
         columnWidth={CARD_WIDTH}
-        height={600} // Fixed height for the container
+        height={containerHeight}
         rowCount={rowsCount}
         rowHeight={CARD_HEIGHT}
         width={containerWidth}
