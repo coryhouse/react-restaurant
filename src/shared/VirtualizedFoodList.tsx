@@ -11,6 +11,7 @@ type VirtualizedFoodListProps = {
 
 const CARD_WIDTH = 400; // Approximate width including margin
 const CARD_HEIGHT = 350; // Increased height to accommodate all content
+const MENU_HEIGHT = 200; // Height of the menu bar
 
 export function VirtualizedFoodList({
   foods,
@@ -35,7 +36,7 @@ export function VirtualizedFoodList({
   }, []);
 
   const containerWidth = windowSize.width - 40;
-  const containerHeight = Math.min(600, windowSize.height - 100); // Responsive height with max limit
+  const containerHeight = windowSize.height - MENU_HEIGHT;
   const columnsCount = Math.max(1, Math.floor(containerWidth / CARD_WIDTH));
   const rowsCount = Math.ceil(foods.length / columnsCount);
 
