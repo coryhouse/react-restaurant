@@ -1,5 +1,5 @@
-import type { Rating } from "../types/rating.types";
 import { eq, useLiveQuery } from "@tanstack/react-db";
+import type { Rating } from "../types/rating.types";
 import { ratingCollection } from "../collections/ratingCollection";
 
 type FoodRatingsProps = {
