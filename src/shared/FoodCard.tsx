@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
-import type { Food, FoodTag } from "../types/food.types";
 import { foodCollection } from "../collections/foodCollection";
+import type { Food, FoodTag } from "../types/food.types";
 import { Card } from "./Card";
 
 const tagIcons: Record<FoodTag, string> = {
@@ -24,7 +24,9 @@ type FoodCardProps = {
 export function FoodCard({ food, showActions = false }: FoodCardProps) {
   return (
     <Card>
-      <div className={`flex flex-col sm:flex-row gap-4 ${showActions ? 'h-80' : ''}`}>
+      <div
+        className={`flex flex-col sm:flex-row gap-4 ${showActions ? "h-80" : ""}`}
+      >
         <div className="flex-1 flex flex-col">
           <h2
             className={
@@ -72,7 +74,9 @@ export function FoodCard({ food, showActions = false }: FoodCardProps) {
             {food.description}
           </p>
 
-          <div className={`flex items-center justify-between ${showActions ? 'mt-auto' : ''}`}>
+          <div
+            className={`flex items-center justify-between ${showActions ? "mt-auto" : ""}`}
+          >
             <p
               className={`font-bold ${showActions ? "text-lg" : "text-xl"} text-green-600`}
             >

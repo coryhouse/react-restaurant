@@ -117,7 +117,9 @@ function Admin() {
             {foodId ? "Edit Food Item" : "Add New Food Item"}
           </h1>
           <p className="text-gray-600 mt-1">
-            {foodId ? "Update the details below to modify this food item." : "Fill in the details below to add a new item to the menu."}
+            {foodId
+              ? "Update the details below to modify this food item."
+              : "Fill in the details below to add a new item to the menu."}
           </p>
         </div>
 
@@ -155,13 +157,15 @@ function Admin() {
           />
 
           <fieldset className="space-y-3">
-            <legend className="text-sm font-medium text-gray-700">Food Categories</legend>
+            <legend className="text-sm font-medium text-gray-700">
+              Food Categories
+            </legend>
             {status === "submitted" && <ErrorMessage message={errors.tags} />}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {foodTags.map((tag) => {
                 const id = "tag-" + tag;
                 return (
-                  <label 
+                  <label
                     key={tag}
                     htmlFor={id}
                     className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
@@ -196,12 +200,16 @@ function Admin() {
             >
               Cancel
             </button>
-            <button 
+            <button
               type="submit"
               disabled={status === "submitting"}
               className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              {status === "submitting" ? "Saving..." : (foodId ? "Save Changes" : "Add Food Item")}
+              {status === "submitting"
+                ? "Saving..."
+                : foodId
+                  ? "Save Changes"
+                  : "Add Food Item"}
             </button>
           </div>
         </form>

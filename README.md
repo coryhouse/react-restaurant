@@ -1,11 +1,4 @@
-# React with Vite and Tanstack Router
-
-## TODO
-
-1. Add loading states
-2. React Router branch
-3. React Hook Form
-4. Use a third party component lib like MUI or Chakra UI
+# React Restaurant App
 
 # React + TypeScript + Vite
 

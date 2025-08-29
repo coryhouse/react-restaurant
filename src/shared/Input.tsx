@@ -8,22 +8,16 @@ type InputProps = {
 
   /** CSS class applied to the root wrapping div */
   className?: string;
-
   /** input label */
   label: string;
-
   /** input id */
   id: string;
-
   /** input onFocus */
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
-
   /** input onChange */
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-
   /** input type */
   type?: "text" | "number" | "phone" | "email" | "password";
-
   /** Error to display below the input */
   error?: string;
 
@@ -59,7 +53,10 @@ export function Input({
 
   return (
     <div className={className}>
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-2">
+      <label
+        htmlFor={id}
+        className="block text-sm font-medium text-gray-700 mb-2"
+      >
         {label}
       </label>
       <input
@@ -79,9 +76,7 @@ export function Input({
         }`}
         {...otherInputProps}
       />
-      <ErrorMessage
-        message={hasError ? error : undefined}
-      />
+      <ErrorMessage message={hasError ? error : undefined} />
     </div>
   );
 }

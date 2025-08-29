@@ -7,7 +7,8 @@ import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import type { MyRouterContext } from "../Router";
 import { ReactBistroLogo } from "../shared/ReactBistroLogo";
 
-const navLinkClassName = "text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors [&.active]:text-blue-600 [&.active]:font-semibold";
+const navLinkClassName =
+  "text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors [&.active]:text-blue-600 [&.active]:font-semibold";
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   errorComponent: (props) => (

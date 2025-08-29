@@ -4,6 +4,7 @@ import { FoodRatings } from "../shared/FoodRatings";
 import { eq, useLiveQuery } from "@tanstack/react-db";
 import { z } from "zod";
 import { foodCollection } from "../collections/foodCollection";
+import { FoodRatings } from "../shared/FoodRatings";
 
 export const Route = createFileRoute("/food/$foodId")({
   params: {
@@ -23,13 +24,10 @@ function FoodDetail() {
 
   if (isLoading) return <p>Loading...</p>;
   if (foods.length === 0) throw notFound();
-  
-  const food = foods[0];
-  
   return (
-    <div>
-      <FoodCard food={food} />
-      <FoodRatings foodId={food.id} />
-    </div>
+    <>
+      <FoodCard food={foods[0]} />
+      <FoodRatings foodId={foods[0].id} />
+    </>
   );
 }

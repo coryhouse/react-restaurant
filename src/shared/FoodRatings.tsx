@@ -1,6 +1,6 @@
+import type { Rating } from "../types/rating.types";
 import { eq, useLiveQuery } from "@tanstack/react-db";
 import { ratingCollection } from "../collections/ratingCollection";
-import type { Rating } from "../types/rating.types";
 
 type FoodRatingsProps = {
   foodId: string;
@@ -28,19 +28,19 @@ function RatingItem({ rating }: { rating: Rating }) {
         <StarRating rating={rating.rating} />
         <span className="text-sm text-gray-600">({rating.rating}/5)</span>
       </div>
-      {rating.comment && (
-        <p className="text-gray-700">{rating.comment}</p>
-      )}
+      {rating.comment && <p className="text-gray-700">{rating.comment}</p>}
     </div>
   );
 }
 
 export function FoodRatings({ foodId }: FoodRatingsProps) {
   const { data: ratings, isLoading } = useLiveQuery((q) =>
-    q.from({ rating: ratingCollection }).where(({ rating }) => eq(rating.foodId, foodId))
+    q
+      .from({ rating: ratingCollection })
+      .where(({ rating }) => eq(rating.foodId, foodId))
   );
 
-  if (isLoading) return <p>Loading ratings...</p>;
+  if (isLoading || !ratings) return <p>Loading ratings...</p>;
 
   if (ratings.length === 0) {
     return (
@@ -51,7 +51,8 @@ export function FoodRatings({ foodId }: FoodRatingsProps) {
     );
   }
 
-  const averageRating = ratings.reduce((sum, rating) => sum + rating.rating, 0) / ratings.length;
+  const averageRating =
+    ratings.reduce((sum, rating) => sum + rating.rating, 0) / ratings.length;
 
   return (
     <div className="mt-8 p-4">
@@ -59,8 +60,12 @@ export function FoodRatings({ foodId }: FoodRatingsProps) {
       <div className="mb-6 p-4 bg-gray-50 rounded-lg">
         <div className="flex items-center gap-3 mb-2">
           <StarRating rating={Math.round(averageRating)} />
-          <span className="text-lg font-semibold">{averageRating.toFixed(1)}/5</span>
-          <span className="text-gray-600">({ratings.length} review{ratings.length > 1 ? 's' : ''})</span>
+          <span className="text-lg font-semibold">
+            {averageRating.toFixed(1)}/5
+          </span>
+          <span className="text-gray-600">
+            ({ratings.length} review{ratings.length > 1 ? "s" : ""})
+          </span>
         </div>
       </div>
       <div className="space-y-0">
