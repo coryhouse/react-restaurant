@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { foodCollection } from "../collections/foodCollection";
 import type { Food, FoodTag } from "../types/food.types";
 import { Card } from "./Card";
+import { foodCollection } from "../collections/foodCollection";
 
 const tagIcons: Record<FoodTag, string> = {
   Breakfast: "🥞",

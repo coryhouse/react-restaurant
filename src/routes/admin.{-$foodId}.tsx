@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { type Food, type NewFood, foodTags } from "../types/food.types";
 import { Input } from "../shared/Input";
 import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { ErrorMessage } from "../shared/ErrorMessage";
+import { foodCollection } from "../collections/foodCollection";
 import { eq, useLiveQuery } from "@tanstack/react-db";
 import type { Status } from "../types/status.types";
 import { z } from "zod";
-import { toast } from "sonner";
-import { foodCollection } from "../collections/foodCollection";
 
 export const Route = createFileRoute("/admin/{-$foodId}")({
   params: {
@@ -17,7 +17,6 @@ export const Route = createFileRoute("/admin/{-$foodId}")({
     }),
   },
   component: Admin,
-  notFoundComponent: () => <h1>Food not found</h1>,
 });
 
 const newFood: NewFood = {
@@ -81,17 +80,15 @@ function Admin() {
     }
     setStatus("submitting");
     try {
+      // Instantly applies optimistic state, then syncs to server
       if ("id" in food) {
-        // Instantly applies optimistic state, then syncs to server
         foodCollection.update(food.id, (draft) => {
-          // set all properties on draft to match food
-          Object.assign(draft, food);
+          Object.assign(draft, food); // set all properties on draft to match food
         });
-        toast.success("Food updated!");
       } else {
         foodCollection.insert({ ...food, id: crypto.randomUUID() }); // add temporary client-side id
-        toast.success("Food added!");
       }
+      toast.success(`Food ${"id" in food ? "saved" : "added"}!`);
       navigate({ to: "/" }); // Redirect to the Menu
     } catch {
       setStatus("idle");

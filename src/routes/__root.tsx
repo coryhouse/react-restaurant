@@ -14,9 +14,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   errorComponent: (props) => (
     <div>Oops! Something went wrong: {props.error.message}</div>
   ),
-  notFoundComponent: () => (
-    <h1>Oops! That page doesn't exist. (root route 404)</h1>
-  ),
+  notFoundComponent: () => <h1>Oops! That page doesn't exist.</h1>,
   component: () => (
     <>
       <nav className="bg-white shadow-sm border-b border-gray-200">

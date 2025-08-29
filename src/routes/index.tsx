@@ -4,7 +4,6 @@ import { VirtualizedFoodList } from "../shared/VirtualizedFoodList";
 import { createFileRoute } from "@tanstack/react-router";
 import { useLiveQuery } from "@tanstack/react-db";
 import { foodCollection } from "../collections/foodCollection";
-import { FoodCard } from "../shared/FoodCard";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -18,6 +17,7 @@ function Index() {
   const { data: foods, isLoading } = useLiveQuery(foodCollection);
 
   if (isLoading) return <p>Loading...</p>;
+  if (!foods) return <p>No foods found</p>;
 
   // Derived state
   const matchingFoods = foods.filter((food) => {
