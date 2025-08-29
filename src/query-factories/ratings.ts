@@ -11,7 +11,7 @@ const keys = {
 
 export class RatingNotFoundError extends Error {}
 
-export const foodQueries = {
+export const ratingQueries = {
   getRatingsByFoodId: (foodId?: string) =>
     queryOptions({
       queryKey: [...keys.allRatings, foodId],
@@ -24,7 +24,7 @@ export const foodQueries = {
               throw new RatingNotFoundError("Rating not found");
             throw new Error("Failed to fetch rating");
           });
-        return ratingSchema.parse(json);
+        return ratingSchema.array().parse(json);
       },
     }),
 };

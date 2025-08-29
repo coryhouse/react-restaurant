@@ -1,4 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import type { Rating } from "../types/rating.types";
+import { ratingQueries } from "../query-factories/ratings";
 
 type FoodRatingsProps = {
   foodId: string;
@@ -32,13 +34,11 @@ function RatingItem({ rating }: { rating: Rating }) {
 }
 
 export function FoodRatings({ foodId }: FoodRatingsProps) {
-  const { data: ratings, isLoading } = useLiveQuery((q) =>
-    q
-      .from({ rating: ratingCollection })
-      .where(({ rating }) => eq(rating.foodId, foodId))
+  const { data: ratings, isLoading } = useQuery(
+    ratingQueries.getRatingsByFoodId(foodId)
   );
 
-  if (isLoading) return <p>Loading ratings...</p>;
+  if (isLoading || !ratings) return <p>Loading ratings...</p>;
 
   if (ratings.length === 0) {
     return (
