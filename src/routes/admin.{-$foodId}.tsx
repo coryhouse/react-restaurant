@@ -114,11 +114,11 @@ function Admin() {
       <div className="bg-white shadow-sm rounded-lg border border-gray-200">
         <div className="px-6 py-4 border-b border-gray-200">
           <h1 className="text-2xl font-bold text-gray-900">
-            {foodId ? "Edit Food Item" : "Add New Food Item"}
+            {foodId ? "Edit Food" : "Add New Food"}
           </h1>
           <p className="text-gray-600 mt-1">
             {foodId
-              ? "Update the details below to modify this food item."
+              ? "Update the details below to modify this food."
               : "Fill in the details below to add a new item to the menu."}
           </p>
         </div>
@@ -157,9 +157,7 @@ function Admin() {
           />
 
           <fieldset className="space-y-3">
-            <legend className="text-sm font-medium text-gray-700">
-              Food Categories
-            </legend>
+            <legend className="text-sm font-medium text-gray-700">Tags</legend>
             {status === "submitted" && <ErrorMessage message={errors.tags} />}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {foodTags.map((tag) => {
@@ -168,7 +166,11 @@ function Admin() {
                   <label
                     key={tag}
                     htmlFor={id}
-                    className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                    className={`flex items-center space-x-2 p-3 border rounded-lg cursor-pointer transition-colors ${
+                      food.tags.some((foodTag) => foodTag === tag)
+                        ? "border-blue-300 bg-blue-50"
+                        : "border-gray-200 hover:bg-gray-50"
+                    }`}
                   >
                     <input
                       id={id}
@@ -209,7 +211,7 @@ function Admin() {
                 ? "Saving..."
                 : foodId
                   ? "Save Changes"
-                  : "Add Food Item"}
+                  : "Add Food"}
             </button>
           </div>
         </form>
