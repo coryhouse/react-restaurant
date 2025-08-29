@@ -1,13 +1,4 @@
-# React with Vite and Tanstack Router
-
-## TODO
-
-1. Switch to QueryOptions
-2. Handle 404 on Admin page with bad food id
-3. Add Tanstack DB
-4. React Router branch
-5. React Hook Form
-6. Use a third party component lib like MUI or Chakra UI
+# React Restaurant App
 
 # React + TypeScript + Vite
 
