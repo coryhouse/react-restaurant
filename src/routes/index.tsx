@@ -16,6 +16,7 @@ function Index() {
   const [searchText, setSearchText] = useState("");
 
   if (isLoading) return <p>Loading...</p>;
+  if (!foods) return <p>No foods found</p>;
 
   // Derived state
   const matchingFoods = foods.filter((food) => {
