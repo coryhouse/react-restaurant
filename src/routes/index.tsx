@@ -12,44 +12,83 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [selectedTag, setSelectedTag] = useState<FoodTag | "">("");
-
   const { data: foods, isLoading } = useLiveQuery(foodCollection);
+  const [searchText, setSearchText] = useState("");
 
   if (isLoading) return <p>Loading...</p>;
 
   // Derived state
-  const matchingFoods =
-    selectedTag === ""
-      ? foods
-      : foods.filter((food) => food.tags.includes(selectedTag));
+  const matchingFoods = foods.filter((food) => {
+    const matchesTag = selectedTag === "" || food.tags.includes(selectedTag);
+    const matchesSearch =
+      searchText === "" ||
+      food.name.toLowerCase().includes(searchText.toLowerCase()) ||
+      food.description.toLowerCase().includes(searchText.toLowerCase());
+    return matchesTag && matchesSearch;
+  });
 
   return (
     <>
-      <h1>Menu</h1>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-6">Our Menu</h1>
 
-      <label className="block font-bold" htmlFor="tag-filter">
-        Filter by tag
-      </label>
-      <select
-        id="tag-filter"
-        value={selectedTag}
-        onChange={(event) => setSelectedTag(event.target.value as FoodTag)}
-      >
-        <option value="">All</option>
-        {foodTags.map((tag) => (
-          <option key={tag}>{tag}</option>
-        ))}
-      </select>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label
+              className="block text-sm font-medium text-gray-700 mb-2"
+              htmlFor="tag-filter"
+            >
+              Filter by category
+            </label>
+            <select
+              id="tag-filter"
+              value={selectedTag}
+              onChange={(event) =>
+                setSelectedTag(event.target.value as FoodTag)
+              }
+              className="block w-full h-12 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">All categories</option>
+              {foodTags.map((tag) => (
+                <option key={tag} value={tag}>
+                  {tag}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      {selectedTag !== "" && (
-        <h2>
-          {matchingFoods.length} matching food{matchingFoods.length > 1 && "s"}{" "}
-          found:
-        </h2>
-      )}
-      <div className="flex flex-wrap">
+          <div>
+            <label
+              className="block text-sm font-medium text-gray-700 mb-2"
+              htmlFor="search-input"
+            >
+              Search menu
+            </label>
+            <input
+              id="search-input"
+              type="text"
+              value={searchText}
+              onChange={(event) => {
+                setSearchText(event.target.value);
+              }}
+              placeholder="Search by name or description..."
+              className="block w-full h-12 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+        </div>
+
+        {(selectedTag !== "" || searchText !== "") && (
+          <div className="mb-4 p-3 bg-blue-50 rounded-md">
+            <p className="text-blue-700 font-medium">
+              {matchingFoods.length} item{matchingFoods.length !== 1 && "s"}{" "}
+              found
+            </p>
+          </div>
+        )}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {matchingFoods.map((food) => (
-          <FoodCard key={food.id} food={food} showActions={true} />
+          <FoodCard key={food.id} food={food} showActions />
         ))}
       </div>
     </>
