@@ -10,7 +10,7 @@ type VirtualizedFoodListProps = {
 };
 
 const CARD_WIDTH = 400; // Approximate width including margin
-const CARD_HEIGHT = 350; // Increased height to accommodate all content
+const CARD_HEIGHT = 370; // Accommodate all content + row margin
 const MENU_HEIGHT = 200; // Height of the menu bar
 
 export function VirtualizedFoodList({
@@ -37,7 +37,10 @@ export function VirtualizedFoodList({
 
   const containerWidth = windowSize.width - 40;
   const containerHeight = windowSize.height - MENU_HEIGHT;
-  const columnsCount = Math.min(3, Math.max(1, Math.floor(containerWidth / CARD_WIDTH)));
+  const columnsCount = Math.min(
+    3,
+    Math.max(1, Math.floor(containerWidth / CARD_WIDTH))
+  );
   const rowsCount = Math.ceil(foods.length / columnsCount);
 
   const itemData = useMemo(
@@ -69,7 +72,7 @@ export function VirtualizedFoodList({
 
     return (
       <div style={style}>
-        <div style={{ padding: "12px" }}>
+        <div style={{ padding: "12px", paddingBottom: "20px" }}>
           <FoodCard food={food} showActions={data.showActions} />
         </div>
       </div>
