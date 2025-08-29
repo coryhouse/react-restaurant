@@ -6,6 +6,9 @@ import {
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import type { MyRouterContext } from "../Router";
 
+const navLinkClassName =
+  "text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors [&.active]:text-blue-600 [&.active]:font-semibold";
+
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   errorComponent: (props) => (
     <div>Oops! Something went wrong: {props.error.message}</div>
@@ -15,23 +18,31 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   ),
   component: () => (
     <>
-      <nav className="flex gap-2 p-2">
-        <Link to="/" className="[&.active]:font-bold">
-          Menu
-        </Link>{" "}
-        <Link
-          to="/admin/{-$foodId}"
-          params={{ foodId: undefined }}
-          className="[&.active]:font-bold"
-        >
-          Admin
-        </Link>{" "}
-        <Link to="/about" className="[&.active]:font-bold">
-          About
-        </Link>
+      <nav className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center space-x-8">
+              <ReactBistroLogo />
+              <div className="flex space-x-6">
+                <Link to="/" className={navLinkClassName}>
+                  Menu
+                </Link>
+                <Link
+                  to="/admin/{-$foodId}"
+                  params={{ foodId: undefined }}
+                  className={navLinkClassName}
+                >
+                  Admin
+                </Link>
+                <Link to="/about" className={navLinkClassName}>
+                  About
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </nav>
-      <hr />
-      <main className="p-2">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Outlet />
       </main>
       <TanStackRouterDevtools />

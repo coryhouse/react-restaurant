@@ -31,6 +31,7 @@ export function UserContextProvider({ children }: UserContextProviderProps) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useUserContext() {
   const context = useContext(UserContext);
   if (context === null) {
