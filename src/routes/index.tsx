@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { type FoodTag, foodTags } from "../types/food.types";
-import { FoodCard } from "../shared/FoodCard";
 import { createFileRoute } from "@tanstack/react-router";
 import { useLiveQuery } from "@tanstack/react-db";
 import { foodCollection } from "../collections/foodCollection";
+import { FoodCard } from "../shared/FoodCard";
 
 export const Route = createFileRoute("/")({
   component: Index,
