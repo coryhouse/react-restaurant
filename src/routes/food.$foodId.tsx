@@ -20,11 +20,12 @@ export const Route = createFileRoute("/food/$foodId")({
 function FoodDetail() {
   const { foodId } = Route.useParams();
 
-  const { data: existingFood } = useQuery({
+  const { data: existingFood, isLoading } = useQuery({
     ...foodQueries.getFoodById(foodId),
     enabled: !!foodId,
   });
 
+  if (isLoading) return <p>Loading...</p>;
   if (!existingFood) throw notFound();
 
   return (
