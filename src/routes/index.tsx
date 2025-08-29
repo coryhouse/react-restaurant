@@ -89,7 +89,7 @@ function Index() {
           </div>
         )}
       </div>
-      <div className="flex flex-wrap">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {matchingFoods.map((food) => (
           <FoodCard key={food.id} food={food} />
         ))}
