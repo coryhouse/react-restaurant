@@ -1,9 +1,9 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { FoodCard } from "../shared/FoodCard";
-import { FoodRatings } from "../shared/FoodRatings";
 import { eq, useLiveQuery } from "@tanstack/react-db";
 import { z } from "zod";
 import { foodCollection } from "../collections/foodCollection";
+import { FoodRatings } from "../shared/FoodRatings";
 
 export const Route = createFileRoute("/food/$foodId")({
   params: {
