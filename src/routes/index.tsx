@@ -1,9 +1,9 @@
 import { useState, useDeferredValue } from "react";
 import { type FoodTag, foodTags } from "../types/food.types";
-import { VirtualizedFoodList } from "../shared/VirtualizedFoodList";
 import { createFileRoute } from "@tanstack/react-router";
 import { useLiveQuery } from "@tanstack/react-db";
 import { foodCollection } from "../collections/foodCollection";
+import { VirtualizedFoodList } from "../shared/VirtualizedFoodList";
 
 export const Route = createFileRoute("/")({
   component: Index,
