@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { type FoodTag, foodTags } from "../types/food.types";
-import { Card } from "../shared/Card";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { foodMutations, foodQueries } from "../query-factories/foods";
-import { toast } from "sonner";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { foodQueries } from "../query-factories/foods";
+import { useQuery } from "@tanstack/react-query";
+import { FoodCard } from "../shared/FoodCard";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -15,83 +14,84 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [selectedTag, setSelectedTag] = useState<FoodTag | "">("");
-
+  const [searchText, setSearchText] = useState("");
   const { data: foods, isLoading } = useQuery(foodQueries.getFoods());
-  const { mutate: deleteFood } = useMutation(
-    foodMutations.deleteFood(() => {
-      toast.success("Food deleted");
-    })
-  );
 
   if (isLoading) return <p>Loading...</p>;
   if (!foods) return <p>No foods found</p>;
 
   // Derived state
-  const matchingFoods =
-    selectedTag === ""
-      ? foods
-      : foods.filter((food) => food.tags.includes(selectedTag));
+  const matchingFoods = foods.filter((food) => {
+    const matchesTag = selectedTag === "" || food.tags.includes(selectedTag);
+    const matchesSearch =
+      searchText === "" ||
+      food.name.toLowerCase().includes(searchText.toLowerCase()) ||
+      food.description.toLowerCase().includes(searchText.toLowerCase());
+    return matchesTag && matchesSearch;
+  });
 
   return (
     <>
-      <h1>Menu</h1>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-6">Our Menu</h1>
 
-      <label className="block font-bold" htmlFor="tag-filter">
-        Filter by tag
-      </label>
-      <select
-        id="tag-filter"
-        value={selectedTag}
-        onChange={(event) => setSelectedTag(event.target.value as FoodTag)}
-      >
-        <option value="">All</option>
-        {foodTags.map((tag) => (
-          <option key={tag}>{tag}</option>
-        ))}
-      </select>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label
+              className="block text-sm font-medium text-gray-700 mb-2"
+              htmlFor="tag-filter"
+            >
+              Filter by category
+            </label>
+            <select
+              id="tag-filter"
+              value={selectedTag}
+              onChange={(event) =>
+                setSelectedTag(event.target.value as FoodTag)
+              }
+              className="block w-full h-12 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">All categories</option>
+              {foodTags.map((tag) => (
+                <option key={tag} value={tag}>
+                  {tag}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      {selectedTag !== "" && (
-        <h2>
-          {matchingFoods.length} matching food{matchingFoods.length > 1 && "s"}{" "}
-          found:
-        </h2>
-      )}
+          <div>
+            <label
+              className="block text-sm font-medium text-gray-700 mb-2"
+              htmlFor="search-input"
+            >
+              Search menu
+            </label>
+            <input
+              id="search-input"
+              type="text"
+              value={searchText}
+              onChange={(event) => {
+                setSearchText(event.target.value);
+              }}
+              placeholder="Search by name or description..."
+              className="block w-full h-12 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+        </div>
+
+        {(selectedTag !== "" || searchText !== "") && (
+          <div className="mb-4 p-3 bg-blue-50 rounded-md">
+            <p className="text-blue-700 font-medium">
+              {matchingFoods.length} item{matchingFoods.length !== 1 && "s"}{" "}
+              found
+            </p>
+          </div>
+        )}
+      </div>
       <div className="flex flex-wrap">
         {matchingFoods.map((food) => (
-          <Card key={food.id}>
-            <div className="flex justify-between">
-              <div className="w-48">
-                <h2>{food.name}</h2>
-                <Link
-                  className="px-2 py-1 mr-2 text-white bg-blue-600 rounded"
-                  to="/admin/{-$foodId}"
-                  params={{ foodId: food.id }}
-                >
-                  Edit
-                </Link>
-                <button
-                  aria-label={"Delete " + food.name}
-                  className="text-red-500 hover:cursor-pointer"
-                  onClick={() => deleteFood(food.id)}
-                >
-                  Delete
-                </button>
-                <p>{food.description}</p>
-                <p>${food.price}</p>
-                <p>
-                  <span className="font-bold">Tags</span>:{" "}
-                  {food.tags.join(", ")}
-                </p>
-              </div>
-              <div className="w-36">
-                <img
-                  className="w-32 rounded"
-                  alt={food.name}
-                  src={`/images/${food.image}`}
-                />
-              </div>
-            </div>
-          </Card>
+          <FoodCard key={food.id} food={food} />
         ))}
       </div>
     </>
