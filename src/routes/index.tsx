@@ -12,8 +12,8 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [selectedTag, setSelectedTag] = useState<FoodTag | "">("");
-  const { data: foods, isLoading } = useLiveQuery(foodCollection);
   const [searchText, setSearchText] = useState("");
+  const { data: foods, isLoading } = useLiveQuery(foodCollection);
 
   if (isLoading) return <p>Loading...</p>;
   if (!foods) return <p>No foods found</p>;
