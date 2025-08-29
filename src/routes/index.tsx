@@ -31,42 +31,52 @@ function Index() {
 
   return (
     <>
-      <h1>Menu</h1>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-6">Our Menu</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="tag-filter">
+              Filter by category
+            </label>
+            <select
+              id="tag-filter"
+              value={selectedTag}
+              onChange={(event) => setSelectedTag(event.target.value as FoodTag)}
+              className="block w-full h-12 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">All categories</option>
+              {foodTags.map((tag) => (
+                <option key={tag} value={tag}>{tag}</option>
+              ))}
+            </select>
+          </div>
 
-      <label className="block font-bold" htmlFor="tag-filter">
-        Filter by tag
-      </label>
-      <select
-        id="tag-filter"
-        value={selectedTag}
-        onChange={(event) => setSelectedTag(event.target.value as FoodTag)}
-      >
-        <option value="">All</option>
-        {foodTags.map((tag) => (
-          <option key={tag}>{tag}</option>
-        ))}
-      </select>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="search-input">
+              Search menu
+            </label>
+            <input
+              id="search-input"
+              type="text"
+              value={searchText}
+              onChange={(event) => {
+                setSearchText(event.target.value);
+              }}
+              placeholder="Search by name or description..."
+              className="block w-full h-12 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+        </div>
 
-      <label className="block font-bold mt-4" htmlFor="search-input">
-        Search foods
-      </label>
-      <input
-        id="search-input"
-        type="text"
-        value={searchText}
-        onChange={(event) => {
-          setSearchText(event.target.value);
-        }}
-        placeholder="Search by name or description..."
-        className="block w-full p-2 border border-gray-300 rounded"
-      />
-
-      {(selectedTag !== "" || deferredSearchText !== "") && (
-        <h2 className="mt-2">
-          {matchingFoods.length} matching food{matchingFoods.length > 1 && "s"}{" "}
-          found:
-        </h2>
-      )}
+        {(selectedTag !== "" || deferredSearchText !== "") && (
+          <div className="mb-4 p-3 bg-blue-50 rounded-md">
+            <p className="text-blue-700 font-medium">
+              {matchingFoods.length} item{matchingFoods.length !== 1 && "s"} found
+            </p>
+          </div>
+        )}
+      </div>
 
       <VirtualizedFoodList
         foods={matchingFoods}
