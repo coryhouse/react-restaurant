@@ -10,8 +10,8 @@ type VirtualizedFoodListProps = {
 };
 
 const CARD_WIDTH = 400; // Approximate width including margin
-const CARD_HEIGHT = 370; // Accommodate all content + row margin
-const MENU_HEIGHT = 200; // Height of the menu bar
+const CARD_HEIGHT = 390; // Accommodate all content + row margin
+const MENU_HEIGHT = 300; // Height for navigation + menu header section
 
 export function VirtualizedFoodList({
   foods,
