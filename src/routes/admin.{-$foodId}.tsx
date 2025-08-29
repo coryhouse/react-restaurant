@@ -110,70 +110,102 @@ function Admin() {
   }
 
   return (
-    <>
-      <h1 className="p-2">Admin</h1>
-      <form className="p-2" onSubmit={handleSubmit}>
-        <Input
-          value={food.name}
-          id="name"
-          onChange={onChange}
-          label="Name"
-          error={errors.name}
-          formStatus={status}
-        />
+    <div className="max-w-2xl mx-auto">
+      <div className="bg-white shadow-sm rounded-lg border border-gray-200">
+        <div className="px-6 py-4 border-b border-gray-200">
+          <h1 className="text-2xl font-bold text-gray-900">
+            {foodId ? "Edit Food Item" : "Add New Food Item"}
+          </h1>
+          <p className="text-gray-600 mt-1">
+            {foodId ? "Update the details below to modify this food item." : "Fill in the details below to add a new item to the menu."}
+          </p>
+        </div>
 
-        <Input
-          value={food.description}
-          id="description"
-          onChange={onChange}
-          label="Description"
-          error={errors.description}
-          formStatus={status}
-        />
+        <form className="px-6 py-6 space-y-6" onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Input
+              value={food.name}
+              id="name"
+              onChange={onChange}
+              label="Name"
+              error={errors.name}
+              formStatus={status}
+            />
 
-        <Input
-          value={food.price}
-          id="price"
-          type="number"
-          onChange={onChange}
-          label="Price"
-          error={errors.price}
-          formStatus={status}
-        />
+            <Input
+              value={food.price}
+              id="price"
+              type="number"
+              step="0.01"
+              min="0"
+              onChange={onChange}
+              label="Price ($)"
+              error={errors.price}
+              formStatus={status}
+            />
+          </div>
 
-        <fieldset>
-          <legend className="font-bold">Tags</legend>
-          {status === "submitted" && <ErrorMessage message={errors.tags} />}
-          <ul>
-            {foodTags.map((tag) => {
-              const id = "tag-" + tag;
-              return (
-                <li key={tag}>
-                  <input
-                    id={id}
-                    type="checkbox"
-                    value={tag}
-                    checked={food.tags.some((foodTag) => foodTag === tag)}
-                    onChange={(event) => {
-                      setFood({
-                        ...food,
-                        tags: event.target.checked
-                          ? [...food.tags, tag]
-                          : food.tags.filter((t) => t !== tag),
-                      });
-                    }}
-                  />{" "}
-                  <label htmlFor={id}>{tag}</label>
-                </li>
-              );
-            })}
-          </ul>
-        </fieldset>
+          <Input
+            value={food.description}
+            id="description"
+            onChange={onChange}
+            label="Description"
+            error={errors.description}
+            formStatus={status}
+          />
 
-        <button className="p-1 mt-4 border rounded bg-slate-300" type="submit">
-          {foodId ? "Save" : "Add"} Food
-        </button>
-      </form>
-    </>
+          <fieldset className="space-y-3">
+            <legend className="text-sm font-medium text-gray-700">Food Categories</legend>
+            {status === "submitted" && <ErrorMessage message={errors.tags} />}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {foodTags.map((tag) => {
+                const id = "tag-" + tag;
+                return (
+                  <label 
+                    key={tag}
+                    htmlFor={id}
+                    className="flex items-center space-x-2 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                  >
+                    <input
+                      id={id}
+                      type="checkbox"
+                      value={tag}
+                      checked={food.tags.some((foodTag) => foodTag === tag)}
+                      onChange={(event) => {
+                        setFood({
+                          ...food,
+                          tags: event.target.checked
+                            ? [...food.tags, tag]
+                            : food.tags.filter((t) => t !== tag),
+                        });
+                      }}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                    <span className="text-sm text-gray-700">{tag}</span>
+                  </label>
+                );
+              })}
+            </div>
+          </fieldset>
+
+          <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+            <button
+              type="button"
+              onClick={() => navigate({ to: "/" })}
+              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+            >
+              Cancel
+            </button>
+            <button 
+              type="submit"
+              disabled={status === "submitting"}
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {status === "submitting" ? "Saving..." : (foodId ? "Save Changes" : "Add Food Item")}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }
