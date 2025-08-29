@@ -37,7 +37,7 @@ export function VirtualizedFoodList({
 
   const containerWidth = windowSize.width - 40;
   const containerHeight = windowSize.height - MENU_HEIGHT;
-  const columnsCount = Math.max(1, Math.floor(containerWidth / CARD_WIDTH));
+  const columnsCount = Math.min(3, Math.max(1, Math.floor(containerWidth / CARD_WIDTH)));
   const rowsCount = Math.ceil(foods.length / columnsCount);
 
   const itemData = useMemo(
