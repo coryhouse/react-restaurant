@@ -60,3 +60,4 @@ This is a React restaurant menu application built with modern TypeScript tooling
 - Images are served statically from `public/images/`
 - Toast notifications use Sonner library
 - The app includes React Query Devtools and TanStack Router Devtools for debugging
+- After adding any new feature, add a Playwright test, or enhance an existing one.
