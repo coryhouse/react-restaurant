@@ -17,7 +17,7 @@ function Index() {
   const [searchText, setSearchText] = useState("");
   const { data: foods, isLoading } = useQuery(foodQueries.getFoods());
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Spinner />;
   if (!foods) return <p>No foods found</p>;
 
   // Derived state
