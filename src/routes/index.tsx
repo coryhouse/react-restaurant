@@ -4,6 +4,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { foodQueries } from "../query-factories/foods";
 import { useQuery } from "@tanstack/react-query";
 import { FoodCard } from "../shared/FoodCard";
+import Spinner from "../shared/Spinner";
 
 export const Route = createFileRoute("/")({
   component: Index,
