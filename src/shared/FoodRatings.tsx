@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Rating } from "../types/rating.types";
 import { ratingQueries } from "../query-factories/ratings";
+import Spinner from "./Spinner";
 
 type FoodRatingsProps = {
   foodId: string;
@@ -38,7 +39,7 @@ export function FoodRatings({ foodId }: FoodRatingsProps) {
     ratingQueries.getRatingsByFoodId(foodId)
   );
 
-  if (isLoading || !ratings) return <p>Loading ratings...</p>;
+  if (isLoading || !ratings) return <Spinner />;
 
   if (ratings.length === 0) {
     return (
