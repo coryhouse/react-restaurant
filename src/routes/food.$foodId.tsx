@@ -4,6 +4,8 @@ import { FoodRatings } from "../shared/FoodRatings";
 import { z } from "zod";
 import { foodQueries } from "../query-factories/foods";
 import { useQuery } from "@tanstack/react-query";
+import Spinner from "../shared/Spinner";
+import { ratingQueries } from "../query-factories/ratings";
 
 export const Route = createFileRoute("/food/$foodId")({
   params: {
@@ -13,7 +15,10 @@ export const Route = createFileRoute("/food/$foodId")({
   },
   component: FoodDetail,
   loader: ({ context: { queryClient }, params: { foodId } }) => {
-    if (foodId) queryClient.ensureQueryData(foodQueries.getFoodById(foodId));
+    if (foodId) {
+      queryClient.ensureQueryData(foodQueries.getFoodById(foodId));
+      queryClient.ensureQueryData(ratingQueries.getRatingsByFoodId(foodId));
+    }
   },
 });
 
@@ -25,7 +30,7 @@ function FoodDetail() {
     enabled: !!foodId,
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Spinner />;
   if (!existingFood) throw notFound();
 
   return (
