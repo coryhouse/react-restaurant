@@ -9,8 +9,9 @@ import Spinner from "../shared/Spinner";
 export const Route = createFileRoute("/")({
   component: Index,
   errorComponent: () => <div>Oops! Failed to load the menu.</div>,
+  pendingComponent: () => <Spinner />,
   loader: ({ context: { queryClient } }) =>
-    queryClient.ensureQueryData(foodQueries.getFoods()),
+    queryClient.ensureQueryData(foodQueries.getFoods()), // Starts the fetch earlier
 });
 
 function Index() {
