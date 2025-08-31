@@ -9,7 +9,8 @@
     "start:api": "json-server --port 3001 db.json --delay 1500",
     "build": "tsc && vite build",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
+    "preview:app": "vite preview",
+    "preview": "concurrently npm:preview:app npm:start:api",
     "pw": "playwright test",
     "generate": "node src/scripts/generateFakeData.ts"
   },
