@@ -1,6 +1,7 @@
 import { eq, useLiveQuery } from "@tanstack/react-db";
 import type { Rating } from "../types/rating.types";
 import { ratingCollection } from "../collections/ratingCollection";
+import Spinner from "./Spinner";
 
 type FoodRatingsProps = {
   foodId: string;
@@ -40,7 +41,7 @@ export function FoodRatings({ foodId }: FoodRatingsProps) {
       .where(({ rating }) => eq(rating.foodId, foodId))
   );
 
-  if (isLoading || !ratings) return <p>Loading ratings...</p>;
+  if (isLoading || !ratings) return <Spinner />;
 
   if (ratings.length === 0) {
     return (
