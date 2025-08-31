@@ -5,6 +5,8 @@ import path, { dirname } from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 
+const numFakeFoods = 5000;
+
 const foodTags = [
   "Breakfast",
   "Lunch",
@@ -44,7 +46,7 @@ const foodImageFileNames = [
 
 const foods = [];
 
-for (let i = 1; i < 10000; i++) {
+for (let i = 1; i < numFakeFoods; i++) {
   foods.push({
     id: i.toString(),
     name: faker.commerce.productName(),
