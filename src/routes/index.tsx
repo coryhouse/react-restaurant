@@ -4,10 +4,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useLiveQuery } from "@tanstack/react-db";
 import { foodCollection } from "../collections/foodCollection";
 import { VirtualizedFoodList } from "../shared/VirtualizedFoodList";
+import Spinner from "../shared/Spinner";
 
 export const Route = createFileRoute("/")({
   component: Index,
   errorComponent: () => <div>Oops! Failed to load the menu.</div>,
+  pendingComponent: () => <Spinner />,
 });
 
 function Index() {
@@ -16,7 +18,7 @@ function Index() {
   const deferredSearchText = useDeferredValue(searchText);
   const { data: foods, isLoading } = useLiveQuery(foodCollection);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Spinner />;
   if (!foods) return <p>No foods found</p>;
 
   // Derived state

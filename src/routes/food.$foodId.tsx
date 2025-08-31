@@ -4,6 +4,7 @@ import { eq, useLiveQuery } from "@tanstack/react-db";
 import { z } from "zod";
 import { foodCollection } from "../collections/foodCollection";
 import { FoodRatings } from "../shared/FoodRatings";
+import Spinner from "../shared/Spinner";
 
 export const Route = createFileRoute("/food/$foodId")({
   params: {
@@ -21,7 +22,7 @@ function FoodDetail() {
     q.from({ food: foodCollection }).where(({ food }) => eq(food.id, foodId))
   );
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Spinner />;
   if (foods.length === 0) throw notFound();
   return (
     <>

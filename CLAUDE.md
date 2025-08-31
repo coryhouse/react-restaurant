@@ -61,3 +61,4 @@ This is a React restaurant menu application built with modern TypeScript tooling
 - Toast notifications use Sonner library
 - The app includes TanStack Router Devtools for debugging
 - After adding any new feature, add a Playwright test, or enhance an existing one.
+- Run Prettier on the code after making changes.
