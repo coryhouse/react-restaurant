@@ -17,6 +17,31 @@ const foodTags = [
   "Alcoholic",
 ] as const;
 
+// Array of filenames from /public/images
+const foodImageFileNames = [
+  "banana-french-toast.jpg",
+  "burger.jpg",
+  "cajun-pasta.jpg",
+  "charcuterie.jpg",
+  "cheesecake.jpg",
+  "chicken-slammer.jpg",
+  "death-by-chocolate.jpg",
+  "donuts.jpg",
+  "italian-meatballs.jpg",
+  "lamb-chop.jpg",
+  "mango-lassi.jpg",
+  "mojito.jpg",
+  "old-fashioned.jpg",
+  "pesto-bowtie-pasta.jpg",
+  "pizza.jpg",
+  "pork-chop.jpg",
+  "ramen.jpg",
+  "salmon-salad.jpg",
+  "salmon.jpg",
+  "street-tacos.jpg",
+  "veggie-sammy.jpg",
+] as const;
+
 const foods = [];
 
 for (let i = 1; i < 10000; i++) {
@@ -24,8 +49,14 @@ for (let i = 1; i < 10000; i++) {
     id: i.toString(),
     name: faker.commerce.productName(),
     description: faker.commerce.productDescription(),
-    price: parseFloat(faker.commerce.price()),
-    image: "", //faker.image.urlLoremFlickr({ category: "nature" }),
+    price: parseFloat(
+      faker.commerce.price({
+        min: 5,
+        max: 30,
+        dec: 2,
+      })
+    ),
+    image: faker.helpers.arrayElement(foodImageFileNames),
     tags: getRandomFoodTags(),
   });
 }
