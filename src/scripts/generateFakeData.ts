@@ -65,7 +65,7 @@ for (let i = 1; i < numFakeFoods; i++) {
 
 function getRandomFoodTags() {
   const randomTags: string[] = [];
-  const numberOfTags = 2 + Math.floor(Math.random() * 3); // Between 2 and 4 tags
+  const numberOfTags = 1 + Math.floor(Math.random() * 3); // Between 1 and 3 tags
 
   for (let i = 0; i < numberOfTags; i++) {
     const randomTag: string = faker.helpers.arrayElement(foodTags);
