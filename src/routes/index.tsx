@@ -71,7 +71,7 @@ function Index() {
             </label>
             <input
               id="search-input"
-              type="text"
+              type="search"
               value={searchText}
               onChange={(event) => {
                 setSearchText(event.target.value);
