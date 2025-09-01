@@ -5,6 +5,8 @@ import path, { dirname } from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 
+const numFakeFoods = 5000;
+
 const foodTags = [
   "Breakfast",
   "Lunch",
@@ -17,22 +19,53 @@ const foodTags = [
   "Alcoholic",
 ] as const;
 
+// Array of filenames from /public/images
+const foodImageFileNames = [
+  "banana-french-toast.jpg",
+  "burger.jpg",
+  "cajun-pasta.jpg",
+  "charcuterie.jpg",
+  "cheesecake.jpg",
+  "chicken-slammer.jpg",
+  "death-by-chocolate.jpg",
+  "donuts.jpg",
+  "italian-meatballs.jpg",
+  "lamb-chop.jpg",
+  "mango-lassi.jpg",
+  "mojito.jpg",
+  "old-fashioned.jpg",
+  "pesto-bowtie-pasta.jpg",
+  "pizza.jpg",
+  "pork-chop.jpg",
+  "ramen.jpg",
+  "salmon-salad.jpg",
+  "salmon.jpg",
+  "street-tacos.jpg",
+  "veggie-sammy.jpg",
+] as const;
+
 const foods = [];
 
-for (let i = 1; i < 10000; i++) {
+for (let i = 1; i < numFakeFoods; i++) {
   foods.push({
     id: i.toString(),
     name: faker.commerce.productName(),
     description: faker.commerce.productDescription(),
-    price: parseFloat(faker.commerce.price()),
-    image: "", //faker.image.urlLoremFlickr({ category: "nature" }),
+    price: parseFloat(
+      faker.commerce.price({
+        min: 5,
+        max: 30,
+        dec: 2,
+      })
+    ),
+    image: faker.helpers.arrayElement(foodImageFileNames),
     tags: getRandomFoodTags(),
   });
 }
 
 function getRandomFoodTags() {
   const randomTags: string[] = [];
-  const numberOfTags = 2 + Math.floor(Math.random() * 3); // Between 2 and 4 tags
+  const numberOfTags = 1 + Math.floor(Math.random() * 3); // Between 1 and 3 tags
 
   for (let i = 0; i < numberOfTags; i++) {
     const randomTag: string = faker.helpers.arrayElement(foodTags);
