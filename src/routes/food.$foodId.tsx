@@ -5,6 +5,7 @@ import { z } from "zod";
 import { foodCollection } from "../collections/foodCollection";
 import { FoodRatings } from "../shared/FoodRatings";
 import Spinner from "../shared/Spinner";
+import { ratingCollection } from "../collections/ratingCollection";
 
 export const Route = createFileRoute("/food/$foodId")({
   params: {
@@ -18,16 +19,22 @@ export const Route = createFileRoute("/food/$foodId")({
 function FoodDetail() {
   const { foodId } = Route.useParams();
 
+  // Fetch food and ratings in parallel
   const { data: foods, isLoading } = useLiveQuery((q) =>
-    q.from({ food: foodCollection }).where(({ food }) => eq(food.id, foodId))
+    q
+      .from({ food: foodCollection })
+      .leftJoin({ rating: ratingCollection }, ({ rating, food }) =>
+        eq(rating.foodId, food.id)
+      )
+      .where(({ food }) => eq(food.id, foodId))
   );
 
   if (isLoading) return <Spinner />;
   if (foods.length === 0) throw notFound();
   return (
     <>
-      <FoodCard food={foods[0]} />
-      <FoodRatings foodId={foods[0].id} />
+      <FoodCard food={foods[0].food} />
+      <FoodRatings foodId={foods[0].food.id} />
     </>
   );
 }
