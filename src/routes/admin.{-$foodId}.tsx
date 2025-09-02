@@ -1,6 +1,6 @@
 // This component is shared between the admin index and admin $foodId routes.
 import { useEffect } from "react";
-import { type Food, type NewFood, foodTags } from "../types/food.types";
+import { type NewFood, foodTags } from "../types/food.types";
 import { Input } from "../shared/Input";
 import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
@@ -35,7 +35,7 @@ const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
   price: z.number().min(0),
-  tags: z.array(z.string()).min(1, "Select at least one tag"),
+  tags: z.array(z.enum(foodTags)).min(1, "Select at least one tag"),
   image: z.string(),
 });
 
@@ -112,8 +112,8 @@ function Admin() {
                   id="name"
                   onChange={(e) => field.handleChange(e.target.value)}
                   label="Name"
-                  error={field.state.meta.errors?.[0]}
-                  formStatus={form.state.isSubmitting ? "submitting" : "idle"}
+                  isSubmitted={form.state.isSubmitted}
+                  error={field.state.meta.errors[0]?.message}
                 />
               )}
             </form.Field>
@@ -128,8 +128,8 @@ function Admin() {
                   min="0"
                   onChange={(e) => field.handleChange(Number(e.target.value))}
                   label="Price ($)"
-                  error={field.state.meta.errors?.[0]}
-                  formStatus={form.state.isSubmitting ? "submitting" : "idle"}
+                  isSubmitted={form.state.isSubmitted}
+                  error={field.state.meta.errors[0]?.message}
                 />
               )}
             </form.Field>
@@ -142,8 +142,8 @@ function Admin() {
                 id="description"
                 onChange={(e) => field.handleChange(e.target.value)}
                 label="Description"
-                error={field.state.meta.errors?.[0]}
-                formStatus={form.state.isSubmitting ? "submitting" : "idle"}
+                isSubmitted={form.state.isSubmitted}
+                error={field.state.meta.errors[0]?.message}
               />
             )}
           </form.Field>
@@ -154,9 +154,6 @@ function Admin() {
                 <legend className="text-sm font-medium text-gray-700">
                   Tags
                 </legend>
-                {field.state.meta.errors?.[0] && (
-                  <ErrorMessage message={field.state.meta.errors[0]} />
-                )}
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {foodTags.map((tag) => {
                     const id = "tag-" + tag;
@@ -191,6 +188,11 @@ function Admin() {
                       </label>
                     );
                   })}
+                  {field.state.meta.errors?.[0] && (
+                    <ErrorMessage
+                      message={field.state.meta.errors[0].message}
+                    />
+                  )}
                 </div>
               </fieldset>
             )}
@@ -203,8 +205,7 @@ function Admin() {
                 id="image"
                 onChange={(e) => field.handleChange(e.target.value)}
                 label="Image URL"
-                error={field.state.meta.errors?.[0]}
-                formStatus={form.state.isSubmitting ? "submitting" : "idle"}
+                isSubmitted={form.state.isSubmitted}
               />
             )}
           </form.Field>
