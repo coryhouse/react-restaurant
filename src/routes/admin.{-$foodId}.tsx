@@ -42,15 +42,11 @@ function Admin() {
   const navigate = useNavigate();
   const { foodId } = Route.useParams();
 
-  const { data: existingFood } = useLiveQuery((q) =>
+  const { data: existingFood, isLoading } = useLiveQuery((q) =>
     q.from({ food: foodCollection }).where(({ food }) => eq(food.id, foodId))
   );
 
   const foundFood = !!foodId && existingFood.length === 1;
-
-  if (foodId && !foundFood) {
-    throw notFound(); //tanstack.com/router/latest/docs/framework/react/guide/not-found-errors#throwing-your-own-notfound-errors
-  }
 
   useEffect(
     function populateForm() {
@@ -74,6 +70,7 @@ function Admin() {
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    if (status === "submitting") return; // Prevent multiple submissions.
     event.preventDefault(); // prevent the browser from reloading the page.
     if (Object.keys(errors).length > 0) {
       setStatus("submitted");
@@ -106,6 +103,9 @@ function Admin() {
         : event.target.value;
     setFood((prev) => ({ ...prev, [event.target.id]: value }));
   }
+
+  if (isLoading) return <Spinner />;
+  if (foodId && !food) throw notFound(); //tanstack.com/router/latest/docs/framework/react/guide/not-found-errors#throwing-your-own-notfound-errors
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -194,15 +194,8 @@ function Admin() {
 
           <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
             <button
-              type="button"
-              onClick={() => navigate({ to: "/" })}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-            >
-              Cancel
-            </button>
-            <button
               type="submit"
-              disabled={status === "submitting"}
+              aria-disabled={status === "submitting"}
               className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {status === "submitting" ? (
