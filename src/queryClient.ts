@@ -1,6 +1,12 @@
 import { QueryClient } from "@tanstack/react-query";
 
 export const queryClient = new QueryClient({
+  // Automatically invalidate queries on mutation success. More: https://tkdodo.eu/blog/automatic-query-invalidation-after-mutations
+  // mutationCache: new MutationCache({
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries();
+  //   },
+  // }),
   defaultOptions: {
     queries: {
       throwOnError: true,
