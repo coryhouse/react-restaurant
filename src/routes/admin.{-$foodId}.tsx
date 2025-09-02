@@ -36,7 +36,7 @@ const formSchema = z.object({
   description: z.string().min(1, "Description is required"),
   price: z.number().min(0),
   tags: z.array(z.string()).min(1, "Select at least one tag"),
-  image: z.url().optional(),
+  image: z.string(),
 });
 
 function Admin() {
