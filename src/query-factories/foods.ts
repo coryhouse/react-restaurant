@@ -5,8 +5,9 @@ import ky from "ky";
 
 const baseUrl = "http://localhost:3001/foods";
 
-const keys = {
+export const foodQueryKeys = {
   allFoods: ["foods"],
+  foodById: (foodId: string) => [...foodQueryKeys.allFoods, foodId],
 };
 
 export class FoodNotFoundError extends Error {}
@@ -14,7 +15,7 @@ export class FoodNotFoundError extends Error {}
 export const foodQueries = {
   getFoodById: (foodId?: string) =>
     queryOptions({
-      queryKey: [...keys.allFoods, foodId],
+      queryKey: foodQueryKeys.foodById(foodId!),
       queryFn: async () => {
         const json = await ky
           .get(`${baseUrl}/${foodId}`)
@@ -30,7 +31,7 @@ export const foodQueries = {
 
   getFoods: () =>
     queryOptions({
-      queryKey: keys.allFoods,
+      queryKey: foodQueryKeys.allFoods,
       queryFn: async () => {
         const json = await ky.get(baseUrl).json();
         return foodSchema.array().parse(json);
