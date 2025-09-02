@@ -60,8 +60,8 @@ export const foodMutations = {
       mutationFn: async (food: NewFood | Food) => {
         const body = { json: food };
         return "id" in food
-          ? ky.put(`${baseUrl}/${food.id}`, body).json()
-          : ky.post(baseUrl, body).json();
+          ? await ky.put(`${baseUrl}/${food.id}`, body).json()
+          : await ky.post(baseUrl, body).json();
       },
       onSuccess,
       onSettled: () => {
