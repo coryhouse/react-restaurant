@@ -1,6 +1,6 @@
 // This file contains reusable Tanstack Query QueryOptions. See here: https://tkdodo.eu/blog/the-query-options-api
 import { queryOptions, useQueryClient } from "@tanstack/react-query";
-import { type Food, type NewFood, foodSchema } from "../types/food.types";
+import { foodSchema, type Food, type NewFood } from "../types/food.types";
 import ky from "ky";
 
 const baseUrl = "http://localhost:3001/foods";
@@ -46,6 +46,22 @@ export const foodMutations = {
     return {
       mutationFn: async (foodId: string) => {
         await ky.delete(`${baseUrl}/${foodId}`);
+      },
+      onSuccess,
+      onSettled: () => {
+        queryClient.invalidateQueries({ queryKey: foodQueryKeys.allFoods });
+      },
+    };
+  },
+  saveFood: (onSuccess: () => void) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const queryClient = useQueryClient();
+    return {
+      mutationFn: async (food: NewFood | Food) => {
+        const body = { json: food };
+        return "id" in food
+          ? ky.put(`${baseUrl}/${food.id}`, body).json()
+          : ky.post(baseUrl, body).json();
       },
       onSuccess,
       onSettled: () => {
