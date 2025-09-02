@@ -47,8 +47,9 @@ function Admin() {
 
   const { mutateAsync: saveFood } = useMutation(
     foodMutations.saveFood(() => {
-      toast.success(`Food ${food ? "saved" : "added"}!`);
-      navigate({ to: "/" }); // Redirect to the Menu
+      navigate({ to: "/" }).then(() => {
+        toast.success(`Food ${food ? "saved" : "added"}!`);
+      });
     })
   );
 
@@ -152,14 +153,12 @@ function Admin() {
                           type="checkbox"
                           value={tag}
                           checked={field.state.value.some(
-                            (foodTag: string) => foodTag === tag
+                            (foodTag) => foodTag === tag
                           )}
                           onChange={(event) => {
                             const updatedTags = event.target.checked
                               ? [...field.state.value, tag]
-                              : field.state.value.filter(
-                                  (t: string) => t !== tag
-                                );
+                              : field.state.value.filter((t) => t !== tag);
                             field.handleChange(updatedTags);
                           }}
                           className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
