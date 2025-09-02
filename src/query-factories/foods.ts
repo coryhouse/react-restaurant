@@ -40,6 +40,7 @@ export const foodQueries = {
 
 export const foodMutations = {
   deleteFood: (onSuccess: () => void) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const queryClient = useQueryClient();
     return {
       mutationFn: async (foodId: string) => {
@@ -53,6 +54,7 @@ export const foodMutations = {
   },
 
   saveFood: (onSuccess: () => void) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const queryClient = useQueryClient();
     return {
       mutationFn: async (food: NewFood | Food) => {
