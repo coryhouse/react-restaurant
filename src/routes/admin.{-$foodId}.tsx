@@ -49,12 +49,6 @@ function Admin() {
     enabled: !!foodId,
   });
 
-  const foundFood = !!foodId && existingFood;
-
-  if (foodId && !foundFood) {
-    throw notFound(); //tanstack.com/router/latest/docs/framework/react/guide/not-found-errors#throwing-your-own-notfound-errors
-  }
-
   useEffect(
     function populateForm() {
       if (existingFood) {
