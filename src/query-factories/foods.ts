@@ -1,12 +1,13 @@
 // This file contains reusable Tanstack Query QueryOptions. See here: https://tkdodo.eu/blog/the-query-options-api
 import { queryOptions, useQueryClient } from "@tanstack/react-query";
-import { type Food, type NewFood, foodSchema } from "../types/food.types";
+import { foodSchema, type Food, type NewFood } from "../types/food.types";
 import ky from "ky";
 
 const baseUrl = "http://localhost:3001/foods";
 
-const keys = {
+export const foodQueryKeys = {
   allFoods: ["foods"],
+  foodById: (foodId: string) => [...foodQueryKeys.allFoods, foodId],
 };
 
 export class FoodNotFoundError extends Error {}
@@ -14,7 +15,7 @@ export class FoodNotFoundError extends Error {}
 export const foodQueries = {
   getFoodById: (foodId?: string) =>
     queryOptions({
-      queryKey: [...keys.allFoods, foodId],
+      queryKey: foodQueryKeys.foodById(foodId!),
       queryFn: async () => {
         const json = await ky
           .get(`${baseUrl}/${foodId}`)
@@ -30,7 +31,7 @@ export const foodQueries = {
 
   getFoods: () =>
     queryOptions({
-      queryKey: keys.allFoods,
+      queryKey: foodQueryKeys.allFoods,
       queryFn: async () => {
         const json = await ky.get(baseUrl).json();
         return foodSchema.array().parse(json);
@@ -48,11 +49,10 @@ export const foodMutations = {
       },
       onSuccess,
       onSettled: () => {
-        queryClient.invalidateQueries({ queryKey: keys.allFoods });
+        queryClient.invalidateQueries({ queryKey: foodQueryKeys.allFoods });
       },
     };
   },
-
   saveFood: (onSuccess: () => void) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const queryClient = useQueryClient();
@@ -60,12 +60,12 @@ export const foodMutations = {
       mutationFn: async (food: NewFood | Food) => {
         const body = { json: food };
         return "id" in food
-          ? ky.put(`${baseUrl}/${food.id}`, body).json()
-          : ky.post(baseUrl, body).json();
+          ? foodSchema.parse(await ky.put(`${baseUrl}/${food.id}`, body).json())
+          : foodSchema.parse(await ky.post(baseUrl, body).json());
       },
       onSuccess,
       onSettled: () => {
-        queryClient.invalidateQueries({ queryKey: keys.allFoods });
+        queryClient.invalidateQueries({ queryKey: foodQueryKeys.allFoods });
       },
     };
   },
