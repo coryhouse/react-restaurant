@@ -49,24 +49,7 @@ export const foodMutations = {
       },
       onSuccess,
       onSettled: () => {
-        queryClient.invalidateQueries({ queryKey: keys.allFoods });
-      },
-    };
-  },
-
-  saveFood: (onSuccess: () => void) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const queryClient = useQueryClient();
-    return {
-      mutationFn: async (food: NewFood | Food) => {
-        const body = { json: food };
-        return "id" in food
-          ? await ky.put(`${baseUrl}/${food.id}`, body).json()
-          : await ky.post(baseUrl, body).json();
-      },
-      onSuccess,
-      onSettled: () => {
-        queryClient.invalidateQueries({ queryKey: keys.allFoods });
+        queryClient.invalidateQueries({ queryKey: foodQueryKeys.allFoods });
       },
     };
   },
