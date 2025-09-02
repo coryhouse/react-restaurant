@@ -54,8 +54,8 @@ function Admin() {
   }
 
   const { mutate: saveFood } = useMutation(
-    foodMutations.saveFood((savedFood: Food | NewFood) => {
-      toast.success(`Food ${"id" in savedFood ? "saved" : "added"}!`);
+    foodMutations.saveFood(() => {
+      toast.success(`Food ${existingFood ? "saved" : "added"}!`);
       navigate({ to: "/" }); // Redirect to the Menu
     })
   );
