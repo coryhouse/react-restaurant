@@ -21,8 +21,8 @@ type InputProps = {
   /** Error to display below the input */
   error?: string;
 
-  /** Status of the form */
-  formStatus: Status;
+  /** True if the form has been submitted */
+  isSubmitted: boolean;
 
   /** Placeholder text */
   placeholder?: string;
@@ -41,7 +41,7 @@ export function Input({
   onBlur,
   type = "text",
   error,
-  formStatus,
+  isSubmitted,
   placeholder,
   step,
   min,
@@ -49,7 +49,7 @@ export function Input({
 }: InputProps) {
   const [hasBeenTouched, setHasBeenTouched] = useState(false);
 
-  const hasError = (hasBeenTouched || formStatus === "submitted") && error;
+  const hasError = (hasBeenTouched || isSubmitted) && error;
 
   return (
     <div className={className}>
