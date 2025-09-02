@@ -1,5 +1,3 @@
-// This component is shared between the admin index and admin $foodId routes.
-import { useEffect } from "react";
 import { type NewFood, foodTags } from "../types/food.types";
 import { Input } from "../shared/Input";
 import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
@@ -42,18 +40,13 @@ const formSchema = z.object({
 function Admin() {
   const navigate = useNavigate();
   const { foodId } = Route.useParams();
-  const { data: existingFood } = useQuery({
+  const { data: food, isLoading } = useQuery({
     ...foodQueries.getFoodById(foodId),
     enabled: !!foodId,
   });
 
-  const foundFood = !!foodId && existingFood;
-
-  if (foodId && !foundFood) {
-    throw notFound(); //tanstack.com/router/latest/docs/framework/react/guide/not-found-errors#throwing-your-own-notfound-errors
-  }
   const form = useForm({
-    defaultValues: newFood,
+    defaultValues: food || newFood,
     onSubmit: async ({ value }) => {
       saveFood(value);
     },
@@ -62,24 +55,15 @@ function Admin() {
     },
   });
 
-  useEffect(
-    function populateForm() {
-      if (existingFood) {
-        form.setFieldValue("name", existingFood.name);
-        form.setFieldValue("description", existingFood.description);
-        form.setFieldValue("price", existingFood.price);
-        form.setFieldValue("tags", existingFood.tags);
-      }
-    },
-    [existingFood, form]
-  );
-
   const { mutate: saveFood } = useMutation(
     foodMutations.saveFood(() => {
-      toast.success(`Food ${existingFood ? "saved" : "added"}!`);
+      toast.success(`Food ${food ? "saved" : "added"}!`);
       navigate({ to: "/" }); // Redirect to the Menu
     })
   );
+
+  if (isLoading) return <Spinner />;
+  if (foodId && !food) throw notFound(); //tanstack.com/router/latest/docs/framework/react/guide/not-found-errors#throwing-your-own-notfound-errors
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -194,41 +178,35 @@ function Admin() {
             )}
           </form.Field>
 
-          <form.Field name="image">
-            {(field) => (
-              <Input
-                value={field.state.value}
-                id="image"
-                onChange={(e) => field.handleChange(e.target.value)}
-                label="Image URL"
-              />
+          <form.Subscribe
+            selector={(state) => [state.canSubmit, state.isSubmitting]}
+            children={([canSubmit, isSubmitting]) => (
+              <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+                <button
+                  type="button"
+                  onClick={() => navigate({ to: "/" })}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={!canSubmit}
+                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center gap-2">
+                      <Spinner size="sm" center={false} />
+                    </div>
+                  ) : foodId ? (
+                    "Save Changes"
+                  ) : (
+                    "Add Food"
+                  )}
+                </button>
+              </div>
             )}
-          </form.Field>
-
-          <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
-            <button
-              type="button"
-              onClick={() => navigate({ to: "/" })}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={form.state.isSubmitting}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              {form.state.isSubmitting ? (
-                <div className="flex items-center gap-2">
-                  <Spinner size="sm" center={false} />
-                </div>
-              ) : foodId ? (
-                "Save Changes"
-              ) : (
-                "Add Food"
-              )}
-            </button>
-          </div>
+          />
         </form>
       </div>
     </div>
