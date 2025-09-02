@@ -44,7 +44,7 @@ function Admin() {
   const [status, setStatus] = useState<Status>("idle");
   const navigate = useNavigate();
   const { foodId } = Route.useParams();
-  const { data: existingFood } = useQuery({
+  const { data: existingFood, isLoading } = useQuery({
     ...foodQueries.getFoodById(foodId),
     enabled: !!foodId,
   });
@@ -104,6 +104,9 @@ function Admin() {
         : event.target.value;
     setFood((prev) => ({ ...prev, [event.target.id]: value }));
   }
+
+  if (isLoading) return <Spinner />;
+  if (foodId && !food) throw notFound(); //tanstack.com/router/latest/docs/framework/react/guide/not-found-errors#throwing-your-own-notfound-errors
 
   return (
     <div className="max-w-2xl mx-auto">
