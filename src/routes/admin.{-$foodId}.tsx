@@ -52,14 +52,6 @@ function Admin() {
   if (foodId && !foundFood) {
     throw notFound(); //tanstack.com/router/latest/docs/framework/react/guide/not-found-errors#throwing-your-own-notfound-errors
   }
-
-  const { mutate: saveFood } = useMutation(
-    foodMutations.saveFood(() => {
-      toast.success(`Food ${existingFood ? "saved" : "added"}!`);
-      navigate({ to: "/" }); // Redirect to the Menu
-    })
-  );
-
   const form = useForm({
     defaultValues: newFood,
     onSubmit: async ({ value }) => {
@@ -80,6 +72,13 @@ function Admin() {
       }
     },
     [existingFood, form]
+  );
+
+  const { mutate: saveFood } = useMutation(
+    foodMutations.saveFood(() => {
+      toast.success(`Food ${existingFood ? "saved" : "added"}!`);
+      navigate({ to: "/" }); // Redirect to the Menu
+    })
   );
 
   return (
