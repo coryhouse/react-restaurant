@@ -66,6 +66,9 @@ function Admin() {
   if (isLoading) return <Spinner />;
   if (foodId && !food) throw notFound(); //tanstack.com/router/latest/docs/framework/react/guide/not-found-errors#throwing-your-own-notfound-errors
 
+  if (isLoading) return <Spinner />;
+  if (foodId && !food) throw notFound(); //tanstack.com/router/latest/docs/framework/react/guide/not-found-errors#throwing-your-own-notfound-errors
+
   return (
     <div className="max-w-2xl mx-auto">
       <div className="bg-white shadow-sm rounded-lg border border-gray-200">
