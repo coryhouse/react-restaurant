@@ -112,7 +112,6 @@ function Admin() {
                   id="name"
                   onChange={(e) => field.handleChange(e.target.value)}
                   label="Name"
-                  isSubmitted={form.state.isSubmitted}
                   error={field.state.meta.errors[0]?.message}
                 />
               )}
@@ -128,7 +127,6 @@ function Admin() {
                   min="0"
                   onChange={(e) => field.handleChange(Number(e.target.value))}
                   label="Price ($)"
-                  isSubmitted={form.state.isSubmitted}
                   error={field.state.meta.errors[0]?.message}
                 />
               )}
@@ -142,7 +140,6 @@ function Admin() {
                 id="description"
                 onChange={(e) => field.handleChange(e.target.value)}
                 label="Description"
-                isSubmitted={form.state.isSubmitted}
                 error={field.state.meta.errors[0]?.message}
               />
             )}
@@ -205,7 +202,6 @@ function Admin() {
                 id="image"
                 onChange={(e) => field.handleChange(e.target.value)}
                 label="Image URL"
-                isSubmitted={form.state.isSubmitted}
               />
             )}
           </form.Field>
