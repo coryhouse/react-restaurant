@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { ErrorMessage } from "./ErrorMessage";
-import type { Status } from "../types/status.types";
 
 type InputProps = {
   /** input value */
@@ -21,9 +19,6 @@ type InputProps = {
   /** Error to display below the input */
   error?: string;
 
-  /** Status of the form */
-  formStatus: Status;
-
   /** Placeholder text */
   placeholder?: string;
 
@@ -38,19 +33,13 @@ export function Input({
   className,
   label,
   id,
-  onBlur,
   type = "text",
   error,
-  formStatus,
   placeholder,
   step,
   min,
   ...otherInputProps
 }: InputProps) {
-  const [hasBeenTouched, setHasBeenTouched] = useState(false);
-
-  const hasError = (hasBeenTouched || formStatus === "submitted") && error;
-
   return (
     <div className={className}>
       <label
@@ -65,18 +54,14 @@ export function Input({
         placeholder={placeholder}
         step={step}
         min={min}
-        onBlur={(event) => {
-          setHasBeenTouched(true);
-          onBlur?.(event);
-        }}
         className={`block w-full px-3 py-2 border rounded-md shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-0 ${
-          hasError
+          error
             ? "border-red-300 focus:border-red-500 focus:ring-red-500"
             : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
         }`}
         {...otherInputProps}
       />
-      <ErrorMessage message={hasError ? error : undefined} />
+      <ErrorMessage message={error} />
     </div>
   );
 }
