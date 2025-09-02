@@ -1,5 +1,5 @@
 // This component is shared between the admin index and admin $foodId routes.
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { type Food, type NewFood, foodTags } from "../types/food.types";
 import { Input } from "../shared/Input";
 import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { ErrorMessage } from "../shared/ErrorMessage";
 import { foodMutations, foodQueries } from "../query-factories/foods";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import type { Status } from "../types/status.types";
+import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
 import Spinner from "../shared/Spinner";
 
@@ -31,17 +31,15 @@ const newFood: NewFood = {
   tags: [],
 };
 
-type Errors = {
-  description?: string;
-  image?: string;
-  name?: string;
-  price?: string;
-  tags?: string;
-};
+const formSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  description: z.string().min(1, "Description is required"),
+  price: z.number().min(0),
+  tags: z.array(z.string()).min(1, "Select at least one tag"),
+  image: z.url().optional(),
+});
 
 function Admin() {
-  const [food, setFood] = useState<Food | NewFood>(newFood);
-  const [status, setStatus] = useState<Status>("idle");
   const navigate = useNavigate();
   const { foodId } = Route.useParams();
   const { data: existingFood } = useQuery({
@@ -55,55 +53,34 @@ function Admin() {
     throw notFound(); //tanstack.com/router/latest/docs/framework/react/guide/not-found-errors#throwing-your-own-notfound-errors
   }
 
-  useEffect(
-    function populateForm() {
-      if (existingFood) {
-        setFood(existingFood);
-      } else if (!foodId) {
-        setFood(newFood);
-      }
-    },
-    [existingFood, foodId]
-  );
-
   const { mutate: saveFood } = useMutation(
-    foodMutations.saveFood(() => {
-      toast.success(`Food ${"id" in food ? "saved" : "added"}!`);
+    foodMutations.saveFood((savedFood: Food | NewFood) => {
+      toast.success(`Food ${"id" in savedFood ? "saved" : "added"}!`);
       navigate({ to: "/" }); // Redirect to the Menu
     })
   );
 
-  const errors = validate();
+  const form = useForm({
+    defaultValues: newFood,
+    onSubmit: async ({ value }) => {
+      saveFood(value);
+    },
+    validators: {
+      onChange: formSchema,
+    },
+  });
 
-  function validate() {
-    const errors: Errors = {};
-    if (!food.name) errors.name = "Name is required";
-    if (!food.description) errors.description = "Description is required";
-    if (food.tags.length === 0) errors.tags = "Select at least one tag";
-    return errors;
-  }
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    if (status === "submitting") return; // Prevent multiple submissions.
-    event.preventDefault(); // prevent the browser from reloading the page.
-    if (Object.keys(errors).length > 0) {
-      setStatus("submitted");
-      return; // If errors, stop here.
-    }
-    setStatus("submitting");
-    saveFood(food);
-  }
-
-  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
-    // Functional form / callback form of set state.
-    // Useful anytime we want to set state based on existing state.
-    // Using the computed property syntax to set a property using a variable.
-    const value =
-      event.target.id === "price"
-        ? Number(event.target.value)
-        : event.target.value;
-    setFood((prev) => ({ ...prev, [event.target.id]: value }));
-  }
+  useEffect(
+    function populateForm() {
+      if (existingFood) {
+        form.setFieldValue("name", existingFood.name);
+        form.setFieldValue("description", existingFood.description);
+        form.setFieldValue("price", existingFood.price);
+        form.setFieldValue("tags", existingFood.tags);
+      }
+    },
+    [existingFood, form]
+  );
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -119,76 +96,118 @@ function Admin() {
           </p>
         </div>
 
-        <form className="px-6 py-6 space-y-6" onSubmit={handleSubmit}>
+        <form
+          className="px-6 py-6 space-y-6"
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            form.handleSubmit();
+          }}
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Input
-              value={food.name}
-              id="name"
-              onChange={onChange}
-              label="Name"
-              error={errors.name}
-              formStatus={status}
-            />
+            <form.Field name="name">
+              {(field) => (
+                <Input
+                  value={field.state.value}
+                  id="name"
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  label="Name"
+                  error={field.state.meta.errors?.[0]}
+                  formStatus={form.state.isSubmitting ? "submitting" : "idle"}
+                />
+              )}
+            </form.Field>
 
-            <Input
-              value={food.price}
-              id="price"
-              type="number"
-              step="0.01"
-              min="0"
-              onChange={onChange}
-              label="Price ($)"
-              error={errors.price}
-              formStatus={status}
-            />
+            <form.Field name="price">
+              {(field) => (
+                <Input
+                  value={field.state.value}
+                  id="price"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  onChange={(e) => field.handleChange(Number(e.target.value))}
+                  label="Price ($)"
+                  error={field.state.meta.errors?.[0]}
+                  formStatus={form.state.isSubmitting ? "submitting" : "idle"}
+                />
+              )}
+            </form.Field>
           </div>
 
-          <Input
-            value={food.description}
-            id="description"
-            onChange={onChange}
-            label="Description"
-            error={errors.description}
-            formStatus={status}
-          />
+          <form.Field name="description">
+            {(field) => (
+              <Input
+                value={field.state.value}
+                id="description"
+                onChange={(e) => field.handleChange(e.target.value)}
+                label="Description"
+                error={field.state.meta.errors?.[0]}
+                formStatus={form.state.isSubmitting ? "submitting" : "idle"}
+              />
+            )}
+          </form.Field>
 
-          <fieldset className="space-y-3">
-            <legend className="text-sm font-medium text-gray-700">Tags</legend>
-            {status === "submitted" && <ErrorMessage message={errors.tags} />}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {foodTags.map((tag) => {
-                const id = "tag-" + tag;
-                return (
-                  <label
-                    key={tag}
-                    htmlFor={id}
-                    className={`flex items-center space-x-2 p-3 border rounded-lg cursor-pointer transition-colors ${
-                      food.tags.some((foodTag) => foodTag === tag)
-                        ? "border-blue-300 bg-blue-50"
-                        : "border-gray-200 hover:bg-gray-50"
-                    }`}
-                  >
-                    <input
-                      id={id}
-                      type="checkbox"
-                      value={tag}
-                      checked={food.tags.some((foodTag) => foodTag === tag)}
-                      onChange={(event) => {
-                        setFood({
-                          ...food,
-                          tags: event.target.checked
-                            ? [...food.tags, tag]
-                            : food.tags.filter((t) => t !== tag),
-                        });
-                      }}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                    />
-                    <span className="text-sm text-gray-700">{tag}</span>
-                  </label>
-                );
-              })}
-            </div>
-          </fieldset>
+          <form.Field name="tags">
+            {(field) => (
+              <fieldset className="space-y-3">
+                <legend className="text-sm font-medium text-gray-700">
+                  Tags
+                </legend>
+                {field.state.meta.errors?.[0] && (
+                  <ErrorMessage message={field.state.meta.errors[0]} />
+                )}
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {foodTags.map((tag) => {
+                    const id = "tag-" + tag;
+                    return (
+                      <label
+                        key={tag}
+                        htmlFor={id}
+                        className={`flex items-center space-x-2 p-3 border rounded-lg cursor-pointer transition-colors ${
+                          field.state.value.some((foodTag) => foodTag === tag)
+                            ? "border-blue-300 bg-blue-50"
+                            : "border-gray-200 hover:bg-gray-50"
+                        }`}
+                      >
+                        <input
+                          id={id}
+                          type="checkbox"
+                          value={tag}
+                          checked={field.state.value.some(
+                            (foodTag: string) => foodTag === tag
+                          )}
+                          onChange={(event) => {
+                            const updatedTags = event.target.checked
+                              ? [...field.state.value, tag]
+                              : field.state.value.filter(
+                                  (t: string) => t !== tag
+                                );
+                            field.handleChange(updatedTags);
+                          }}
+                          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        />
+                        <span className="text-sm text-gray-700">{tag}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </fieldset>
+            )}
+          </form.Field>
+
+          <form.Field name="image">
+            {(field) => (
+              <Input
+                value={field.state.value}
+                id="image"
+                onChange={(e) => field.handleChange(e.target.value)}
+                label="Image URL"
+                error={field.state.meta.errors?.[0]}
+                formStatus={form.state.isSubmitting ? "submitting" : "idle"}
+              />
+            )}
+          </form.Field>
 
           <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
             <button
@@ -200,10 +219,10 @@ function Admin() {
             </button>
             <button
               type="submit"
-              aria-disabled={status === "submitting"}
+              disabled={form.state.isSubmitting}
               className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              {status === "submitting" ? (
+              {form.state.isSubmitting ? (
                 <div className="flex items-center gap-2">
                   <Spinner size="sm" center={false} />
                 </div>
