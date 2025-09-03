@@ -89,11 +89,12 @@ function Admin() {
           Object.assign(draft, food); // set all properties on draft to match food
         });
         await tx.isPersisted.promise; // wait for the transaction to be persisted
+        toast.success(`Food saved!`);
       } else {
         const tx = foodCollection.insert({ ...food, id: crypto.randomUUID() }); // add temporary client-side id
         await tx.isPersisted.promise; // wait for the transaction to be persisted
+        toast.success(`Food added!`);
       }
-      toast.success(`Food saved!`);
       navigate({ to: "/" }); // Redirect to the Menu
     } catch (error) {
       // The optimistic update has been automatically rolled back
