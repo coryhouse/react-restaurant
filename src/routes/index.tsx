@@ -1,7 +1,7 @@
 import { type FoodTag, foodTags } from "../types/food.types";
 import { createFileRoute } from "@tanstack/react-router";
-import { foodQueries } from "../query-factories/foods";
-import { useQuery } from "@tanstack/react-query";
+import { useLiveQuery } from "@tanstack/react-db";
+import { foodCollection } from "../collections/foodCollection";
 import { FoodCard } from "../shared/FoodCard";
 import Spinner from "../shared/Spinner";
 import { z } from "zod";
@@ -16,14 +16,12 @@ export const Route = createFileRoute("/")({
   errorComponent: () => <div>Oops! Failed to load the menu.</div>,
   pendingComponent: () => <Spinner />,
   validateSearch: searchSchema,
-  loader: ({ context: { queryClient } }) =>
-    queryClient.ensureQueryData(foodQueries.getFoods()), // Starts the fetch earlier
 });
 
 function Index() {
   const { tag, search } = Route.useSearch();
   const navigate = Route.useNavigate();
-  const { data: foods, isLoading } = useQuery(foodQueries.getFoods());
+  const { data: foods, isLoading } = useLiveQuery(foodCollection);
 
   if (isLoading) return <Spinner />;
   if (!foods) return <p>No foods found</p>;
