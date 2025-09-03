@@ -1,8 +1,9 @@
+import { useDeferredValue } from "react";
 import { type FoodTag, foodTags } from "../types/food.types";
 import { createFileRoute } from "@tanstack/react-router";
 import { useLiveQuery } from "@tanstack/react-db";
 import { foodCollection } from "../collections/foodCollection";
-import { FoodCard } from "../shared/FoodCard";
+import { VirtualizedFoodList } from "../shared/VirtualizedFoodList";
 import Spinner from "../shared/Spinner";
 import { z } from "zod";
 
@@ -21,6 +22,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   const { tag, search } = Route.useSearch();
   const navigate = Route.useNavigate();
+  const deferredSearch = useDeferredValue(search);
   const { data: foods, isLoading } = useLiveQuery(foodCollection);
 
   if (isLoading) return <Spinner />;
@@ -30,9 +32,9 @@ function Index() {
   const matchingFoods = foods.filter((food) => {
     const matchesTag = !tag || food.tags.includes(tag);
     const matchesSearch =
-      !search ||
-      food.name.toLowerCase().includes(search.toLowerCase()) ||
-      food.description.toLowerCase().includes(search.toLowerCase());
+      !deferredSearch ||
+      food.name.toLowerCase().includes(deferredSearch.toLowerCase()) ||
+      food.description.toLowerCase().includes(deferredSearch.toLowerCase());
     return matchesTag && matchesSearch;
   });
 
@@ -105,11 +107,12 @@ function Index() {
           </div>
         )}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {matchingFoods.map((food) => (
-          <FoodCard key={food.id} food={food} showActions />
-        ))}
-      </div>
+
+      <VirtualizedFoodList
+        foods={matchingFoods}
+        showActions={true}
+        isPending={deferredSearch !== search}
+      />
     </>
   );
 }

@@ -25,7 +25,7 @@ export function FoodCard({ food, showActions = false }: FoodCardProps) {
   return (
     <Card>
       <div
-        className={`flex flex-col sm:flex-row gap-4 ${showActions ? "h-80" : ""}`}
+        className={`flex flex-col sm:flex-row gap-4 ${showActions ? "h-80" : ""} overflow-hidden`}
       >
         <div className="flex-1 flex flex-col">
           <h2
@@ -98,7 +98,7 @@ export function FoodCard({ food, showActions = false }: FoodCardProps) {
           </div>
         </div>
 
-        <div className="w-full sm:w-32 md:w-40 flex-shrink-0">
+        <div className="w-full sm:w-32 md:w-40 min-w-0 flex-shrink-0">
           <img
             className="w-full h-32 sm:h-full object-cover rounded-lg shadow-sm"
             alt={food.name}
