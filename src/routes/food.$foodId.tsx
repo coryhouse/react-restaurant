@@ -14,6 +14,11 @@ export const Route = createFileRoute("/food/$foodId")({
     }),
   },
   component: FoodDetail,
+  loader: async () => {
+    // start fetch ASAP - Minor optimization in this case
+    foodCollection.preload();
+    ratingCollection.preload();
+  },
 });
 
 function FoodDetail() {
