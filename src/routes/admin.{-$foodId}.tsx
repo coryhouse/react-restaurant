@@ -6,7 +6,12 @@ import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { ErrorMessage } from "../shared/ErrorMessage";
 import { foodCollection } from "../collections/foodCollection";
-import { eq, useLiveQuery } from "@tanstack/react-db";
+import {
+  DuplicateKeyError,
+  eq,
+  SchemaValidationError,
+  useLiveQuery,
+} from "@tanstack/react-db";
 import type { Status } from "../types/status.types";
 import { z } from "zod";
 import Spinner from "../shared/Spinner";
@@ -80,15 +85,26 @@ function Admin() {
     try {
       // Instantly applies optimistic state, then syncs to server
       if ("id" in food) {
-        foodCollection.update(food.id, (draft) => {
+        const tx = foodCollection.update(food.id, (draft) => {
           Object.assign(draft, food); // set all properties on draft to match food
         });
+        await tx.isPersisted.promise; // wait for the transaction to be persisted
       } else {
-        foodCollection.insert({ ...food, id: crypto.randomUUID() }); // add temporary client-side id
+        const tx = foodCollection.insert({ ...food, id: crypto.randomUUID() }); // add temporary client-side id
+        await tx.isPersisted.promise; // wait for the transaction to be persisted
       }
-      toast.success(`Food ${"id" in food ? "saved" : "added"}!`);
+      toast.success(`Food saved!`);
       navigate({ to: "/" }); // Redirect to the Menu
-    } catch {
+    } catch (error) {
+      // The optimistic update has been automatically rolled back
+      if (error instanceof SchemaValidationError) {
+        toast.error(`Validation error: ${error.issues[0]?.message}`);
+      } else if (error instanceof DuplicateKeyError) {
+        toast.error("A food with this ID already exists");
+      } else {
+        toast.error(`Failed to add food.`);
+      }
+      console.error(error);
       setStatus("idle");
     }
   }
