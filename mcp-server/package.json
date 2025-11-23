@@ -12,7 +12,12 @@
     "start": "node dist/index.js",
     "dev": "tsc --watch"
   },
-  "keywords": ["mcp", "server", "restaurant", "api"],
+  "keywords": [
+    "mcp",
+    "server",
+    "restaurant",
+    "api"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
