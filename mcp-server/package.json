@@ -1,0 +1,25 @@
+{
+  "name": "react-restaurant-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for React Restaurant API",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "react-restaurant-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch"
+  },
+  "keywords": ["mcp", "server", "restaurant", "api"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.2"
+  }
+}
