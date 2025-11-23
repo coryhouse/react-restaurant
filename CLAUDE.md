@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+In responses, sacrifice grammar for concision.
+
 ## Development Commands
 
 - `npm start` - Start both the React app (port 3000) and JSON Server API (port 3001) concurrently
