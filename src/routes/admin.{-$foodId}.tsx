@@ -5,8 +5,13 @@ import { Input } from "../shared/Input";
 import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { ErrorMessage } from "../shared/ErrorMessage";
-import { foodMutations, foodQueries } from "../query-factories/foods";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { foodCollection } from "../collections/foodCollection";
+import {
+  DuplicateKeyError,
+  eq,
+  SchemaValidationError,
+  useLiveQuery,
+} from "@tanstack/react-db";
 import type { Status } from "../types/status.types";
 import { z } from "zod";
 import Spinner from "../shared/Spinner";
@@ -18,9 +23,6 @@ export const Route = createFileRoute("/admin/{-$foodId}")({
     }),
   },
   component: Admin,
-  loader: ({ context: { queryClient }, params: { foodId } }) => {
-    if (foodId) queryClient.ensureQueryData(foodQueries.getFoodById(foodId));
-  },
 });
 
 const newFood: NewFood = {
@@ -44,27 +46,22 @@ function Admin() {
   const [status, setStatus] = useState<Status>("idle");
   const navigate = useNavigate();
   const { foodId } = Route.useParams();
-  const { data: existingFood, isLoading } = useQuery({
-    ...foodQueries.getFoodById(foodId),
-    enabled: !!foodId,
-  });
+
+  const { data: existingFood, isLoading } = useLiveQuery((q) =>
+    q.from({ food: foodCollection }).where(({ food }) => eq(food.id, foodId))
+  );
+
+  const foundFood = !!foodId && existingFood.length === 1;
 
   useEffect(
     function populateForm() {
-      if (existingFood) {
-        setFood(existingFood);
+      if (foundFood && existingFood.length === 1) {
+        setFood(existingFood[0]);
       } else if (!foodId) {
         setFood(newFood);
       }
     },
-    [existingFood, foodId]
-  );
-
-  const { mutate: saveFood } = useMutation(
-    foodMutations.saveFood(() => {
-      toast.success(`Food ${"id" in food ? "saved" : "added"}!`);
-      navigate({ to: "/" }); // Redirect to the Menu
-    })
+    [foundFood, foodId, existingFood]
   );
 
   const errors = validate();
@@ -85,7 +82,32 @@ function Admin() {
       return; // If errors, stop here.
     }
     setStatus("submitting");
-    saveFood(food);
+    try {
+      // Instantly applies optimistic state, then syncs to server
+      if ("id" in food) {
+        const tx = foodCollection.update(food.id, (draft) => {
+          Object.assign(draft, food); // set all properties on draft to match food
+        });
+        await tx.isPersisted.promise; // wait for the transaction to be persisted
+        toast.success(`Food saved!`);
+      } else {
+        const tx = foodCollection.insert({ ...food, id: crypto.randomUUID() }); // add temporary client-side id
+        await tx.isPersisted.promise; // wait for the transaction to be persisted
+        toast.success(`Food added!`);
+      }
+      navigate({ to: "/" }); // Redirect to the Menu
+    } catch (error) {
+      // The optimistic update has been automatically rolled back
+      if (error instanceof SchemaValidationError) {
+        toast.error(`Validation error: ${error.issues[0]?.message}`);
+      } else if (error instanceof DuplicateKeyError) {
+        toast.error("A food with this ID already exists");
+      } else {
+        toast.error(`Failed to add food.`);
+      }
+      console.error(error);
+      setStatus("idle");
+    }
   }
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {

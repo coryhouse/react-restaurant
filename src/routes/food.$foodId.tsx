@@ -1,11 +1,11 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { FoodCard } from "../shared/FoodCard";
-import { FoodRatings } from "../shared/FoodRatings";
+import { eq, useLiveQuery } from "@tanstack/react-db";
 import { z } from "zod";
-import { foodQueries } from "../query-factories/foods";
-import { useQuery } from "@tanstack/react-query";
+import { foodCollection } from "../collections/foodCollection";
+import { FoodRatings } from "../shared/FoodRatings";
 import Spinner from "../shared/Spinner";
-import { ratingQueries } from "../query-factories/ratings";
+import { ratingCollection } from "../collections/ratingCollection";
 
 export const Route = createFileRoute("/food/$foodId")({
   params: {
@@ -14,29 +14,32 @@ export const Route = createFileRoute("/food/$foodId")({
     }),
   },
   component: FoodDetail,
-  loader: ({ context: { queryClient }, params: { foodId } }) => {
-    if (foodId) {
-      queryClient.ensureQueryData(foodQueries.getFoodById(foodId));
-      queryClient.ensureQueryData(ratingQueries.getRatingsByFoodId(foodId));
-    }
+  loader: async () => {
+    // start fetch ASAP - Minor optimization in this case
+    foodCollection.preload();
+    ratingCollection.preload();
   },
 });
 
 function FoodDetail() {
   const { foodId } = Route.useParams();
 
-  const { data: existingFood, isLoading } = useQuery({
-    ...foodQueries.getFoodById(foodId),
-    enabled: !!foodId,
-  });
+  // Fetch food and ratings in parallel
+  const { data: foods, isLoading } = useLiveQuery((q) =>
+    q
+      .from({ food: foodCollection })
+      .leftJoin({ rating: ratingCollection }, ({ rating, food }) =>
+        eq(rating.foodId, food.id)
+      )
+      .where(({ food }) => eq(food.id, foodId))
+  );
 
   if (isLoading) return <Spinner />;
-  if (!existingFood) throw notFound();
-
+  if (foods.length === 0) throw notFound();
   return (
-    <div>
-      <FoodCard food={existingFood} />
-      <FoodRatings foodId={existingFood.id} />
-    </div>
+    <>
+      <FoodCard food={foods[0].food} />
+      <FoodRatings foodId={foods[0].food.id} />
+    </>
   );
 }
