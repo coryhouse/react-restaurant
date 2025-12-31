@@ -21,5 +21,5 @@ createRoot(document.getElementById("root")!).render(
         </CartContextProvider>
       </UserContextProvider>
     </ErrorBoundary>
-  </StrictMode>
+  </StrictMode>,
 );
