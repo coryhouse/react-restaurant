@@ -4,6 +4,7 @@ import type { Food, FoodTag } from "../types/food.types";
 import { Card } from "./Card";
 import { useMutation } from "@tanstack/react-query";
 import { foodMutations } from "../query-factories/foods";
+import { useCart } from "../CartContext";
 
 const tagIcons: Record<FoodTag, string> = {
   Breakfast: "🥞",
@@ -26,8 +27,9 @@ export function FoodCard({ food, showActions = false }: FoodCardProps) {
   const { mutate: deleteFood } = useMutation(
     foodMutations.deleteFood(() => {
       toast.success("Food deleted");
-    })
+    }),
   );
+  const { addItem } = useCart();
 
   return (
     <Card>
@@ -103,6 +105,18 @@ export function FoodCard({ food, showActions = false }: FoodCardProps) {
               ))}
             </div>
           </div>
+
+          {showActions && (
+            <button
+              onClick={() => {
+                addItem(food);
+                toast.success(`${food.name} added to cart!`);
+              }}
+              className="w-full mt-3 px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md transition-colors"
+            >
+              Add to Cart
+            </button>
+          )}
         </div>
 
         <div className="w-full sm:w-32 md:w-40 flex-shrink-0">
