@@ -29,6 +29,6 @@ test("should support adding a new food, displaying the new food on the menu page
 
   await page.getByRole("button", { name: "Delete New food" }).click();
   await expect(
-    page.getByRole("button", { name: "Delete New food" })
+    page.getByRole("button", { name: "Delete New food" }),
   ).toHaveCount(0);
 });

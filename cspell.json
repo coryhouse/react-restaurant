@@ -3,10 +3,7 @@
   "ignorePaths": [],
   "dictionaryDefinitions": [],
   "dictionaries": [],
-  "words": [
-    "arkregex",
-    "VITE"
-  ],
+  "words": ["arkregex", "VITE"],
   "ignoreWords": [],
   "import": []
 }

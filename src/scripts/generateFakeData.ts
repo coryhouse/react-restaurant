@@ -56,7 +56,7 @@ for (let i = 1; i < numFakeFoods; i++) {
         min: 5,
         max: 30,
         dec: 2,
-      })
+      }),
     ),
     image: faker.helpers.arrayElement(foodImageFileNames),
     tags: getRandomFoodTags(),

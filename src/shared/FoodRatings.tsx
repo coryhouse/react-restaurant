@@ -36,7 +36,7 @@ function RatingItem({ rating }: { rating: Rating }) {
 
 export function FoodRatings({ foodId }: FoodRatingsProps) {
   const { data: ratings, isLoading } = useQuery(
-    ratingQueries.getRatingsByFoodId(foodId)
+    ratingQueries.getRatingsByFoodId(foodId),
   );
 
   if (isLoading || !ratings) return <Spinner />;

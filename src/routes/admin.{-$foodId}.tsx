@@ -57,14 +57,14 @@ function Admin() {
         setFood(newFood);
       }
     },
-    [existingFood, foodId]
+    [existingFood, foodId],
   );
 
   const { mutate: saveFood } = useMutation(
     foodMutations.saveFood(() => {
       toast.success(`Food ${"id" in food ? "saved" : "added"}!`);
       navigate({ to: "/" }); // Redirect to the Menu
-    })
+    }),
   );
 
   const errors = validate();
