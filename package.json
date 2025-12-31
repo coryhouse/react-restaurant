@@ -12,7 +12,10 @@
     "preview:app": "vite preview",
     "preview": "concurrently npm:preview:app npm:start:api",
     "pw": "playwright test",
-    "generate": "node src/scripts/generateFakeData.ts"
+    "generate": "node src/scripts/generateFakeData.ts",
+    "format": "prettier --write .",
+    "check-format": "prettier --check .",
+    "check": "npm run lint && npm run build && npm run pw && npm run check-format"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",

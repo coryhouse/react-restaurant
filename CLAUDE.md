@@ -4,6 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 In responses, sacrifice grammar for concision.
 
+## Notifications
+
+Play terminal bell (`echo -e '\a'`) when:
+
+- Completing a significant task
+- Encountering an issue that needs user attention
+
 ## Development Commands
 
 - `npm start` - Start both the React app (port 3000) and JSON Server API (port 3001) concurrently
@@ -13,6 +20,7 @@ In responses, sacrifice grammar for concision.
 - `npm run lint` - Run ESLint with TypeScript support
 - `npm run preview` - Preview the production build
 - `npm run pw` - Run Playwright end-to-end tests
+- `npm run check` - Run lint, build, Playwright tests, and format check
 
 ## Architecture Overview
 
@@ -63,4 +71,4 @@ This is a React restaurant menu application built with modern TypeScript tooling
 - Toast notifications use Sonner library
 - The app includes React Query Devtools and TanStack Router Devtools for debugging
 - After adding any new feature, add a Playwright test, or enhance an existing one.
-- Run Prettier on the code after making changes.
+- Run `npm run check` after making changes and fix any reported issues.
