@@ -1,9 +1,12 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import type { Food } from "./types/food.types";
-import type { CartContext, CartItem } from "./types/cart.types";
+import type {
+  CartContext as CartContextType,
+  CartItem,
+} from "./types/cart.types";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 
-const CartContext = createContext<CartContext | null>(null);
+export const CartContext = createContext<CartContextType | null>(null);
 
 type CartContextProviderProps = {
   children: React.ReactNode;
@@ -74,12 +77,4 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
       {children}
     </CartContext.Provider>
   );
-}
-
-export function useCart() {
-  const context = useContext(CartContext);
-  if (context === null) {
-    throw new Error("useCart must be used within a CartContextProvider");
-  }
-  return context;
 }
