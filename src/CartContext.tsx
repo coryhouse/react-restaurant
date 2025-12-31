@@ -12,7 +12,7 @@ type CartContextProviderProps = {
 export function CartContextProvider({ children }: CartContextProviderProps) {
   const [items, setItems] = useLocalStorage<CartItem[]>(
     "react-restaurant-cart",
-    []
+    [],
   );
 
   // Computed values - React Compiler will memoize these automatically
@@ -20,7 +20,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
   const totalPrice = items.reduce(
     (sum, item) => sum + item.food.price * item.quantity,
-    0
+    0,
   );
 
   const addItem = (food: Food) => {
@@ -31,7 +31,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         return prev.map((item) =>
           item.food.id === food.id
             ? { ...item, quantity: item.quantity + 1 }
-            : item
+            : item,
         );
       }
       // Add new item with quantity 1
@@ -50,8 +50,8 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     }
     setItems((prev) =>
       prev.map((item) =>
-        item.food.id === foodId ? { ...item, quantity } : item
-      )
+        item.food.id === foodId ? { ...item, quantity } : item,
+      ),
     );
   };
 
