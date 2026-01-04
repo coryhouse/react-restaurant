@@ -13,14 +13,14 @@ Play terminal bell (`echo -e '\a'`) when:
 
 ## Development Commands
 
-- `npm start` - Start both the React app (port 3000) and JSON Server API (port 3001) concurrently
-- `npm run start:app` - Start only the React app on port 3000
-- `npm run start:api` - Start only the JSON Server API on port 3001
-- `npm run build` - TypeScript compile and build for production
-- `npm run lint` - Run ESLint with TypeScript support
-- `npm run preview` - Preview the production build
-- `npm run pw` - Run Playwright end-to-end tests
-- `npm run check` - Run lint, build, Playwright tests, and format check
+- `bun start` - Start both the React app (port 3000) and JSON Server API (port 3001) concurrently
+- `bun run start:app` - Start only the React app on port 3000
+- `bun run start:api` - Start only the JSON Server API on port 3001
+- `bun run build` - TypeScript compile and build for production
+- `bun run lint` - Run ESLint with TypeScript support
+- `bun run preview` - Preview the production build
+- `bun run pw` - Run Playwright end-to-end tests
+- `bun run check` - Run lint, build, Playwright tests, and format check
 
 ## Architecture Overview
 
@@ -64,11 +64,11 @@ This is a React restaurant menu application built with modern TypeScript tooling
 
 ### Development Notes
 
-- The app requires both frontend and API servers running (`npm start`)
+- The app requires both frontend and API servers running (`bun start`)
 - Route parameters use TanStack Router's type-safe parameter parsing
 - All forms use controlled components with validation
 - Images are served statically from `public/images/`
 - Toast notifications use Sonner library
 - The app includes React Query Devtools and TanStack Router Devtools for debugging
 - After adding any new feature, add a Playwright test, or enhance an existing one.
-- Run `npm run check` after making changes and fix any reported issues.
+- Run `bun run check` after making changes and fix any reported issues.
