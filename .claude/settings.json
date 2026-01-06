@@ -1,0 +1,29 @@
+{
+  "enabledPlugins": {
+    "dev-browser@dev-browser-marketplace": true
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run check",
+            "statusMessage": "Running bun run check..."
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run check",
+            "statusMessage": "Running bun run check..."
+          }
+        ]
+      }
+    ]
+  }
+}
