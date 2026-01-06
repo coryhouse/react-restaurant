@@ -7,7 +7,7 @@
     "start": "concurrently npm:start:app npm:start:api",
     "start:app": "vite --port 3000 --strictPort",
     "start:api": "json-server --port 3001 db.json --delay 1500",
-    "build": "tsc --build && vite build",
+    "build": "tsc --noEmit --project tsconfig.app.json && vite build",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview:app": "vite preview",
     "preview": "concurrently npm:preview:app npm:start:api",
