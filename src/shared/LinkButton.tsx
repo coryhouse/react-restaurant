@@ -1,6 +1,6 @@
 import { Link, type LinkProps } from "@tanstack/react-router";
 
-type LinkButtonVariant = "primary" | "danger" | "text";
+type LinkButtonVariant = "primary" | "danger" | "text" | "ghost";
 type LinkButtonSize = "sm" | "md" | "lg";
 
 type LinkButtonProps = Omit<LinkProps, "className"> & {
@@ -13,6 +13,7 @@ const variantClasses: Record<LinkButtonVariant, string> = {
   primary: "bg-blue-600 hover:bg-blue-700 text-white",
   danger: "text-red-600 hover:text-red-700 hover:bg-red-50",
   text: "text-blue-600 hover:text-blue-800",
+  ghost: "text-gray-600 hover:text-gray-900 hover:bg-gray-100",
 };
 
 const sizeClasses: Record<LinkButtonSize, string> = {

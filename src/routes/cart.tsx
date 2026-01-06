@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCart } from "../CartContext";
+import { useCart } from "../hooks/useCart";
 import { Card } from "../shared/Card";
 import { Button } from "../shared/Button";
 import { LinkButton } from "../shared/LinkButton";
@@ -60,13 +60,9 @@ function Cart() {
             ${totalPrice.toFixed(2)}
           </span>
         </div>
-        <Button
-          className="w-full font-bold"
-          size="lg"
-          onClick={() => alert("Checkout coming soon!")}
-        >
+        <LinkButton to="/checkout" className="w-full font-bold" size="lg">
           Proceed to Checkout
-        </Button>
+        </LinkButton>
       </Card>
     </div>
   );
