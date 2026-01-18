@@ -1,6 +1,8 @@
 {
-  "enabledPlugins": {
-    "dev-browser@dev-browser-marketplace": true
+  "permissions": {
+    "allow": ["Bash(npm run test:*)", "Bash(git diff:*)"],
+    "ask": ["Bash(git push:*)", "Bash(npm publish:*)"],
+    "deny": ["Read(.env*)", "Bash(rm -rf:*)"]
   },
   "hooks": {
     "PostToolUse": [
@@ -25,5 +27,9 @@
         ]
       }
     ]
+  },
+  "enabledPlugins": {
+    "dev-browser@dev-browser-marketplace": true,
+    "frontend-design@claude-plugins-official": true
   }
 }
