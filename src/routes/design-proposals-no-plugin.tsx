@@ -99,7 +99,7 @@ function RusticWarmthMockup() {
                 <div className="w-10 h-10 bg-amber-200 rounded-full"></div>
                 <span className="text-amber-900 font-medium">{item}</span>
               </div>
-            )
+            ),
           )}
         </div>
       </div>
@@ -448,7 +448,7 @@ const proposals: Proposal[] = [
 
 function DesignProposals() {
   const [selectedProposal, setSelectedProposal] = useState<Proposal | null>(
-    null
+    null,
   );
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
@@ -718,7 +718,7 @@ function DesignProposals() {
                             <p className="text-xs text-gray-500">{color}</p>
                           </div>
                         </div>
-                      )
+                      ),
                     )}
                   </div>
                 </div>

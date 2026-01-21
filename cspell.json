@@ -1,9 +1,24 @@
 {
   "version": "0.2",
-  "ignorePaths": [],
-  "dictionaryDefinitions": [],
-  "dictionaries": [],
-  "words": ["arkregex", "VITE"],
+  "ignorePaths": [
+    "node_modules/**",
+    "build/**",
+    "dist/**",
+    "coverage/**",
+    "**/*.config.js",
+    "**/json-server/**",
+    "src/routes/design-proposals-frontend-plugin.tsx",
+    "src/routes/design-proposals-no-plugin.tsx"
+  ],
+  "dictionaryDefinitions": [
+    {
+      "name": "custom-dictionary",
+      "path": "./.cspell/custom-dictionary.txt",
+      "addWords": true
+    }
+  ],
+  "dictionaries": ["custom-dictionary"],
+  "words": [],
   "ignoreWords": [],
   "import": []
 }

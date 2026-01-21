@@ -11,7 +11,9 @@ export const checkoutFormSchema = z.object({
     .string()
     .length(2, { error: "State must be 2 letters" })
     .regex(/^[A-Z]{2}$/, { error: "Use state abbreviation (e.g., NY)" }),
-  zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, { error: "Enter valid ZIP code" }),
+  zipCode: z
+    .string()
+    .regex(/^\d{5}(-\d{4})?$/, { error: "Enter valid ZIP code" }),
 });
 
 export type CheckoutFormData = z.infer<typeof checkoutFormSchema>;

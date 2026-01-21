@@ -6,16 +6,28 @@
   "scripts": {
     "start": "concurrently npm:start:app npm:start:api",
     "start:app": "vite --port 3000 --strictPort",
-    "start:api": "json-server --port 3001 db.json --delay 1500",
+    "start:api": "json-server --port 3001 db.json --delay 0",
     "build": "tsc --noEmit --project tsconfig.app.json && vite build",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview:app": "vite preview",
     "preview": "concurrently npm:preview:app npm:start:api",
     "pw": "playwright test",
+    "pw-debug": "playwright test --debug",
     "generate": "node src/scripts/generateFakeData.ts",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
-    "check": "npm run lint && npm run build && npm run pw && npm run check-format"
+    "check": "npm run lint && npm run build && npm run pw && npm run check-format",
+    "typecheck": "tsc --noEmit --project tsconfig.app.json",
+    "prepare": "husky",
+    "cspell": "cspell . --no-progress --show-suggestions --gitignore"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --max-warnings 0"
+    ],
+    "*.{ts,tsx,js,jsx,json,css,md}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",
@@ -25,6 +37,7 @@
     "@tanstack/router-devtools": "^1.5.0",
     "@tanstack/router-plugin": "^1.131.27",
     "concurrently": "^9.2.0",
+    "cspell": "^9.6.0",
     "json-server": "^0.17.0",
     "ky": "^1.9.0",
     "react": "^19.1.1",
@@ -46,6 +59,8 @@
     "eslint-plugin-react-hooks": "^6.0.0-rc.1",
     "eslint-plugin-react-refresh": "^0.4.5",
     "globals": "^16.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "tailwindcss": "^4.1.12",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.40.0",

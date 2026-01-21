@@ -6,10 +6,30 @@ export const Route = createFileRoute("/design-proposals-frontend-plugin")({
 });
 
 const menuItems = [
-  { name: "Burger", price: 8.99, image: "/images/burger.jpg", tag: "Signature" },
-  { name: "Cajun Pasta", price: 16.99, image: "/images/cajun-pasta.jpg", tag: "Spicy" },
-  { name: "Salmon Steak", price: 18.99, image: "/images/salmon.jpg", tag: "Chef's Pick" },
-  { name: "Street Tacos", price: 9.99, image: "/images/street-tacos.jpg", tag: "Popular" },
+  {
+    name: "Burger",
+    price: 8.99,
+    image: "/images/burger.jpg",
+    tag: "Signature",
+  },
+  {
+    name: "Cajun Pasta",
+    price: 16.99,
+    image: "/images/cajun-pasta.jpg",
+    tag: "Spicy",
+  },
+  {
+    name: "Salmon Steak",
+    price: 18.99,
+    image: "/images/salmon.jpg",
+    tag: "Chef's Pick",
+  },
+  {
+    name: "Street Tacos",
+    price: 9.99,
+    image: "/images/street-tacos.jpg",
+    tag: "Popular",
+  },
 ];
 
 function DesignProposals() {
@@ -52,8 +72,9 @@ function DesignProposals() {
             <span className="italic text-amber-200">Visions</span>
           </h2>
           <p className="text-white/60 text-lg max-w-xl mx-auto leading-relaxed">
-            Each proposal offers a complete aesthetic direction—from brutalist rawness
-            to refined luxury. Click any card to explore the full vision.
+            Each proposal offers a complete aesthetic direction—from brutalist
+            rawness to refined luxury. Click any card to explore the full
+            vision.
           </p>
         </div>
       </section>
@@ -61,14 +82,15 @@ function DesignProposals() {
       {/* Proposals Grid */}
       <section className="max-w-7xl mx-auto px-6 pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
           {/* Proposal 1: Brutalist */}
           <ProposalCard
             index={1}
             title="Brutalist Kitchen"
             subtitle="Raw. Honest. Unforgettable."
             expanded={expandedProposal === 1}
-            onToggle={() => setExpandedProposal(expandedProposal === 1 ? null : 1)}
+            onToggle={() =>
+              setExpandedProposal(expandedProposal === 1 ? null : 1)
+            }
             tags={["Bold Typography", "High Contrast", "Grid Breaking"]}
             gradient="from-zinc-800 to-neutral-900"
           >
@@ -81,7 +103,9 @@ function DesignProposals() {
             title="Golden Hour"
             subtitle="Refined elegance for discerning palates."
             expanded={expandedProposal === 2}
-            onToggle={() => setExpandedProposal(expandedProposal === 2 ? null : 2)}
+            onToggle={() =>
+              setExpandedProposal(expandedProposal === 2 ? null : 2)
+            }
             tags={["Serif Typography", "Gold Accents", "Sophisticated"]}
             gradient="from-amber-950 to-stone-900"
           >
@@ -94,7 +118,9 @@ function DesignProposals() {
             title="Farm to Table"
             subtitle="Warm, natural, and inviting."
             expanded={expandedProposal === 3}
-            onToggle={() => setExpandedProposal(expandedProposal === 3 ? null : 3)}
+            onToggle={() =>
+              setExpandedProposal(expandedProposal === 3 ? null : 3)
+            }
             tags={["Earth Tones", "Organic Shapes", "Handcrafted Feel"]}
             gradient="from-emerald-950 to-stone-900"
           >
@@ -107,7 +133,9 @@ function DesignProposals() {
             title="Neon Diner"
             subtitle="70s nostalgia meets digital future."
             expanded={expandedProposal === 4}
-            onToggle={() => setExpandedProposal(expandedProposal === 4 ? null : 4)}
+            onToggle={() =>
+              setExpandedProposal(expandedProposal === 4 ? null : 4)
+            }
             tags={["Gradient Mesh", "Retro Typography", "Bold Geometry"]}
             gradient="from-fuchsia-950 to-violet-950"
           >
@@ -120,7 +148,9 @@ function DesignProposals() {
             title="The Menu Edit"
             subtitle="Magazine-worthy presentation."
             expanded={expandedProposal === 5}
-            onToggle={() => setExpandedProposal(expandedProposal === 5 ? null : 5)}
+            onToggle={() =>
+              setExpandedProposal(expandedProposal === 5 ? null : 5)
+            }
             tags={["Strong Grid", "Typography First", "Minimal"]}
             gradient="from-slate-800 to-slate-900"
           >
@@ -133,13 +163,14 @@ function DesignProposals() {
             title="Pop Kitchen"
             subtitle="Bold, fun, and full of energy."
             expanded={expandedProposal === 6}
-            onToggle={() => setExpandedProposal(expandedProposal === 6 ? null : 6)}
+            onToggle={() =>
+              setExpandedProposal(expandedProposal === 6 ? null : 6)
+            }
             tags={["Vibrant Colors", "Playful Motion", "Energetic"]}
             gradient="from-orange-600 to-rose-700"
           >
             <PlayfulProposal />
           </ProposalCard>
-
         </div>
       </section>
 
@@ -147,7 +178,8 @@ function DesignProposals() {
       <footer className="border-t border-white/10 py-12 px-6">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-white/40 text-sm">
-            Click any proposal to see the expanded vision • All designs are production-ready
+            Click any proposal to see the expanded vision • All designs are
+            production-ready
           </p>
         </div>
       </footer>
@@ -197,7 +229,12 @@ function ProposalCard({
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
             </svg>
           </button>
         </div>
@@ -228,9 +265,7 @@ function ProposalCard({
           expanded ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="border-t border-white/10">
-          {children}
-        </div>
+        <div className="border-t border-white/10">{children}</div>
       </div>
     </div>
   );
@@ -340,9 +375,15 @@ function LuxuryProposal() {
           React Bistro
         </span>
         <div className="flex gap-8 text-sm tracking-[0.15em] uppercase text-amber-100/60">
-          <span className="hover:text-amber-200 cursor-pointer transition-colors">Carte</span>
-          <span className="hover:text-amber-200 cursor-pointer transition-colors">Reservations</span>
-          <span className="hover:text-amber-200 cursor-pointer transition-colors">Contact</span>
+          <span className="hover:text-amber-200 cursor-pointer transition-colors">
+            Carte
+          </span>
+          <span className="hover:text-amber-200 cursor-pointer transition-colors">
+            Reservations
+          </span>
+          <span className="hover:text-amber-200 cursor-pointer transition-colors">
+            Contact
+          </span>
         </div>
       </nav>
 
@@ -350,9 +391,30 @@ function LuxuryProposal() {
       <div className="relative py-20 px-8 text-center">
         <div className="absolute inset-0 flex items-center justify-center opacity-5">
           <svg viewBox="0 0 100 100" className="w-96 h-96">
-            <circle cx="50" cy="50" r="48" fill="none" stroke="#d4a853" strokeWidth="0.5" />
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#d4a853" strokeWidth="0.5" />
-            <circle cx="50" cy="50" r="32" fill="none" stroke="#d4a853" strokeWidth="0.5" />
+            <circle
+              cx="50"
+              cy="50"
+              r="48"
+              fill="none"
+              stroke="#d4a853"
+              strokeWidth="0.5"
+            />
+            <circle
+              cx="50"
+              cy="50"
+              r="40"
+              fill="none"
+              stroke="#d4a853"
+              strokeWidth="0.5"
+            />
+            <circle
+              cx="50"
+              cy="50"
+              r="32"
+              fill="none"
+              stroke="#d4a853"
+              strokeWidth="0.5"
+            />
           </svg>
         </div>
         <p className="text-amber-400 text-sm tracking-[0.3em] uppercase mb-4">
@@ -393,7 +455,9 @@ function LuxuryProposal() {
                     <h3 className="text-xl italic group-hover:text-amber-200 transition-colors">
                       {item.name}
                     </h3>
-                    <span className="text-amber-400 font-light">${item.price}</span>
+                    <span className="text-amber-400 font-light">
+                      ${item.price}
+                    </span>
                   </div>
                   <span className="text-xs tracking-[0.2em] uppercase text-amber-100/40">
                     {item.tag}
@@ -430,9 +494,15 @@ function OrganicProposal() {
           react bistro
         </span>
         <div className="flex gap-6 text-sm text-stone-600">
-          <span className="hover:text-emerald-700 cursor-pointer transition-colors">menu</span>
-          <span className="hover:text-emerald-700 cursor-pointer transition-colors">our story</span>
-          <span className="hover:text-emerald-700 cursor-pointer transition-colors">visit</span>
+          <span className="hover:text-emerald-700 cursor-pointer transition-colors">
+            menu
+          </span>
+          <span className="hover:text-emerald-700 cursor-pointer transition-colors">
+            our story
+          </span>
+          <span className="hover:text-emerald-700 cursor-pointer transition-colors">
+            visit
+          </span>
         </div>
       </nav>
 
@@ -462,8 +532,8 @@ function OrganicProposal() {
             <span className="italic text-emerald-700">grown with care</span>
           </h1>
           <p className="text-stone-600 text-lg leading-relaxed mb-8 max-w-lg">
-            From our partner farms to your plate—every ingredient tells the story
-            of sustainable farming and mindful cooking.
+            From our partner farms to your plate—every ingredient tells the
+            story of sustainable farming and mindful cooking.
           </p>
           <button className="bg-emerald-700 text-white px-8 py-4 rounded-full hover:bg-emerald-800 transition-colors">
             Explore our menu →
@@ -509,7 +579,9 @@ function OrganicProposal() {
                   >
                     {item.name}
                   </h3>
-                  <span className="text-emerald-700 font-medium">${item.price}</span>
+                  <span className="text-emerald-700 font-medium">
+                    ${item.price}
+                  </span>
                 </div>
                 <span className="text-xs text-stone-500 bg-stone-100 px-2 py-1 rounded-full">
                   {item.tag}
@@ -571,9 +643,15 @@ function RetroFuturisticProposal() {
           REACT BISTRO
         </span>
         <div className="flex gap-6 font-mono text-sm uppercase tracking-wider text-white/70">
-          <span className="hover:text-pink-400 cursor-pointer transition-colors">Menu</span>
-          <span className="hover:text-pink-400 cursor-pointer transition-colors">About</span>
-          <span className="hover:text-pink-400 cursor-pointer transition-colors">Contact</span>
+          <span className="hover:text-pink-400 cursor-pointer transition-colors">
+            Menu
+          </span>
+          <span className="hover:text-pink-400 cursor-pointer transition-colors">
+            About
+          </span>
+          <span className="hover:text-pink-400 cursor-pointer transition-colors">
+            Contact
+          </span>
         </div>
       </nav>
 
@@ -605,8 +683,8 @@ function RetroFuturisticProposal() {
         </h1>
 
         <p className="text-white/60 max-w-lg mx-auto mb-10 font-mono">
-          Where retro vibes meet tomorrow's taste. A culinary journey
-          through time and space.
+          Where retro vibes meet tomorrow's taste. A culinary journey through
+          time and space.
         </p>
 
         <button
@@ -632,9 +710,13 @@ function RetroFuturisticProposal() {
                 className="relative aspect-square rounded-2xl overflow-hidden mb-3"
                 style={{
                   background: `linear-gradient(135deg, rgba(${
-                    i === 0 ? "244, 114, 182" :
-                    i === 1 ? "129, 140, 248" :
-                    i === 2 ? "251, 146, 60" : "52, 211, 153"
+                    i === 0
+                      ? "244, 114, 182"
+                      : i === 1
+                        ? "129, 140, 248"
+                        : i === 2
+                          ? "251, 146, 60"
+                          : "52, 211, 153"
                   }, 0.2), transparent)`,
                 }}
               >
@@ -645,7 +727,9 @@ function RetroFuturisticProposal() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                 <div className="absolute bottom-3 left-3 right-3">
-                  <span className="font-mono text-xs text-pink-400">{item.tag}</span>
+                  <span className="font-mono text-xs text-pink-400">
+                    {item.tag}
+                  </span>
                 </div>
               </div>
               <h3
@@ -664,7 +748,8 @@ function RetroFuturisticProposal() {
       <div
         className="relative z-10 py-6 text-center font-mono text-sm"
         style={{
-          background: "linear-gradient(90deg, rgba(244, 114, 182, 0.1), rgba(129, 140, 248, 0.1))",
+          background:
+            "linear-gradient(90deg, rgba(244, 114, 182, 0.1), rgba(129, 140, 248, 0.1))",
         }}
       >
         <span className="text-pink-400">★</span>
@@ -690,9 +775,15 @@ function EditorialProposal() {
           React Bistro
         </span>
         <div className="flex gap-8 text-xs tracking-[0.2em] uppercase text-black/50">
-          <span className="hover:text-black cursor-pointer transition-colors">Menu</span>
-          <span className="hover:text-black cursor-pointer transition-colors">Story</span>
-          <span className="hover:text-black cursor-pointer transition-colors">Visit</span>
+          <span className="hover:text-black cursor-pointer transition-colors">
+            Menu
+          </span>
+          <span className="hover:text-black cursor-pointer transition-colors">
+            Story
+          </span>
+          <span className="hover:text-black cursor-pointer transition-colors">
+            Visit
+          </span>
         </div>
       </nav>
 
@@ -717,8 +808,8 @@ function EditorialProposal() {
             className="text-black/60 leading-relaxed mb-8 text-sm"
             style={{ fontFamily: "'IBM Plex Sans', sans-serif" }}
           >
-            Exploring the intersection of tradition and innovation,
-            where every plate becomes a canvas and every meal a narrative.
+            Exploring the intersection of tradition and innovation, where every
+            plate becomes a canvas and every meal a narrative.
           </p>
           <button
             className="self-start border border-black px-6 py-3 text-xs tracking-[0.2em] uppercase hover:bg-black hover:text-white transition-all"
@@ -736,7 +827,10 @@ function EditorialProposal() {
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="mt-2 flex justify-between text-xs text-black/40" style={{ fontFamily: "'IBM Plex Mono', monospace" }}>
+          <div
+            className="mt-2 flex justify-between text-xs text-black/40"
+            style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+          >
             <span>01 — Salmon Steak</span>
             <span>$18.99</span>
           </div>
@@ -825,15 +919,27 @@ function PlayfulProposal() {
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
           className="absolute w-32 h-32 rounded-full bg-orange-400 opacity-60 blur-xl"
-          style={{ top: "10%", left: "10%", animation: "float 6s ease-in-out infinite" }}
+          style={{
+            top: "10%",
+            left: "10%",
+            animation: "float 6s ease-in-out infinite",
+          }}
         />
         <div
           className="absolute w-24 h-24 rounded-full bg-pink-400 opacity-60 blur-xl"
-          style={{ top: "60%", right: "15%", animation: "float 8s ease-in-out infinite reverse" }}
+          style={{
+            top: "60%",
+            right: "15%",
+            animation: "float 8s ease-in-out infinite reverse",
+          }}
         />
         <div
           className="absolute w-40 h-40 rounded-full bg-violet-400 opacity-50 blur-xl"
-          style={{ bottom: "10%", left: "30%", animation: "float 7s ease-in-out infinite" }}
+          style={{
+            bottom: "10%",
+            left: "30%",
+            animation: "float 7s ease-in-out infinite",
+          }}
         />
       </div>
 
@@ -898,8 +1004,8 @@ function PlayfulProposal() {
           className="text-lg text-gray-600 max-w-md mx-auto mb-8"
           style={{ fontFamily: "'Nunito', sans-serif" }}
         >
-          Delicious meals made with love, served with a smile!
-          Order now and taste the happiness! 🥳
+          Delicious meals made with love, served with a smile! Order now and
+          taste the happiness! 🥳
         </p>
 
         <button
