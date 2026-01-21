@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Order {
+  id              String   @id @default(uuid())
+  orderNumber     String   @unique
+
+  // Customer
+  customerName    String
+  customerEmail   String
+  customerPhone   String?
+
+  // Shipping
+  addressLine1    String
+  addressLine2    String?
+  city            String
+  state           String
+  zipCode         String
+  country         String   @default("US")
+
+  // Order
+  items           OrderItem[]
+  subtotal        Float
+  tax             Float
+  total           Float
+
+  // Payment
+  paymentStatus   PaymentStatus  @default(PENDING)
+  paymentMethod   String?
+  stripeSessionId String?  @unique
+  stripePaymentId String?
+
+  // Metadata
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  fulfilledAt     DateTime?
+
+  @@index([customerEmail])
+  @@index([orderNumber])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id          String  @id @default(uuid())
+  orderId     String
+  order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  // Food item snapshot (denormalized to preserve historical data)
+  foodId      String
+  foodName    String
+  foodImage   String
+  price       Float
+  quantity    Int
+
+  @@index([orderId])
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+  CANCELLED
+}
