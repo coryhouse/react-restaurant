@@ -1,0 +1,10 @@
+# Custom Dictionary Words
+lassi
+viewports
+arkregex
+VITE
+iconify
+Fraunces
+Mojito
+bowtie
+xlink
