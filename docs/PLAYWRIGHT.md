@@ -1,0 +1,1 @@
+NEVER use `getByTestId`. If it appears necessary, improve the HTML structure to support using other accessible locators.
