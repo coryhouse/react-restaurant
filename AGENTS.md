@@ -1,6 +1,15 @@
 This is React a restaurant management app.
 
+## Output Formatting
+
 In responses, sacrifice grammar for concision.
+
+## Separate docs (Only read these if necessary)
+
+For TypeScript conventions, see docs/TYPESCRIPT.md
+For Playwright test writing conventions, see docs/PLAYWRIGHT.md
+For React conventions, see docs/REACT.md
+For Routing conventions, see docs/ROUTING.md
 
 ## Notifications
 
@@ -20,7 +29,7 @@ built with modern TypeScript tooling:
 ### Core Stack
 
 - **React 19** with TypeScript and Vite
-- **TanStack Router** for file-based routing with type-safe navigation
+- **TanStack Router** for file-based routing
 - **TanStack Query** for server state management with optimistic updates
 - **Tailwind CSS 4** for styling
 - **JSON Server** as a mock REST API backend
@@ -31,11 +40,7 @@ built with modern TypeScript tooling:
 
 1. **Query Factories Pattern**: All API interactions are centralized in `src/query-factories` using TanStack Query's QueryOptions API for reusable query definitions.
 
-2. **File-based Routing**: Routes are defined in `src/routes/` with TanStack Router's file-based routing system. The route tree is auto-generated in `routeTree.gen.ts`.
-
-3. **Type-safe Parameters**: Route parameters are validated using Zod schemas, ensuring type safety throughout the routing system.
-
-4. **Centralized Error Handling**: Global error boundaries and route-level error components provide consistent error handling.
+2. **Centralized Error Handling**: Global error boundaries and route-level error components provide consistent error handling.
 
 ### Data Flow
 
