@@ -9,12 +9,33 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DesignProposalsNoPluginRouteImport } from './routes/design-proposals-no-plugin'
+import { Route as DesignProposalsFrontendPluginRouteImport } from './routes/design-proposals-frontend-plugin'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FoodFoodIdRouteImport } from './routes/food.$foodId'
+import { Route as CheckoutSuccessRouteImport } from './routes/checkout.success'
+import { Route as CheckoutCancelRouteImport } from './routes/checkout.cancel'
 import { Route as AdminChar123FoodIdChar125RouteImport } from './routes/admin.{-$foodId}'
 
+const DesignProposalsNoPluginRoute = DesignProposalsNoPluginRouteImport.update({
+  id: '/design-proposals-no-plugin',
+  path: '/design-proposals-no-plugin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DesignProposalsFrontendPluginRoute =
+  DesignProposalsFrontendPluginRouteImport.update({
+    id: '/design-proposals-frontend-plugin',
+    path: '/design-proposals-frontend-plugin',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CartRoute = CartRouteImport.update({
   id: '/cart',
   path: '/cart',
@@ -35,6 +56,16 @@ const FoodFoodIdRoute = FoodFoodIdRouteImport.update({
   path: '/food/$foodId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => CheckoutRoute,
+} as any)
+const CheckoutCancelRoute = CheckoutCancelRouteImport.update({
+  id: '/cancel',
+  path: '/cancel',
+  getParentRoute: () => CheckoutRoute,
+} as any)
 const AdminChar123FoodIdChar125Route =
   AdminChar123FoodIdChar125RouteImport.update({
     id: '/admin/{-$foodId}',
@@ -46,14 +77,24 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRouteWithChildren
+  '/design-proposals-frontend-plugin': typeof DesignProposalsFrontendPluginRoute
+  '/design-proposals-no-plugin': typeof DesignProposalsNoPluginRoute
   '/admin/{-$foodId}': typeof AdminChar123FoodIdChar125Route
+  '/checkout/cancel': typeof CheckoutCancelRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/food/$foodId': typeof FoodFoodIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRouteWithChildren
+  '/design-proposals-frontend-plugin': typeof DesignProposalsFrontendPluginRoute
+  '/design-proposals-no-plugin': typeof DesignProposalsNoPluginRoute
   '/admin/{-$foodId}': typeof AdminChar123FoodIdChar125Route
+  '/checkout/cancel': typeof CheckoutCancelRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/food/$foodId': typeof FoodFoodIdRoute
 }
 export interface FileRoutesById {
@@ -61,20 +102,50 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRouteWithChildren
+  '/design-proposals-frontend-plugin': typeof DesignProposalsFrontendPluginRoute
+  '/design-proposals-no-plugin': typeof DesignProposalsNoPluginRoute
   '/admin/{-$foodId}': typeof AdminChar123FoodIdChar125Route
+  '/checkout/cancel': typeof CheckoutCancelRoute
+  '/checkout/success': typeof CheckoutSuccessRoute
   '/food/$foodId': typeof FoodFoodIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/cart' | '/admin/{-$foodId}' | '/food/$foodId'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/cart'
+    | '/checkout'
+    | '/design-proposals-frontend-plugin'
+    | '/design-proposals-no-plugin'
+    | '/admin/{-$foodId}'
+    | '/checkout/cancel'
+    | '/checkout/success'
+    | '/food/$foodId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/cart' | '/admin/{-$foodId}' | '/food/$foodId'
+  to:
+    | '/'
+    | '/about'
+    | '/cart'
+    | '/checkout'
+    | '/design-proposals-frontend-plugin'
+    | '/design-proposals-no-plugin'
+    | '/admin/{-$foodId}'
+    | '/checkout/cancel'
+    | '/checkout/success'
+    | '/food/$foodId'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/cart'
+    | '/checkout'
+    | '/design-proposals-frontend-plugin'
+    | '/design-proposals-no-plugin'
     | '/admin/{-$foodId}'
+    | '/checkout/cancel'
+    | '/checkout/success'
     | '/food/$foodId'
   fileRoutesById: FileRoutesById
 }
@@ -82,12 +153,36 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   CartRoute: typeof CartRoute
+  CheckoutRoute: typeof CheckoutRouteWithChildren
+  DesignProposalsFrontendPluginRoute: typeof DesignProposalsFrontendPluginRoute
+  DesignProposalsNoPluginRoute: typeof DesignProposalsNoPluginRoute
   AdminChar123FoodIdChar125Route: typeof AdminChar123FoodIdChar125Route
   FoodFoodIdRoute: typeof FoodFoodIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/design-proposals-no-plugin': {
+      id: '/design-proposals-no-plugin'
+      path: '/design-proposals-no-plugin'
+      fullPath: '/design-proposals-no-plugin'
+      preLoaderRoute: typeof DesignProposalsNoPluginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/design-proposals-frontend-plugin': {
+      id: '/design-proposals-frontend-plugin'
+      path: '/design-proposals-frontend-plugin'
+      fullPath: '/design-proposals-frontend-plugin'
+      preLoaderRoute: typeof DesignProposalsFrontendPluginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cart': {
       id: '/cart'
       path: '/cart'
@@ -116,6 +211,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FoodFoodIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout/success': {
+      id: '/checkout/success'
+      path: '/success'
+      fullPath: '/checkout/success'
+      preLoaderRoute: typeof CheckoutSuccessRouteImport
+      parentRoute: typeof CheckoutRoute
+    }
+    '/checkout/cancel': {
+      id: '/checkout/cancel'
+      path: '/cancel'
+      fullPath: '/checkout/cancel'
+      preLoaderRoute: typeof CheckoutCancelRouteImport
+      parentRoute: typeof CheckoutRoute
+    }
     '/admin/{-$foodId}': {
       id: '/admin/{-$foodId}'
       path: '/admin/{-$foodId}'
@@ -126,10 +235,27 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface CheckoutRouteChildren {
+  CheckoutCancelRoute: typeof CheckoutCancelRoute
+  CheckoutSuccessRoute: typeof CheckoutSuccessRoute
+}
+
+const CheckoutRouteChildren: CheckoutRouteChildren = {
+  CheckoutCancelRoute: CheckoutCancelRoute,
+  CheckoutSuccessRoute: CheckoutSuccessRoute,
+}
+
+const CheckoutRouteWithChildren = CheckoutRoute._addFileChildren(
+  CheckoutRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   CartRoute: CartRoute,
+  CheckoutRoute: CheckoutRouteWithChildren,
+  DesignProposalsFrontendPluginRoute: DesignProposalsFrontendPluginRoute,
+  DesignProposalsNoPluginRoute: DesignProposalsNoPluginRoute,
   AdminChar123FoodIdChar125Route: AdminChar123FoodIdChar125Route,
   FoodFoodIdRoute: FoodFoodIdRoute,
 }

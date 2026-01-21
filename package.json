@@ -16,7 +16,7 @@
     "generate": "node src/scripts/generateFakeData.ts",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
-    "check": "npm run lint && npm run build && npm run pw && npm run check-format",
+    "check": "concurrently 'bun lint' 'bun run build' 'bun pw' 'bun check-format' 'bun cspell'",
     "typecheck": "tsc --noEmit --project tsconfig.app.json",
     "prepare": "husky",
     "cspell": "cspell . --no-progress --show-suggestions --gitignore"

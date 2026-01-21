@@ -6,7 +6,14 @@ import reactRefresh from "eslint-plugin-react-refresh";
 
 export default tseslint.config(
   {
-    ignores: ["dist", "src/routeTree.gen.ts"],
+    ignores: [
+      "dist",
+      "src/routeTree.gen.ts",
+      "test-results",
+      "playwright-report",
+      "blob-report",
+      "playwright/.cache",
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
