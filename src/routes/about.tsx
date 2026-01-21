@@ -1,21 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useUserContext } from "../UserContext";
 
 export const Route = createFileRoute("/about")({
   component: About,
 });
 
 function About() {
-  const { user, setUser } = useUserContext();
   return (
     <>
-      <div className="p-2">Hello {user?.name}!</div>
-      <button
-        className="p-2 border-2 border-gray-400"
-        onClick={() => setUser(null)}
-      >
-        Logout
-      </button>
+      <h1>About</h1>
+      <p>This Restaurant management app uses React and json-server</p>
     </>
   );
 }
