@@ -16,13 +16,12 @@ export default function Spinner({
   };
 
   const spinner = (
-    <div
-      className={`${sizeClasses[size]} border-2 border-gray-200 border-t-blue-600 rounded-full animate-spin ${className}`}
-      role="status"
+    <output
+      className={`${sizeClasses[size]} border-2 border-gray-200 border-t-blue-600 rounded-full animate-spin block ${className}`}
       aria-label="Loading"
     >
       <span className="sr-only">Loading...</span>
-    </div>
+    </output>
   );
 
   if (center) {
