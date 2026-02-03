@@ -213,24 +213,16 @@ function ProposalCard({
       }`}
     >
       {/* Card Header - Always Visible */}
-      <div
-        role="button"
-        tabIndex={0}
-        className={`bg-gradient-to-br ${gradient} p-6 cursor-pointer`}
+      <button
+        type="button"
+        className={`bg-gradient-to-br ${gradient} p-6 cursor-pointer w-full text-left`}
         onClick={onToggle}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            onToggle();
-          }
-        }}
       >
         <div className="flex items-start justify-between mb-4">
           <span className="font-mono text-white/40 text-sm">0{index}</span>
-          <button
-            type="button"
+          <span
             className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
-            aria-label={expanded ? "Collapse" : "Expand"}
+            aria-hidden="true"
           >
             <svg
               className={`w-4 h-4 transition-transform duration-300 ${expanded ? "rotate-45" : ""}`}
@@ -246,7 +238,7 @@ function ProposalCard({
                 d="M12 4v16m8-8H4"
               />
             </svg>
-          </button>
+          </span>
         </div>
 
         <h3
@@ -267,7 +259,7 @@ function ProposalCard({
             </span>
           ))}
         </div>
-      </div>
+      </button>
 
       {/* Expanded Content */}
       <div
@@ -318,10 +310,16 @@ function BrutalistProposal() {
           <span className="text-yellow-400">SPEAKS</span>
         </h1>
         <div className="mt-8 flex gap-4">
-          <button type="button" className="bg-yellow-400 text-black px-8 py-4 font-black uppercase hover:bg-white transition-colors">
+          <button
+            type="button"
+            className="bg-yellow-400 text-black px-8 py-4 font-black uppercase hover:bg-white transition-colors"
+          >
             View Menu
           </button>
-          <button type="button" className="border-2 border-white px-8 py-4 font-black uppercase hover:bg-white hover:text-black transition-colors">
+          <button
+            type="button"
+            className="border-2 border-white px-8 py-4 font-black uppercase hover:bg-white hover:text-black transition-colors"
+          >
             Order Now
           </button>
         </div>
@@ -439,7 +437,10 @@ function LuxuryProposal() {
           Indulge in an exquisite journey through flavors crafted with passion,
           presented with artistry, and served with grace.
         </p>
-        <button type="button" className="border border-amber-400 text-amber-400 px-12 py-4 tracking-[0.2em] uppercase text-sm hover:bg-amber-400 hover:text-black transition-all duration-300">
+        <button
+          type="button"
+          className="border border-amber-400 text-amber-400 px-12 py-4 tracking-[0.2em] uppercase text-sm hover:bg-amber-400 hover:text-black transition-all duration-300"
+        >
           Reserve a Table
         </button>
       </div>
@@ -520,7 +521,11 @@ function OrganicProposal() {
       <div className="relative px-6 py-16">
         {/* Organic shape decoration */}
         <div className="absolute top-0 right-0 w-64 h-64 opacity-20">
-          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg
+            viewBox="0 0 200 200"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
             <path
               fill="#059669"
               d="M47.5,-57.2C59.9,-45.8,67.3,-29.3,69.8,-12.1C72.3,5.1,69.9,23,61.2,37.1C52.5,51.2,37.5,61.5,21.1,66.6C4.6,71.7,-13.3,71.5,-29.2,65.4C-45.1,59.3,-59,47.2,-66.3,32.1C-73.6,17,-74.3,-1.2,-69.4,-17.7C-64.5,-34.2,-54,-49,-40.5,-60C-27,-71,-10.5,-78.2,3.8,-82.7C18.1,-87.2,35.1,-68.6,47.5,-57.2Z"
@@ -545,7 +550,10 @@ function OrganicProposal() {
             From our partner farms to your plate—every ingredient tells the
             story of sustainable farming and mindful cooking.
           </p>
-          <button type="button" className="bg-emerald-700 text-white px-8 py-4 rounded-full hover:bg-emerald-800 transition-colors">
+          <button
+            type="button"
+            className="bg-emerald-700 text-white px-8 py-4 rounded-full hover:bg-emerald-800 transition-colors"
+          >
             Explore our menu →
           </button>
         </div>

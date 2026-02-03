@@ -35,10 +35,16 @@ function ModernMinimalistMockup() {
               FINE DINING
             </p>
             <div className="mt-6 flex gap-4 justify-center">
-              <button type="button" className="px-6 py-2 border border-white text-white text-sm hover:bg-white hover:text-gray-900 transition">
+              <button
+                type="button"
+                className="px-6 py-2 border border-white text-white text-sm hover:bg-white hover:text-gray-900 transition"
+              >
                 VIEW MENU
               </button>
-              <button type="button" className="px-6 py-2 bg-white text-gray-900 text-sm hover:bg-gray-100 transition">
+              <button
+                type="button"
+                className="px-6 py-2 bg-white text-gray-900 text-sm hover:bg-gray-100 transition"
+              >
                 RESERVE
               </button>
             </div>
@@ -78,7 +84,10 @@ function RusticWarmthMockup() {
               The Golden Fork
             </h2>
             <p className="text-amber-200 italic">Farm-to-table since 1952</p>
-            <button type="button" className="mt-6 px-8 py-3 bg-amber-600 text-white rounded-full hover:bg-amber-500 transition">
+            <button
+              type="button"
+              className="mt-6 px-8 py-3 bg-amber-600 text-white rounded-full hover:bg-amber-500 transition"
+            >
               Explore Our Kitchen
             </button>
           </div>
@@ -130,7 +139,10 @@ function BoldVibrantMockup() {
               </span>
             ))}
           </div>
-          <button type="button" className="mt-6 px-8 py-3 bg-white text-orange-600 font-bold rounded-full hover:scale-105 transition transform">
+          <button
+            type="button"
+            className="mt-6 px-8 py-3 bg-white text-orange-600 font-bold rounded-full hover:scale-105 transition transform"
+          >
             ORDER NOW
           </button>
         </div>
@@ -178,7 +190,10 @@ function ElegantDarkMockup() {
             <p className="text-gray-400 mt-4 italic text-sm">
               An unforgettable culinary journey
             </p>
-            <button type="button" className="mt-6 px-8 py-2 border border-amber-400 text-amber-400 text-sm hover:bg-amber-400 hover:text-gray-950 transition">
+            <button
+              type="button"
+              className="mt-6 px-8 py-2 border border-amber-400 text-amber-400 text-sm hover:bg-amber-400 hover:text-gray-950 transition"
+            >
               DISCOVER
             </button>
           </div>
@@ -224,10 +239,16 @@ function FreshHealthyMockup() {
             Nourish your body, delight your taste
           </p>
           <div className="mt-6 flex gap-4 justify-center">
-            <button type="button" className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+            <button
+              type="button"
+              className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+            >
               Browse Menu
             </button>
-            <button type="button" className="px-6 py-3 border-2 border-green-600 text-green-700 rounded-lg hover:bg-green-600 hover:text-white transition">
+            <button
+              type="button"
+              className="px-6 py-3 border-2 border-green-600 text-green-700 rounded-lg hover:bg-green-600 hover:text-white transition"
+            >
               Our Story
             </button>
           </div>
@@ -276,10 +297,16 @@ function RetroDinerMockup() {
             Good Food. Good Times. Since '58
           </p>
           <div className="mt-6 flex gap-4 justify-center">
-            <button type="button" className="px-6 py-3 bg-yellow-400 text-red-700 font-bold rounded hover:bg-yellow-300 transition">
+            <button
+              type="button"
+              className="px-6 py-3 bg-yellow-400 text-red-700 font-bold rounded hover:bg-yellow-300 transition"
+            >
               🍔 SEE MENU
             </button>
-            <button type="button" className="px-6 py-3 bg-white text-red-600 font-bold rounded hover:bg-gray-100 transition">
+            <button
+              type="button"
+              className="px-6 py-3 bg-white text-red-600 font-bold rounded hover:bg-gray-100 transition"
+            >
               📍 FIND US
             </button>
           </div>
@@ -547,11 +574,11 @@ function DesignProposals() {
                       </p>
                     </div>
                     <div className="flex gap-1">
-                      {Object.values(proposal.colorScheme)
+                      {Object.entries(proposal.colorScheme)
                         .slice(0, 3)
-                        .map((color, i) => (
+                        .map(([name, color]) => (
                           <div
-                            key={i}
+                            key={name}
                             className="w-4 h-4 rounded-full border border-gray-200"
                             style={{
                               backgroundColor: color.startsWith("linear")
@@ -599,11 +626,11 @@ function DesignProposals() {
                         </p>
                       </div>
                       <div className="flex gap-1">
-                        {Object.values(proposal.colorScheme)
+                        {Object.entries(proposal.colorScheme)
                           .slice(0, 4)
-                          .map((color, i) => (
+                          .map(([name, color]) => (
                             <div
-                              key={i}
+                              key={name}
                               className="w-6 h-6 rounded-full border border-gray-200"
                               style={{
                                 backgroundColor: color.startsWith("linear")
@@ -641,17 +668,30 @@ function DesignProposals() {
       {/* Detail Modal */}
       {selectedProposal && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
           className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-6"
           onClick={() => setSelectedProposal(null)}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              setSelectedProposal(null);
+            }
+          }}
         >
           <div
+            role="document"
             className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
             <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-gray-900">
+                <h2
+                  id="modal-title"
+                  className="text-xl font-bold text-gray-900"
+                >
                   {selectedProposal.name}
                 </h2>
                 <p className="text-gray-500">{selectedProposal.tagline}</p>
@@ -778,10 +818,16 @@ function DesignProposals() {
 
               {/* Action Buttons */}
               <div className="mt-8 pt-6 border-t border-gray-200 flex gap-4">
-                <button type="button" className="flex-1 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
+                <button
+                  type="button"
+                  className="flex-1 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
+                >
                   Select This Design
                 </button>
-                <button type="button" className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition">
+                <button
+                  type="button"
+                  className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition"
+                >
                   Request Changes
                 </button>
               </div>
