@@ -27,7 +27,7 @@ function ModernMinimalistMockup() {
   return (
     <div className="bg-white rounded-lg overflow-hidden shadow-lg">
       {/* Hero Section */}
-      <div className="relative h-64 bg-gradient-to-r from-gray-900 to-gray-700">
+      <div className="relative h-64 bg-linear-to-r from-gray-900 to-gray-700">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white">
             <h2 className="text-4xl font-light tracking-widest mb-2">BISTRO</h2>
@@ -119,7 +119,7 @@ function RusticWarmthMockup() {
 // Proposal 3: Bold & Vibrant
 function BoldVibrantMockup() {
   return (
-    <div className="bg-gradient-to-br from-orange-500 to-pink-600 rounded-lg overflow-hidden shadow-lg">
+    <div className="bg-linear-to-br from-orange-500 to-pink-600 rounded-lg overflow-hidden shadow-lg">
       {/* Hero Section */}
       <div className="relative h-64 flex items-center justify-center p-6">
         <div className="text-center text-white">
@@ -153,7 +153,7 @@ function BoldVibrantMockup() {
           {["Burgers", "Pizza", "Tacos", "Drinks"].map((cat) => (
             <div
               key={cat}
-              className="text-center p-3 bg-gradient-to-br from-orange-100 to-pink-100 rounded-xl cursor-pointer hover:from-orange-200 hover:to-pink-200 transition"
+              className="text-center p-3 bg-linear-to-br from-orange-100 to-pink-100 rounded-xl cursor-pointer hover:from-orange-200 hover:to-pink-200 transition"
             >
               <div className="text-2xl mb-1">
                 {cat === "Burgers" && "🍔"}
@@ -225,7 +225,7 @@ function ElegantDarkMockup() {
 // Proposal 5: Fresh & Healthy
 function FreshHealthyMockup() {
   return (
-    <div className="bg-gradient-to-b from-green-50 to-emerald-100 rounded-lg overflow-hidden shadow-lg">
+    <div className="bg-linear-to-b from-green-50 to-emerald-100 rounded-lg overflow-hidden shadow-lg">
       {/* Hero Section */}
       <div className="relative h-64 flex items-center justify-center p-6">
         <div className="text-center">
@@ -610,7 +610,7 @@ function DesignProposals() {
               >
                 <div className="flex">
                   {/* Mockup Preview */}
-                  <div className="w-80 flex-shrink-0 transform scale-[0.6] origin-top-left -mr-32 -mb-24">
+                  <div className="w-80 shrink-0 transform scale-[0.6] origin-top-left -mr-32 -mb-24">
                     <proposal.mockupComponent />
                   </div>
 

@@ -121,7 +121,7 @@ export function FoodCard({ food, showActions = false }: FoodCardProps) {
           )}
         </div>
 
-        <div className="w-full sm:w-32 md:w-40 flex-shrink-0">
+        <div className="w-full sm:w-32 md:w-40 shrink-0">
           <img
             className="w-full h-32 sm:h-full object-cover rounded-lg shadow-sm"
             alt={food.name}

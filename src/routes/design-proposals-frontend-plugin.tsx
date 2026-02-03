@@ -52,7 +52,7 @@ function DesignProposals() {
 
       {/* Hero */}
       <section className="relative overflow-hidden py-24 px-6">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 via-transparent to-rose-900/20" />
+        <div className="absolute inset-0 bg-linear-to-br from-amber-900/20 via-transparent to-rose-900/20" />
         <div
           className="absolute inset-0 opacity-30"
           style={{
@@ -215,7 +215,7 @@ function ProposalCard({
       {/* Card Header - Always Visible */}
       <button
         type="button"
-        className={`bg-gradient-to-br ${gradient} p-6 cursor-pointer w-full text-left`}
+        className={`bg-linear-to-br ${gradient} p-6 cursor-pointer w-full text-left`}
         onClick={onToggle}
       >
         <div className="flex items-start justify-between mb-4">
@@ -264,7 +264,7 @@ function ProposalCard({
       {/* Expanded Content */}
       <div
         className={`overflow-hidden transition-all duration-500 ${
-          expanded ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+          expanded ? "max-h-500 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div className="border-t border-white/10">{children}</div>
@@ -454,7 +454,7 @@ function LuxuryProposal() {
           <div className="grid grid-cols-2 gap-x-12 gap-y-8 max-w-4xl mx-auto">
             {menuItems.map((item) => (
               <div key={item.name} className="flex gap-6 group cursor-pointer">
-                <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-amber-200/30 flex-shrink-0">
+                <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-amber-200/30 shrink-0">
                   <img
                     src={item.image}
                     alt={item.name}
@@ -481,7 +481,7 @@ function LuxuryProposal() {
       </div>
 
       {/* Gold Banner */}
-      <div className="bg-gradient-to-r from-amber-900/50 via-amber-800/50 to-amber-900/50 py-6 text-center">
+      <div className="bg-linear-to-r from-amber-900/50 via-amber-800/50 to-amber-900/50 py-6 text-center">
         <span className="text-amber-200 tracking-[0.2em] uppercase text-sm">
           ✦ Open Tuesday through Sunday • 5pm to 11pm ✦
         </span>
@@ -583,7 +583,7 @@ function OrganicProposal() {
               key={item.name}
               className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer group"
             >
-              <div className="aspect-[4/3] overflow-hidden">
+              <div className="aspect-4/3 overflow-hidden">
                 <img
                   src={item.image}
                   alt={item.name}
@@ -651,7 +651,7 @@ function RetroFuturisticProposal() {
       {/* Nav */}
       <nav className="relative z-10 px-6 py-4 flex justify-between items-center border-b border-white/10">
         <span
-          className="text-2xl font-bold tracking-[0.1em]"
+          className="text-2xl font-bold tracking-widest"
           style={{
             fontFamily: "'Syncopate', Impact, sans-serif",
             background: "linear-gradient(135deg, #f472b6, #818cf8)",
@@ -745,7 +745,7 @@ function RetroFuturisticProposal() {
                   alt={item.name}
                   className="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent" />
                 <div className="absolute bottom-3 left-3 right-3">
                   <span className="font-mono text-xs text-pink-400">
                     {item.tag}
@@ -841,7 +841,7 @@ function EditorialProposal() {
         </div>
 
         <div className="col-span-7">
-          <div className="aspect-[4/3] bg-black/5 overflow-hidden">
+          <div className="aspect-4/3 bg-black/5 overflow-hidden">
             <img
               src="/images/salmon.jpg"
               alt="Featured dish"
@@ -1049,7 +1049,7 @@ function PlayfulProposal() {
                 animationDelay: `${i * 0.1}s`,
               }}
             >
-              <div className="aspect-square rounded-2xl overflow-hidden mb-3 bg-gradient-to-br from-orange-100 to-pink-100">
+              <div className="aspect-square rounded-2xl overflow-hidden mb-3 bg-linear-to-br from-orange-100 to-pink-100">
                 <img
                   src={item.image}
                   alt={item.name}
