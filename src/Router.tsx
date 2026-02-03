@@ -1,7 +1,7 @@
 import type { QueryClient } from "@tanstack/query-core";
 import { Router, RouterProvider } from "@tanstack/react-router";
-import { routeTree } from "./routeTree.gen";
 import { queryClient } from "./queryClient";
+import { routeTree } from "./routeTree.gen";
 
 // Type router context so it can be referenced in __root. Must be in sync with the context in the router below for app to compile.
 export type MyRouterContext = {

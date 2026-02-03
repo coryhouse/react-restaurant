@@ -1,15 +1,16 @@
 // This component is shared between the admin index and admin $foodId routes.
-import { useEffect, useState } from "react";
-import { type Food, type NewFood, foodTags } from "../types/food.types";
-import { Input } from "../shared/Input";
-import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
-import { toast } from "sonner";
-import { ErrorMessage } from "../shared/ErrorMessage";
-import { foodMutations, foodQueries } from "../query-factories/foods";
+
 import { useMutation, useQuery } from "@tanstack/react-query";
-import type { Status } from "../types/status.types";
+import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { z } from "zod";
+import { foodMutations, foodQueries } from "../query-factories/foods";
+import { ErrorMessage } from "../shared/ErrorMessage";
+import { Input } from "../shared/Input";
 import Spinner from "../shared/Spinner";
+import { type Food, foodTags, type NewFood } from "../types/food.types";
+import type { Status } from "../types/status.types";
 
 export const Route = createFileRoute("/admin/{-$foodId}")({
   params: {

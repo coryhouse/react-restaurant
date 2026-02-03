@@ -1,10 +1,10 @@
-import { type FoodTag, foodTags } from "../types/food.types";
-import { createFileRoute } from "@tanstack/react-router";
-import { foodQueries } from "../query-factories/foods";
 import { useQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { z } from "zod";
+import { foodQueries } from "../query-factories/foods";
 import { FoodCard } from "../shared/FoodCard";
 import Spinner from "../shared/Spinner";
-import { z } from "zod";
+import { type FoodTag, foodTags } from "../types/food.types";
 
 const searchSchema = z.object({
   tag: z.enum(foodTags).optional(),

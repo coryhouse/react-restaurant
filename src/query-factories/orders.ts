@@ -1,11 +1,11 @@
 import { queryOptions, useQueryClient } from "@tanstack/react-query";
 import ky from "ky";
-import { orderSchema } from "../types/order.types";
+import type { CartItem } from "../types/cart.types";
 import type {
   CheckoutFormData,
   CheckoutResponse,
 } from "../types/checkout.types";
-import type { CartItem } from "../types/cart.types";
+import { orderSchema } from "../types/order.types";
 
 const baseUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:3002";
 

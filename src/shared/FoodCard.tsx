@@ -1,10 +1,10 @@
+import { useMutation } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { useCart } from "../hooks/useCart";
+import { foodMutations } from "../query-factories/foods";
 import type { Food, FoodTag } from "../types/food.types";
 import { Card } from "./Card";
-import { useMutation } from "@tanstack/react-query";
-import { foodMutations } from "../query-factories/foods";
-import { useCart } from "../hooks/useCart";
 
 const tagIcons: Record<FoodTag, string> = {
   Breakfast: "🥞",

@@ -1,12 +1,12 @@
-import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { Button } from "../../shared/Button";
+import { useState } from "react";
 import { orderMutations } from "../../query-factories/orders";
-import {
-  checkoutFormSchema,
-  type CheckoutFormData,
-} from "../../types/checkout.types";
+import { Button } from "../../shared/Button";
 import type { CartItem } from "../../types/cart.types";
+import {
+  type CheckoutFormData,
+  checkoutFormSchema,
+} from "../../types/checkout.types";
 import type { Status } from "../../types/status.types";
 import { CustomerInfoSection } from "./CustomerInfoSection";
 import { ShippingAddressSection } from "./ShippingAddressSection";

@@ -1,10 +1,10 @@
 import { createContext } from "react";
-import type { Food } from "./types/food.types";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 import type {
   CartContext as CartContextType,
   CartItem,
 } from "./types/cart.types";
-import { useLocalStorage } from "./hooks/useLocalStorage";
+import type { Food } from "./types/food.types";
 
 export const CartContext = createContext<CartContextType | null>(null);
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { ErrorMessage } from "./ErrorMessage";
 import type { Status } from "../types/status.types";
+import { ErrorMessage } from "./ErrorMessage";
 
 type InputProps = {
   /** input value */

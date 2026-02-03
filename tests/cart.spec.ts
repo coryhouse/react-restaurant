@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test("should support adding items to cart, viewing cart, updating quantities, and removing items", async ({
   page,

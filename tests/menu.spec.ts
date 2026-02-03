@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 // Unit: 1 function or 1 component
 // Integration test: Test a feature in the browser against mocked endpoints

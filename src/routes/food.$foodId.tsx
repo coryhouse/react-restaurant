@@ -1,11 +1,11 @@
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { FoodCard } from "../shared/FoodCard";
-import { FoodRatings } from "../shared/FoodRatings";
 import { z } from "zod";
 import { foodQueries } from "../query-factories/foods";
-import { useQuery } from "@tanstack/react-query";
-import Spinner from "../shared/Spinner";
 import { ratingQueries } from "../query-factories/ratings";
+import { FoodCard } from "../shared/FoodCard";
+import { FoodRatings } from "../shared/FoodRatings";
+import Spinner from "../shared/Spinner";
 
 export const Route = createFileRoute("/food/$foodId")({
   params: {

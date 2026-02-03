@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import type { Rating } from "../types/rating.types";
 import { ratingQueries } from "../query-factories/ratings";
+import type { Rating } from "../types/rating.types";
 import Spinner from "./Spinner";
 
 type FoodRatingsProps = {
