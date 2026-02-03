@@ -155,7 +155,7 @@ function Admin() {
             {status === "submitted" && <ErrorMessage message={errors.tags} />}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {foodTags.map((tag) => {
-                const id = "tag-" + tag;
+                const id = `tag-${tag}`;
                 return (
                   <label
                     key={tag}

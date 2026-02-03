@@ -1,9 +1,10 @@
 // Create 10000 foods using faker.js
 // import { type Food } from "../types/food.types";
+
+import fs from "node:fs";
+import path, { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { faker } from "@faker-js/faker";
-import fs from "fs";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
 
 const numFakeFoods = 5000;
 
