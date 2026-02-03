@@ -1,4 +1,7 @@
 {
+  "env": {
+    "ENABLE_TOOL_SEARCH": "true"
+  },
   "permissions": {
     "allow": ["Bash(npm run test:*)", "Bash(git diff:*)"],
     "ask": ["Bash(git push:*)", "Bash(npm publish:*)"],
