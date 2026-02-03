@@ -67,6 +67,7 @@ export function FoodCard({ food, showActions = false }: FoodCardProps) {
                 Edit
               </Link>
               <button
+                type="button"
                 aria-label={`Delete ${food.name}`}
                 className="px-3 py-1 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors"
                 onClick={() => {

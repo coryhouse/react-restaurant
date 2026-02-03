@@ -35,10 +35,10 @@ function ModernMinimalistMockup() {
               FINE DINING
             </p>
             <div className="mt-6 flex gap-4 justify-center">
-              <button className="px-6 py-2 border border-white text-white text-sm hover:bg-white hover:text-gray-900 transition">
+              <button type="button" className="px-6 py-2 border border-white text-white text-sm hover:bg-white hover:text-gray-900 transition">
                 VIEW MENU
               </button>
-              <button className="px-6 py-2 bg-white text-gray-900 text-sm hover:bg-gray-100 transition">
+              <button type="button" className="px-6 py-2 bg-white text-gray-900 text-sm hover:bg-gray-100 transition">
                 RESERVE
               </button>
             </div>
@@ -78,7 +78,7 @@ function RusticWarmthMockup() {
               The Golden Fork
             </h2>
             <p className="text-amber-200 italic">Farm-to-table since 1952</p>
-            <button className="mt-6 px-8 py-3 bg-amber-600 text-white rounded-full hover:bg-amber-500 transition">
+            <button type="button" className="mt-6 px-8 py-3 bg-amber-600 text-white rounded-full hover:bg-amber-500 transition">
               Explore Our Kitchen
             </button>
           </div>
@@ -130,7 +130,7 @@ function BoldVibrantMockup() {
               </span>
             ))}
           </div>
-          <button className="mt-6 px-8 py-3 bg-white text-orange-600 font-bold rounded-full hover:scale-105 transition transform">
+          <button type="button" className="mt-6 px-8 py-3 bg-white text-orange-600 font-bold rounded-full hover:scale-105 transition transform">
             ORDER NOW
           </button>
         </div>
@@ -178,7 +178,7 @@ function ElegantDarkMockup() {
             <p className="text-gray-400 mt-4 italic text-sm">
               An unforgettable culinary journey
             </p>
-            <button className="mt-6 px-8 py-2 border border-amber-400 text-amber-400 text-sm hover:bg-amber-400 hover:text-gray-950 transition">
+            <button type="button" className="mt-6 px-8 py-2 border border-amber-400 text-amber-400 text-sm hover:bg-amber-400 hover:text-gray-950 transition">
               DISCOVER
             </button>
           </div>
@@ -224,10 +224,10 @@ function FreshHealthyMockup() {
             Nourish your body, delight your taste
           </p>
           <div className="mt-6 flex gap-4 justify-center">
-            <button className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+            <button type="button" className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
               Browse Menu
             </button>
-            <button className="px-6 py-3 border-2 border-green-600 text-green-700 rounded-lg hover:bg-green-600 hover:text-white transition">
+            <button type="button" className="px-6 py-3 border-2 border-green-600 text-green-700 rounded-lg hover:bg-green-600 hover:text-white transition">
               Our Story
             </button>
           </div>
@@ -276,10 +276,10 @@ function RetroDinerMockup() {
             Good Food. Good Times. Since '58
           </p>
           <div className="mt-6 flex gap-4 justify-center">
-            <button className="px-6 py-3 bg-yellow-400 text-red-700 font-bold rounded hover:bg-yellow-300 transition">
+            <button type="button" className="px-6 py-3 bg-yellow-400 text-red-700 font-bold rounded hover:bg-yellow-300 transition">
               🍔 SEE MENU
             </button>
-            <button className="px-6 py-3 bg-white text-red-600 font-bold rounded hover:bg-gray-100 transition">
+            <button type="button" className="px-6 py-3 bg-white text-red-600 font-bold rounded hover:bg-gray-100 transition">
               📍 FIND US
             </button>
           </div>
@@ -469,6 +469,7 @@ function DesignProposals() {
             <div className="flex items-center gap-4">
               <div className="flex bg-gray-100 rounded-lg p-1">
                 <button
+                  type="button"
                   onClick={() => setViewMode("grid")}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition ${
                     viewMode === "grid"
@@ -479,6 +480,7 @@ function DesignProposals() {
                   Grid View
                 </button>
                 <button
+                  type="button"
                   onClick={() => setViewMode("list")}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition ${
                     viewMode === "list"
@@ -522,9 +524,10 @@ function DesignProposals() {
         {viewMode === "grid" ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {proposals.map((proposal) => (
-              <div
+              <button
+                type="button"
                 key={proposal.id}
-                className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition cursor-pointer group"
+                className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition cursor-pointer group text-left w-full"
                 onClick={() => setSelectedProposal(proposal)}
               >
                 {/* Mockup Preview */}
@@ -562,19 +565,20 @@ function DesignProposals() {
                   <p className="text-sm text-gray-600 line-clamp-2 mb-3">
                     {proposal.description}
                   </p>
-                  <button className="text-sm text-blue-600 font-medium hover:text-blue-800 transition">
+                  <span className="text-sm text-blue-600 font-medium hover:text-blue-800 transition">
                     View Details →
-                  </button>
+                  </span>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         ) : (
           <div className="space-y-4">
             {proposals.map((proposal) => (
-              <div
+              <button
+                type="button"
                 key={proposal.id}
-                className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition cursor-pointer"
+                className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition cursor-pointer text-left w-full"
                 onClick={() => setSelectedProposal(proposal)}
               >
                 <div className="flex">
@@ -628,7 +632,7 @@ function DesignProposals() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         )}
@@ -653,14 +657,17 @@ function DesignProposals() {
                 <p className="text-gray-500">{selectedProposal.tagline}</p>
               </div>
               <button
+                type="button"
                 onClick={() => setSelectedProposal(null)}
                 className="p-2 hover:bg-gray-100 rounded-full transition"
+                aria-label="Close"
               >
                 <svg
                   className="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -753,6 +760,7 @@ function DesignProposals() {
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
+                          aria-hidden="true"
                         >
                           <path
                             strokeLinecap="round"
@@ -770,10 +778,10 @@ function DesignProposals() {
 
               {/* Action Buttons */}
               <div className="mt-8 pt-6 border-t border-gray-200 flex gap-4">
-                <button className="flex-1 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
+                <button type="button" className="flex-1 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
                   Select This Design
                 </button>
-                <button className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition">
+                <button type="button" className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition">
                   Request Changes
                 </button>
               </div>

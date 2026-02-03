@@ -9,7 +9,10 @@ import { queryClient } from "./queryClient";
 import { AppRouterProvider } from "./Router";
 import { UserContextProvider } from "./UserContext";
 
-createRoot(document.getElementById("root")!).render(
+const rootElement = document.getElementById("root");
+if (!rootElement) throw new Error("Root element not found");
+
+createRoot(rootElement).render(
   <StrictMode>
     <ErrorBoundary fallback={<div>Oops!</div>}>
       <Toaster richColors position="top-right" />

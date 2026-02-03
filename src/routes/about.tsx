@@ -11,6 +11,7 @@ function About() {
     <>
       <div className="p-2">Hello {user?.name}!</div>
       <button
+        type="button"
         className="p-2 border-2 border-gray-400"
         onClick={() => setUser(null)}
       >

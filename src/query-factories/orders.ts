@@ -17,7 +17,7 @@ export const orderQueryKeys = {
 export const orderQueries = {
   getOrderById: (orderId?: string) =>
     queryOptions({
-      queryKey: orderQueryKeys.orderById(orderId!),
+      queryKey: orderQueryKeys.orderById(orderId ?? ""),
       queryFn: async () => {
         const json = await ky.get(`${baseUrl}/api/orders/${orderId}`).json();
         return orderSchema.parse(json);

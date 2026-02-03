@@ -15,7 +15,7 @@ export class FoodNotFoundError extends Error {}
 export const foodQueries = {
   getFoodById: (foodId?: string) =>
     queryOptions({
-      queryKey: foodQueryKeys.foodById(foodId!),
+      queryKey: foodQueryKeys.foodById(foodId ?? ""),
       queryFn: async () => {
         const json = await ky
           .get(`${baseUrl}/${foodId}`)
