@@ -108,6 +108,7 @@ export function FoodCard({ food, showActions = false }: FoodCardProps) {
 
           {showActions && (
             <button
+              type="button"
               onClick={() => {
                 addItem(food);
                 toast.success(`${food.name} added to cart!`);
