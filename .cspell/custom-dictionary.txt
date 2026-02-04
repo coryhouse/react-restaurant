@@ -1,7 +1,6 @@
 # Custom Dictionary Words
 arkregex
 bowtie
-Csvg
 Fraunces
 iconify
 lassi
