@@ -1,5 +1,8 @@
 This is React a restaurant management app.
 
+For frontend tasks, see /frontend/AGENTS.md
+For backend tasks, see /backend/AGENTS.md
+
 ## Output Formatting
 
 In responses, sacrifice grammar for concision.
