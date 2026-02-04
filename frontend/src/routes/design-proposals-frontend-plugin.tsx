@@ -1,3 +1,4 @@
+/* cSpell:ignore Fsvg, Crect, Csvg  */
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 
