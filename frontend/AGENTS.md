@@ -1,22 +1,9 @@
-This is React a restaurant management app.
-
-## Output Formatting
-
-In responses, sacrifice grammar for concision.
-
 ## Separate docs (Only read these if necessary)
 
 For TypeScript conventions, see docs/TYPESCRIPT.md
 For Playwright test writing conventions, see docs/PLAYWRIGHT.md
 For React conventions, see docs/REACT.md
 For Routing conventions, see docs/ROUTING.md
-
-## Notifications
-
-Play terminal bell (`echo -e '\a'`) when:
-
-- Completing a significant task
-- Encountering an issue that needs user attention
 
 ## Development Commands
 
@@ -59,21 +46,3 @@ built with modern TypeScript tooling:
 - The app includes React Query Devtools and TanStack Router Devtools for debugging
 - After adding any new feature, add a Playwright test, or enhance an existing one.
 - Run `bun run check` after making changes and fix any reported issues.
-
-## Bug Fixes: Prove It Pattern
-
-When given a bug report, first spawn a subagent to write a test that reproduces the issue. Proceed once reproduction succeeds.
-
-Test level hierarchy — Reproduce at the lowest level that can capture the bug:
-
-1. **Unit test** — Pure logic bugs, isolated functions (lives next to the code)
-2. **Integration test** — Component interactions, API boundaries (lives next to the code)
-3. **UX spec test** — Full user flows, browser-dependent behavior (lives in `tests/`)
-
-For every bug fix:
-
-1. **Reproduce with subagent** — Spawn a subagent to write a test that demonstrates the bug. The test should *fail* before the fix.
-2. **Fix** — Apply the fix.
-3. **Confirm** — The test now *passes*, proving the fix works.
-
-If the bug is environment-specific or transient, document why a test isn't possible rather than skipping.
