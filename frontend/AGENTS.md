@@ -31,7 +31,6 @@ built with modern TypeScript tooling:
 
 ### Data Flow
 
-- **API Base URL**: `http://localhost:3001/foods` (JSON Server)
 - **Data Validation**: All API responses are validated using Zod schemas defined in `src/food.ts`
 - **State Management**: Server state managed by TanStack Query, local UI state with React hooks
 - **Optimistic Updates**: Mutations automatically invalidate and refetch related queries
