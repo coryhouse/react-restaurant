@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "streetsidesoftware.code-spell-checker",
+    "GitHub.vscode-pull-request-github",
+    "ms-playwright.playwright",
+    "pflannery.vscode-versionlens",
+    "vitest.explorer",
+    "aaron-bond.better-comments"
+  ]
+}
