@@ -1,10 +1,11 @@
 # Custom Dictionary Words
-lassi
-viewports
 arkregex
-VITE
-iconify
-Fraunces
-Mojito
 bowtie
+Csvg
+Fraunces
+iconify
+lassi
+Mojito
+viewports
+VITE
 xlink
