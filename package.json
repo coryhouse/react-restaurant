@@ -1,0 +1,9 @@
+{
+  "name": "react-restaurant",
+  "scripts": {
+    "start": "concurrently \"bun run --cwd frontend start\" \"dotnet run --project backend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
