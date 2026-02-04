@@ -1,5 +1,10 @@
 using RestaurantApi.Data;
 
+var apiPort = Environment.GetEnvironmentVariable("API_PORT")
+    ?? throw new InvalidOperationException("API_PORT environment variable is required");
+var frontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL")
+    ?? throw new InvalidOperationException("FRONTEND_URL environment variable is required");
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
@@ -9,7 +14,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
+        policy.WithOrigins(frontendUrl)
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -17,7 +22,7 @@ builder.Services.AddCors(options =>
 
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenLocalhost(5000);
+    options.ListenLocalhost(int.Parse(apiPort));
 });
 
 var app = builder.Build();
