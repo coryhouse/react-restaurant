@@ -3,7 +3,7 @@ import { queryOptions, useQueryClient } from "@tanstack/react-query";
 import ky from "ky";
 import { type Food, foodSchema, type NewFood } from "../types/food.types";
 
-const baseUrl = "http://localhost:3001/foods";
+const baseUrl = import.meta.env.VITE_API_URL + "/v1/foods";
 
 export const foodQueryKeys = {
   allFoods: ["foods"],

@@ -100,7 +100,7 @@ test.describe("Feature Name", () => {
 **Application Details:**
 
 - React app runs on `http://localhost:3000`
-- API server on `http://localhost:3001`
+- API server on `http://localhost:5000/api/v1`
 - Uses TanStack Router for routing
 - Uses TanStack Query for data fetching
 - Toast notifications via Sonner library
