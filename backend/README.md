@@ -1,10 +1,10 @@
 # Restaurant API
 
-A .NET 9 Minimal API that serves restaurant food data.
+A .NET 10 Minimal API that serves restaurant food data.
 
 ## Prerequisites
 
-- .NET 9 SDK installed
+- .NET 10 SDK installed
 
 ## Project Structure
 
@@ -21,11 +21,13 @@ backend/
 ## Getting Started
 
 1. Navigate to the backend directory:
+
    ```bash
    cd backend
    ```
 
 2. Restore dependencies:
+
    ```bash
    dotnet restore
    ```
@@ -44,6 +46,7 @@ The API will start on `http://localhost:5000`
 Returns all 21 food items as a JSON array.
 
 **Example:**
+
 ```bash
 curl http://localhost:5000/api/v1/foods
 ```
@@ -53,6 +56,7 @@ curl http://localhost:5000/api/v1/foods
 Health check endpoint.
 
 **Example:**
+
 ```bash
 curl http://localhost:5000/health
 ```
@@ -60,6 +64,7 @@ curl http://localhost:5000/health
 ## Swagger Documentation
 
 Once the API is running, you can access the Swagger UI at:
+
 - http://localhost:5000/swagger
 
 ## Features

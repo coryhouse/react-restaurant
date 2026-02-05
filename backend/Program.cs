@@ -40,11 +40,9 @@ app.MapGet("/api/v1/foods", () =>
     var foods = FoodData.GetAllFoods();
     return Results.Ok(foods);
 })
-.WithName("GetFoods")
-.WithOpenApi();
+.WithName("GetFoods");
 
 app.MapGet("/health", () => Results.Ok("Healthy"))
-    .WithName("HealthCheck")
-    .WithOpenApi();
+    .WithName("HealthCheck");
 
 app.Run();
