@@ -29,7 +29,7 @@
     "@tanstack/react-query": "^5.85.5",
     "@tanstack/react-query-devtools": "^5.85.5",
     "@tanstack/react-router": "^1.5.0",
-    "@tanstack/router-devtools": "^1.5.0",
+    "@tanstack/react-router-devtools": "^1.158.1",
     "@tanstack/router-plugin": "^1.131.27",
     "concurrently": "^9.2.0",
     "cspell": "^9.6.0",
