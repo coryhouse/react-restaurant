@@ -7,15 +7,16 @@ const baseUrl = import.meta.env.VITE_API_URL + "/v1/foods";
 
 export const foodQueryKeys = {
   allFoods: ["foods"],
-  foodById: (foodId: string) => [...foodQueryKeys.allFoods, foodId],
+  foodById: (foodId: number) => [...foodQueryKeys.allFoods, foodId],
 };
 
 export class FoodNotFoundError extends Error {}
 
 export const foodQueries = {
-  getFoodById: (foodId?: string) =>
+  getFoodById: (foodId?: number) =>
     queryOptions({
-      queryKey: foodQueryKeys.foodById(foodId ?? ""),
+      enabled: !!foodId,
+      queryKey: foodQueryKeys.foodById(foodId as number),
       queryFn: async () => {
         const json = await ky
           .get(`${baseUrl}/${foodId}`)
@@ -43,7 +44,7 @@ export const foodMutations = {
   deleteFood: (onSuccess: () => void) => {
     const queryClient = useQueryClient();
     return {
-      mutationFn: async (foodId: string) => {
+      mutationFn: async (foodId: number) => {
         await ky.delete(`${baseUrl}/${foodId}`);
       },
       onSuccess,

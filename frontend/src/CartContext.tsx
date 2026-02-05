@@ -42,11 +42,11 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     });
   };
 
-  const removeItem = (foodId: string) => {
+  const removeItem = (foodId: number) => {
     setItems((prev) => prev.filter((item) => item.food.id !== foodId));
   };
 
-  const updateQuantity = (foodId: string, quantity: number) => {
+  const updateQuantity = (foodId: number, quantity: number) => {
     if (quantity <= 0) {
       removeItem(foodId);
       return;

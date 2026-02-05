@@ -70,8 +70,8 @@ function Cart() {
 
 type CartItemCardProps = {
   item: CartItem;
-  onRemove: (foodId: string) => void;
-  onUpdateQuantity: (foodId: string, quantity: number) => void;
+  onRemove: (foodId: number) => void;
+  onUpdateQuantity: (foodId: number, quantity: number) => void;
 };
 
 function CartItemCard({ item, onRemove, onUpdateQuantity }: CartItemCardProps) {

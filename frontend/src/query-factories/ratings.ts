@@ -12,7 +12,7 @@ const keys = {
 export class RatingNotFoundError extends Error {}
 
 export const ratingQueries = {
-  getRatingsByFoodId: (foodId?: string) =>
+  getRatingsByFoodId: (foodId?: number) =>
     queryOptions({
       queryKey: [...keys.allRatings, foodId],
       queryFn: async () => {

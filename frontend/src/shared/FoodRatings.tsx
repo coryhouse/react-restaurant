@@ -4,7 +4,7 @@ import type { Rating } from "../types/rating.types";
 import Spinner from "./Spinner";
 
 type FoodRatingsProps = {
-  foodId: string;
+  foodId: number;
 };
 
 function StarRating({ rating }: { rating: number }) {

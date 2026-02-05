@@ -8,8 +8,8 @@ export type CartItem = {
 export type CartContext = {
   items: CartItem[];
   addItem: (food: Food) => void;
-  removeItem: (foodId: string) => void;
-  updateQuantity: (foodId: string, quantity: number) => void;
+  removeItem: (foodId: number) => void;
+  updateQuantity: (foodId: number, quantity: number) => void;
   clearCart: () => void;
   totalItems: number;
   totalPrice: number;
