@@ -10,7 +10,7 @@ import Spinner from "../shared/Spinner";
 export const Route = createFileRoute("/food/$foodId")({
   params: {
     parse: (params) => ({
-      foodId: z.string().parse(params.foodId),
+      foodId: z.number().parse(params.foodId),
     }),
   },
   component: FoodDetail,
