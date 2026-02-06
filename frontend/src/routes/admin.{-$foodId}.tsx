@@ -15,7 +15,7 @@ import type { Status } from "../types/status.types";
 export const Route = createFileRoute("/admin/{-$foodId}")({
   params: {
     parse: (params) => ({
-      foodId: z.number().optional().parse(params.foodId),
+      foodId: z.coerce.number().optional().parse(params.foodId),
     }),
   },
   component: Admin,
