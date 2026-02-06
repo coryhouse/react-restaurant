@@ -13,7 +13,7 @@ Create a .NET 9 Minimal API in the `backend/` folder that serves restaurant food
 
 ## Endpoints
 
-### GET /api/v1/foods
+### GET /foods
 
 Returns all food items as a JSON array.
 
@@ -55,12 +55,12 @@ public record Food(
 
 ## Features
 
-| Feature | Included |
-|---------|----------|
-| Swagger/OpenAPI | Yes |
-| CORS (localhost:5173) | Yes |
-| Health check | Yes |
-| Ratings endpoint | Future (separate endpoint) |
+| Feature               | Included                   |
+| --------------------- | -------------------------- |
+| Swagger/OpenAPI       | Yes                        |
+| CORS (localhost:5173) | Yes                        |
+| Health check          | Yes                        |
+| Ratings endpoint      | Future (separate endpoint) |
 
 ## Food Data (Hardcoded)
 
@@ -260,7 +260,7 @@ backend/
 5. Configure Program.cs with:
    - CORS policy for localhost:5173
    - Swagger/OpenAPI
-   - GET /api/v1/foods endpoint
+   - GET /foods endpoint
    - GET /health endpoint
 6. Test endpoints
 
@@ -268,6 +268,6 @@ backend/
 
 1. Run `dotnet run` from backend folder
 2. Open http://localhost:5000/swagger to verify Swagger UI
-3. Call GET http://localhost:5000/api/v1/foods - expect 21 food items
+3. Call GET http://localhost:5000/foods - expect 21 food items
 4. Call GET http://localhost:5000/health - expect "Healthy"
 5. Verify CORS by calling from frontend (localhost:5173)

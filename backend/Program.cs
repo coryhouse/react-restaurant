@@ -54,7 +54,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowFrontend");
 
-app.MapGet("/api/v1/foods", async (RestaurantDbContext db) =>
+app.MapGet("/foods", async (RestaurantDbContext db) =>
 {
     var foods = await db.Foods.ToListAsync();
     return Results.Ok(foods);
@@ -62,7 +62,7 @@ app.MapGet("/api/v1/foods", async (RestaurantDbContext db) =>
 .WithName("GetFoods")
 .Produces<List<Food>>(StatusCodes.Status200OK);
 
-app.MapGet("/api/v1/foods/{id:int}", async (int id, RestaurantDbContext db) =>
+app.MapGet("/foods/{id:int}", async (int id, RestaurantDbContext db) =>
 {
     var food = await db.Foods.FindAsync(id);
     return food is not null ? Results.Ok(food) : Results.NotFound();
@@ -71,17 +71,17 @@ app.MapGet("/api/v1/foods/{id:int}", async (int id, RestaurantDbContext db) =>
 .Produces<Food>(StatusCodes.Status200OK)
 .Produces(StatusCodes.Status404NotFound);
 
-app.MapPost("/api/v1/foods", async (Food food, RestaurantDbContext db) =>
+app.MapPost("/foods", async (Food food, RestaurantDbContext db) =>
 {
     db.Foods.Add(food);
     await db.SaveChangesAsync();
-    return Results.Created($"/api/v1/foods/{food.Id}", food);
+    return Results.Created($"/foods/{food.Id}", food);
 })
 .WithName("CreateFood")
 .Produces<Food>(StatusCodes.Status201Created)
 .Produces(StatusCodes.Status400BadRequest);
 
-app.MapPut("/api/v1/foods/{id:int}", async (int id, Food updatedFood, RestaurantDbContext db) =>
+app.MapPut("/foods/{id:int}", async (int id, Food updatedFood, RestaurantDbContext db) =>
 {
     var food = await db.Foods.FindAsync(id);
     if (food is null)
@@ -101,7 +101,7 @@ app.MapPut("/api/v1/foods/{id:int}", async (int id, Food updatedFood, Restaurant
 .Produces(StatusCodes.Status404NotFound)
 .Produces(StatusCodes.Status400BadRequest);
 
-app.MapDelete("/api/v1/foods/{id:int}", async (int id, RestaurantDbContext db) =>
+app.MapDelete("/foods/{id:int}", async (int id, RestaurantDbContext db) =>
 {
     var food = await db.Foods.FindAsync(id);
     if (food is null)

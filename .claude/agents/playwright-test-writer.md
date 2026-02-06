@@ -22,7 +22,7 @@ Your primary responsibilities:
 - Work with React 19 + TypeScript + Vite application architecture
 - Test TanStack Router file-based routing with type-safe navigation
 - Validate TanStack Query server state management and optimistic updates
-- Test interactions with backend API at http://localhost:5000/api/v1/foods
+- Test interactions with backend API at http://localhost:5000/foods
 - Consider Tailwind CSS styling when writing selectors
 - Use `npm run pw` command for running tests
 

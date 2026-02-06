@@ -77,28 +77,28 @@ docker-compose down -v
 
 ## API Endpoints
 
-### GET /api/v1/foods
+### GET /foods
 
 Returns all food items from the database.
 
 ```bash
-curl http://localhost:5000/api/v1/foods
+curl http://localhost:5000/foods
 ```
 
-### GET /api/v1/foods/{id}
+### GET /foods/{id}
 
 Returns a specific food item by ID.
 
 ```bash
-curl http://localhost:5000/api/v1/foods/1
+curl http://localhost:5000/foods/1
 ```
 
-### POST /api/v1/foods
+### POST /foods
 
 Creates a new food item.
 
 ```bash
-curl -X POST http://localhost:5000/api/v1/foods \
+curl -X POST http://localhost:5000/foods \
   -H "Content-Type: application/json" \
   -d '{
     "name": "New Dish",
@@ -109,12 +109,12 @@ curl -X POST http://localhost:5000/api/v1/foods \
   }'
 ```
 
-### PUT /api/v1/foods/{id}
+### PUT /foods/{id}
 
 Updates an existing food item.
 
 ```bash
-curl -X PUT http://localhost:5000/api/v1/foods/1 \
+curl -X PUT http://localhost:5000/foods/1 \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Updated Burger",
@@ -125,12 +125,12 @@ curl -X PUT http://localhost:5000/api/v1/foods/1 \
   }'
 ```
 
-### DELETE /api/v1/foods/{id}
+### DELETE /foods/{id}
 
 Deletes a food item.
 
 ```bash
-curl -X DELETE http://localhost:5000/api/v1/foods/1
+curl -X DELETE http://localhost:5000/foods/1
 ```
 
 ### GET /health

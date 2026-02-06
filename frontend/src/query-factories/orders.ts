@@ -7,7 +7,7 @@ import type {
 } from "../types/checkout.types";
 import { orderSchema } from "../types/order.types";
 
-const baseUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:3002";
+const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 export const orderQueryKeys = {
   allOrders: ["orders"],
@@ -19,7 +19,7 @@ export const orderQueries = {
     queryOptions({
       queryKey: orderQueryKeys.orderById(orderId ?? ""),
       queryFn: async () => {
-        const json = await ky.get(`${baseUrl}/api/orders/${orderId}`).json();
+        const json = await ky.get(`${baseUrl}/orders/${orderId}`).json();
         return orderSchema.parse(json);
       },
       enabled: !!orderId,
@@ -34,7 +34,7 @@ export const orderMutations = {
     return {
       mutationFn: async (payload: CheckoutFormData & { items: CartItem[] }) => {
         const response = await ky
-          .post(`${baseUrl}/api/checkout`, {
+          .post(`${baseUrl}/checkout`, {
             json: {
               ...payload,
               items: payload.items.map((item) => ({

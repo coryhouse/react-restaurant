@@ -3,7 +3,7 @@ import { queryOptions } from "@tanstack/react-query";
 import ky from "ky";
 import { ratingSchema } from "../types/rating.types";
 
-const baseUrl = import.meta.env.VITE_API_URL + "/v1/ratings";
+const baseUrl = import.meta.env.VITE_API_URL + "/ratings";
 
 const keys = {
   allRatings: ["ratings"],
