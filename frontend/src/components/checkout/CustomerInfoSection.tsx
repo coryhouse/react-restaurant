@@ -30,7 +30,6 @@ export function CustomerInfoSection({
           onChange={(e) => onChange("customerName", e.target.value)}
           error={errors.customerName}
           formStatus={formStatus}
-          placeholder="John Doe"
         />
 
         <Input
@@ -41,7 +40,6 @@ export function CustomerInfoSection({
           onChange={(e) => onChange("customerEmail", e.target.value)}
           error={errors.customerEmail}
           formStatus={formStatus}
-          placeholder="john@example.com"
         />
 
         <Input
@@ -52,7 +50,6 @@ export function CustomerInfoSection({
           onChange={(e) => onChange("customerPhone", e.target.value)}
           error={errors.customerPhone}
           formStatus={formStatus}
-          placeholder="(555) 123-4567"
         />
       </div>
     </div>
