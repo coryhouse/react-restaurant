@@ -14,6 +14,10 @@ Play terminal bell (`echo -e '\a'`) when:
 - Completing a significant task
 - Encountering an issue that needs user attention
 
+## Playwright Locators
+
+Never use `xpath` CSS selectors, or `getById`. Only use Playwright's recommended accessible locators such as `getByRole`, `getByLabel`, `getByText`, and `getByPlaceholder`.
+
 ## Bug Fixes: Prove It Pattern
 
 When given a bug report, first spawn a subagent to write a test that reproduces the issue. Proceed once reproduction succeeds.
