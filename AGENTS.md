@@ -16,7 +16,7 @@ Play terminal bell (`echo -e '\a'`) when:
 
 ## Playwright Locators
 
-Never use `xpath` CSS selectors, or `getById`. Only use Playwright's recommended accessible locators such as `getByRole`, `getByLabel`, `getByText`, and `getByPlaceholder`.
+Never use `xpath` CSS selectors, or `getById`. Only use Playwright's recommended accessible locators such as `getByRole`, `getByLabel`, `getByText`, and `getByPlaceholder`. Enhance the HTML if necessary to support these locators.
 
 ## Bug Fixes: Prove It Pattern
 
