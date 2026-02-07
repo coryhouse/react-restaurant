@@ -7,6 +7,10 @@ For backend tasks, see /backend/AGENTS.md
 
 In responses, sacrifice grammar for concision.
 
+## Long-term Memory
+
+Use LEARNINGS.md as an external memory to ensure a continuous cycle of improvement. Track your mistakes, new insights, and what I like or dislike. Automatically update this file after each interaction, and review it before starting new tasks to avoid repeating past mistakes.
+
 ## Notifications
 
 Play terminal bell (`echo -e '\a'`) when:
