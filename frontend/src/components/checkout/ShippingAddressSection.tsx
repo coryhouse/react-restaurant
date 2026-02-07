@@ -1,4 +1,5 @@
 import { Input } from "../../shared/Input";
+import { Select } from "../../shared/Select";
 import type { CheckoutFormData } from "../../types/checkout.types";
 import type { Status } from "../../types/status.types";
 
@@ -8,6 +9,59 @@ type ShippingAddressSectionProps = {
   formStatus: Status;
   onChange: (field: keyof CheckoutFormData, value: string) => void;
 };
+
+const usStates = [
+  { value: "AL", label: "Alabama" },
+  { value: "AK", label: "Alaska" },
+  { value: "AZ", label: "Arizona" },
+  { value: "AR", label: "Arkansas" },
+  { value: "CA", label: "California" },
+  { value: "CO", label: "Colorado" },
+  { value: "CT", label: "Connecticut" },
+  { value: "DE", label: "Delaware" },
+  { value: "FL", label: "Florida" },
+  { value: "GA", label: "Georgia" },
+  { value: "HI", label: "Hawaii" },
+  { value: "ID", label: "Idaho" },
+  { value: "IL", label: "Illinois" },
+  { value: "IN", label: "Indiana" },
+  { value: "IA", label: "Iowa" },
+  { value: "KS", label: "Kansas" },
+  { value: "KY", label: "Kentucky" },
+  { value: "LA", label: "Louisiana" },
+  { value: "ME", label: "Maine" },
+  { value: "MD", label: "Maryland" },
+  { value: "MA", label: "Massachusetts" },
+  { value: "MI", label: "Michigan" },
+  { value: "MN", label: "Minnesota" },
+  { value: "MS", label: "Mississippi" },
+  { value: "MO", label: "Missouri" },
+  { value: "MT", label: "Montana" },
+  { value: "NE", label: "Nebraska" },
+  { value: "NV", label: "Nevada" },
+  { value: "NH", label: "New Hampshire" },
+  { value: "NJ", label: "New Jersey" },
+  { value: "NM", label: "New Mexico" },
+  { value: "NY", label: "New York" },
+  { value: "NC", label: "North Carolina" },
+  { value: "ND", label: "North Dakota" },
+  { value: "OH", label: "Ohio" },
+  { value: "OK", label: "Oklahoma" },
+  { value: "OR", label: "Oregon" },
+  { value: "PA", label: "Pennsylvania" },
+  { value: "RI", label: "Rhode Island" },
+  { value: "SC", label: "South Carolina" },
+  { value: "SD", label: "South Dakota" },
+  { value: "TN", label: "Tennessee" },
+  { value: "TX", label: "Texas" },
+  { value: "UT", label: "Utah" },
+  { value: "VT", label: "Vermont" },
+  { value: "VA", label: "Virginia" },
+  { value: "WA", label: "Washington" },
+  { value: "WV", label: "West Virginia" },
+  { value: "WI", label: "Wisconsin" },
+  { value: "WY", label: "Wyoming" },
+];
 
 export function ShippingAddressSection({
   formData,
@@ -30,7 +84,6 @@ export function ShippingAddressSection({
           onChange={(e) => onChange("addressLine1", e.target.value)}
           error={errors.addressLine1}
           formStatus={formStatus}
-          placeholder="123 Main St"
         />
 
         <Input
@@ -41,7 +94,6 @@ export function ShippingAddressSection({
           onChange={(e) => onChange("addressLine2", e.target.value)}
           error={errors.addressLine2}
           formStatus={formStatus}
-          placeholder="Apt 4B"
         />
 
         <div className="grid grid-cols-2 gap-4">
@@ -53,19 +105,23 @@ export function ShippingAddressSection({
             onChange={(e) => onChange("city", e.target.value)}
             error={errors.city}
             formStatus={formStatus}
-            placeholder="New York"
           />
 
-          <Input
+          <Select
             id="state"
             label="State"
-            type="text"
             value={formData.state}
-            onChange={(e) => onChange("state", e.target.value.toUpperCase())}
+            onChange={(e) => onChange("state", e.target.value)}
             error={errors.state}
             formStatus={formStatus}
-            placeholder="NY"
-          />
+          >
+            <option value="">Select a state</option>
+            {usStates.map((state) => (
+              <option key={state.value} value={state.value}>
+                {state.label}
+              </option>
+            ))}
+          </Select>
         </div>
 
         <Input
@@ -76,7 +132,6 @@ export function ShippingAddressSection({
           onChange={(e) => onChange("zipCode", e.target.value)}
           error={errors.zipCode}
           formStatus={formStatus}
-          placeholder="10001"
         />
       </div>
     </div>
