@@ -2,36 +2,39 @@ import { useState } from "react";
 import type { Status } from "../types/status.types";
 import { ErrorMessage } from "./ErrorMessage";
 
-type InputProps = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
+type SelectProps = Omit<
+  React.SelectHTMLAttributes<HTMLSelectElement>,
   "id" | "value"
 > & {
-  /** input value */
-  value: string | number;
+  /** select value */
+  value: string;
 
-  /** input label */
+  /** select label */
   label: string;
 
-  /** input id */
+  /** select id */
   id: string;
 
-  /** Error to display below the input */
+  /** Error to display below the select */
   error?: string;
 
   /** Status of the form */
   formStatus: Status;
+
+  /** Select options */
+  children: React.ReactNode;
 };
 
-export function Input({
+export function Select({
   className,
   label,
   id,
   onBlur,
-  type = "text",
   error,
   formStatus,
-  ...otherInputProps
-}: InputProps) {
+  children,
+  ...otherSelectProps
+}: SelectProps) {
   const [hasBeenTouched, setHasBeenTouched] = useState(false);
 
   const hasError = (hasBeenTouched || formStatus === "submitted") && error;
@@ -44,9 +47,8 @@ export function Input({
       >
         {label}
       </label>
-      <input
+      <select
         id={id}
-        type={type}
         onBlur={(event) => {
           setHasBeenTouched(true);
           onBlur?.(event);
@@ -56,8 +58,10 @@ export function Input({
             ? "border-red-300 focus:border-red-500 focus:ring-red-500"
             : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
         }`}
-        {...otherInputProps}
-      />
+        {...otherSelectProps}
+      >
+        {children}
+      </select>
       <ErrorMessage message={hasError ? error : undefined} />
     </div>
   );
