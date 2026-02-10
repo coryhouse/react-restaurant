@@ -13,9 +13,10 @@ Commit all changes, push to remote, and create a pull request with a focused, in
 When invoked, this skill will:
 
 1. Analyze changed files to understand the intent
-2. Create a commit following the repository's style
-3. Push the branch to remote
-4. Open a PR with a concise, meaningful description
+2. Create a new branch if currently on main
+3. Create a commit following the repository's style
+4. Push the branch to remote
+5. Open a PR with a concise, meaningful description
 
 **Arguments:**
 - No argument (default): Creates a regular PR ready for review
@@ -41,7 +42,26 @@ Analyze the output to understand:
 - The nature of the changes (feature, fix, refactor, etc.)
 - The repository's commit message style
 
-### 2. Create Commit
+### 2. Create Branch (if on main)
+
+Check if currently on the main branch. If so, create a new branch with a descriptive name based on the changes:
+
+```bash
+git rev-parse --abbrev-ref HEAD
+```
+
+If the output is `main` or `master`, create a new branch:
+
+```bash
+git checkout -b descriptive-branch-name
+```
+
+Branch naming guidelines:
+- Use kebab-case (lowercase with hyphens)
+- Be descriptive but concise (2-4 words)
+- Examples: `add-avatar-upload`, `fix-duplicate-submissions`, `refactor-date-utils`
+
+### 3. Create Commit
 
 Stage relevant files and create a commit:
 
@@ -58,15 +78,15 @@ EOF
 )"
 ```
 
-### 3. Push to Remote
+### 4. Push to Remote
 
-Push the branch with upstream tracking:
+Push the current branch with upstream tracking:
 
 ```bash
-git push -u origin branch-name
+git push -u origin HEAD
 ```
 
-### 4. Create PR
+### 5. Create PR
 
 Use gh CLI to create a PR with a focused description.
 
