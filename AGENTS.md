@@ -9,7 +9,17 @@ In responses, sacrifice grammar for concision.
 
 ## Long-term Memory
 
-Use LEARNINGS.md as an external memory to ensure a continuous cycle of improvement. Track your mistakes, new insights, and what I like or dislike. Automatically update this file after each interaction, and review it before starting new tasks to avoid repeating past mistakes.
+Use LEARNINGS.md as external memory for durable, reusable guidance. Review it before starting new tasks.
+
+Write to LEARNINGS.md only when at least one applies:
+- A repeated preference/workflow style I stated (formatting, process, tooling).
+- A mistake you made and corrective rule to prevent repeat.
+- A project-specific insight likely to matter in future tasks.
+
+Do NOT write to LEARNINGS.md for:
+- One-off factual Q&A responses.
+- Routine explanations with no new preference/rule.
+- Temporary context that won’t help future turns.
 
 ## Notifications
 
