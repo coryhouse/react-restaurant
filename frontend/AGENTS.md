@@ -5,6 +5,10 @@ For Playwright test writing conventions, see docs/PLAYWRIGHT.md
 For React conventions, see docs/REACT.md
 For Routing conventions, see docs/ROUTING.md
 
+## Skills
+
+When I mention creating or adding tests, use the playwright-test-writer skill.
+
 ## Development Commands
 
 Use `bun` to run commands.
