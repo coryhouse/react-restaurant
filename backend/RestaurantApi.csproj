@@ -13,4 +13,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="RestaurantApi.Tests/**/*.cs" />
+    <EmbeddedResource Remove="RestaurantApi.Tests/**/*.resx" />
+    <None Remove="RestaurantApi.Tests/**/*" />
+  </ItemGroup>
+
 </Project>
