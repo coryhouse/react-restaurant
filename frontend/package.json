@@ -15,7 +15,7 @@
     "format": "biome format --write .",
     "check-format": "biome format .",
     "check": "concurrently 'bun lint' 'bun run build' 'bun pw' 'bun cspell'",
-    "typecheck": "tsc --noEmit --project tsconfig.app.json",
+    "typecheck": "npx tsgo --noEmit --project tsconfig.app.json",
     "prepare": "husky",
     "cspell": "cspell . --no-progress --show-suggestions --gitignore"
   },
@@ -31,6 +31,7 @@
     "@tanstack/react-router": "^1.5.0",
     "@tanstack/react-router-devtools": "^1.158.1",
     "@tanstack/router-plugin": "^1.131.27",
+    "@typescript/native-preview": "^7.0.0-dev.20260222.1",
     "concurrently": "^9.2.0",
     "cspell": "^9.6.0",
     "json-server": "^0.17.0",
@@ -43,7 +44,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.14",
-    "dotenv-cli": "^8.0.0",
     "@faker-js/faker": "^10.0.0",
     "@playwright/test": "^1.55.0",
     "@tanstack/router-vite-plugin": "^1.5.0",
@@ -52,6 +52,7 @@
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^5.0.1",
     "babel-plugin-react-compiler": "^19.1.0-rc.2",
+    "dotenv-cli": "^8.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "tailwindcss": "^4.1.12",
