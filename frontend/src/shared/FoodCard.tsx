@@ -98,10 +98,9 @@ export function FoodCard({ food, showActions = false }: FoodCardProps) {
                 <span
                   key={tag}
                   className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full flex items-center gap-1"
-                  title={tag}
                 >
-                  <span>{tagIcons[tag]}</span>
-                  <span className="hidden sm:inline">{tag}</span>
+                  <span aria-hidden="true">{tagIcons[tag]}</span>
+                  <span>{tag}</span>
                 </span>
               ))}
             </div>
