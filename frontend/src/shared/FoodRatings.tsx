@@ -9,11 +9,16 @@ type FoodRatingsProps = {
 
 function StarRating({ rating }: { rating: number }) {
   return (
-    <div className="flex">
+    <div
+      className="flex"
+      role="img"
+      aria-label={`Rating: ${rating} out of 5 stars`}
+    >
       {[1, 2, 3, 4, 5].map((star) => (
         <span
           key={star}
           className={star <= rating ? "text-yellow-400" : "text-gray-300"}
+          aria-hidden="true"
         >
           ★
         </span>
