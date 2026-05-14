@@ -1,7 +1,7 @@
 export function ReactBistroLogo() {
   return (
     <div className="flex items-center space-x-2">
-      <div className="relative">
+      <div className="relative" aria-hidden="true">
         <div className="w-8 h-8 rounded-full border-2 border-blue-500 flex items-center justify-center">
           <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
         </div>
