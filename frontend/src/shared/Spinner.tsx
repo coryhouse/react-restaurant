@@ -16,12 +16,15 @@ export default function Spinner({
   };
 
   const spinner = (
-    <output
+    // biome-ignore lint/a11y/useSemanticElements: role="status" is the correct ARIA pattern for loading spinners
+    <div
+      role="status"
+      aria-live="polite"
       className={`${sizeClasses[size]} border-2 border-gray-200 border-t-blue-600 rounded-full animate-spin block ${className}`}
       aria-label="Loading"
     >
       <span className="sr-only">Loading...</span>
-    </output>
+    </div>
   );
 
   if (center) {
