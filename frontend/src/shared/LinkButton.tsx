@@ -7,6 +7,7 @@ type LinkButtonProps = Omit<LinkProps, "className"> & {
   variant?: LinkButtonVariant;
   size?: LinkButtonSize;
   className?: string;
+  disabled?: boolean;
 };
 
 const variantClasses: Record<LinkButtonVariant, string> = {
@@ -26,6 +27,7 @@ export function LinkButton({
   variant = "primary",
   size = "md",
   className = "",
+  disabled = false,
   ...props
 }: LinkButtonProps) {
   const isTextVariant = variant === "text";
@@ -35,7 +37,8 @@ export function LinkButton({
 
   return (
     <Link
-      className={`${baseClasses} transition-colors ${variantClasses[variant]} ${isTextVariant ? "" : sizeClasses[size]} ${className}`}
+      className={`${baseClasses} transition-colors ${disabled ? "opacity-50 pointer-events-none" : ""} ${variantClasses[variant]} ${isTextVariant ? "" : sizeClasses[size]} ${className}`}
+      aria-disabled={disabled}
       {...props}
     />
   );
